@@ -6,6 +6,7 @@ import { ResultsStore } from "../stores/ResultsStore";
 
 export interface IScrambleProps {
     event: any;
+    resultsStore: ResultsStore;
 }
 
 class Scramble extends React.Component<IScrambleProps> {
@@ -19,11 +20,11 @@ class Scramble extends React.Component<IScrambleProps> {
     }
 
     componentDidMount() {
-        this.ResultsStore.generateScramble(this.ResultsStore.selectedEvent);
+        this.props.resultsStore.generateScramble(this.props.resultsStore.selectedEvent);
     }
 
     render() {
-        return <div className="text-3xl">{this.ResultsStore.scramble}</div>;
+        return <div className="text-3xl">{this.props.resultsStore.scramble}</div>;
     }
 }
 

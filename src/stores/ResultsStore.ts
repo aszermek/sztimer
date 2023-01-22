@@ -9,7 +9,6 @@ export class ResultsStore {
 
     constructor() {
         makeAutoObservable(this, {
-            addResult: action,
             generateScramble: flow,
         });
     }
@@ -67,7 +66,7 @@ export class ResultsStore {
     };
 
     *generateScramble(event: string) {
-        console.log("generate scramble");
         this.scramble = yield ScrambleService.getScramble(event);
+        console.log("generate scramble:", this.scramble);
     }
 }
