@@ -46,6 +46,10 @@ export class ResultsStore {
         this._results.splice(this._results.indexOf(result));
     };
 
+    deleteAllResults = () => {
+        this._results = [];
+    }
+
     calculateAvg = (array: IResult[]): number | string => {
         const dnfResults: IResult[] = array.filter((r) => r.penalty === "dnf");
         if (dnfResults.length > 1) {

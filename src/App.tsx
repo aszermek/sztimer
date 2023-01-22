@@ -22,10 +22,10 @@ class App extends React.Component {
                 <div className="grid grid-cols-6 bg-slate-200 h-screen">
                     <div className={card}></div>
                     <div className="col-span-4 overflow-hidden">
-                        <div className="flex flex-col gap-4 items-center pt-8">
+                        <div className="flex flex-col gap-8 items-center pt-8">
                             <Logo />
                             <Scramble resultsStore={this.ResultsStore} event={this.ResultsStore.selectedEvent} />
-                            <div className="h-[35vw] flex flex-col items-center justify-center">
+                            <div className="h-[35vw] flex flex-col gap-4 items-center justify-center">
                                 <Timer
                                     resultsStore={this.ResultsStore}
                                     inspection

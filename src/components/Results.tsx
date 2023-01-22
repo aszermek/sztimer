@@ -1,8 +1,10 @@
+import { TrashIcon } from "@heroicons/react/24/solid";
 import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../models/IResult";
 import { ResultsStore } from "../stores/ResultsStore";
+import { SmallButton } from "./SmallButton";
 import { TimeFormatter } from "./TimeFormatter";
 
 export interface IResultsProps {
@@ -47,13 +49,19 @@ class Results extends React.Component<IResultsProps> {
                 <thead>
                     <tr>
                         <th colSpan={4} className="p-3">
-                            <div>
-                                {"Solves: "}
-                                {validSolveCount}/{solveCount}
-                            </div>
-                            <div>
-                                {"Mean: "}
-                                <TimeFormatter time={mean} />
+                            <div className="flex flex-row gap-4">
+                                <div className="flex justify-center items-center">
+                                    {"Solves: "}
+                                    {validSolveCount}/{solveCount}
+                                    <br />
+                                    {"Mean: "}
+                                    <TimeFormatter time={mean} />
+                                </div>
+                                <div className="flex justify-center items-center">
+                                    <SmallButton color="Red" onClick={this.ResultsStore.deleteAllResults}>
+                                        <TrashIcon className="w-6 h-6" />
+                                    </SmallButton>
+                                </div>
                             </div>
                         </th>
                     </tr>
@@ -91,9 +99,7 @@ class Results extends React.Component<IResultsProps> {
                                     : null;
                             rows.push(
                                 <tr key={i}>
-                                    <td className="p-2 text-right">
-                                        {i + 1}
-                                    </td>
+                                    <td className="p-2 text-right">{i + 1}</td>
                                     <td className="p-2 text-center">
                                         <TimeFormatter
                                             time={result.time}
