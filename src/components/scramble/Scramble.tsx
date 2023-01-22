@@ -2,8 +2,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
-import { ResultsStore } from "../stores/ResultsStore";
-import { SmallButton } from "./SmallButton";
+import { ResultsStore } from "../../stores/ResultsStore";
+import { SmallButton } from "../common/SmallButton";
 
 export interface IScrambleProps {
     event: any;
@@ -32,7 +32,7 @@ class Scramble extends React.Component<IScrambleProps> {
                 {this.props.resultsStore.canGetPrevScramble && <SmallButton
                     onClick={() => this.props.resultsStore.getPrevScramble()}
                 >
-                    <ChevronLeftIcon className="w-6 h-6" />
+                    <ChevronLeftIcon />
                 </SmallButton>}
                 <div
                     className="cursor-pointer"
@@ -45,7 +45,7 @@ class Scramble extends React.Component<IScrambleProps> {
                 <SmallButton
                     onClick={() => this.props.resultsStore.getNextScramble()}
                 >
-                    <ChevronRightIcon className="w-6 h-6" />
+                    <ChevronRightIcon />
                 </SmallButton>
             </div>
         );

@@ -1,10 +1,10 @@
 import React from "react";
-import Logo from "./components/Logo";
+import Logo from "./components/common/Logo";
 // import "./App.css";
-import Results from "./components/Results";
-import Scramble from "./components/Scramble";
-import TimeFlagger from "./components/TimeFlagger";
-import Timer from "./components/Timer";
+import Results from "./components/results/Results";
+import Scramble from "./components/scramble/Scramble";
+import TimeFlagger from "./components/timer/TimeFlagger";
+import Timer from "./components/timer/Timer";
 import { ResultsStore } from "./stores/ResultsStore";
 
 class App extends React.Component {

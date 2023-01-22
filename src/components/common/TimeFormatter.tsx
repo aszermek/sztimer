@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IPenaltyTypes } from "../models/IResult";
+import { IPenaltyTypes } from "../../models/IResult";
 
 export interface ITimeFormatterProps {
     time: number | string | null;

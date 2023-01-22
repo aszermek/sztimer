@@ -2,10 +2,11 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
-import { IResult } from "../models/IResult";
-import { ResultsStore } from "../stores/ResultsStore";
-import { SmallButton } from "./SmallButton";
-import { TimeFormatter } from "./TimeFormatter";
+import { IResult } from "../../models/IResult";
+import { ResultsStore } from "../../stores/ResultsStore";
+import { Button } from "../common/Button";
+import { SmallButton } from "../common/SmallButton";
+import { TimeFormatter } from "../common/TimeFormatter";
 
 export interface IResultsProps {
     results?: IResult[];
@@ -58,9 +59,9 @@ class Results extends React.Component<IResultsProps> {
                                     <TimeFormatter time={mean} />
                                 </div>
                                 <div className="flex justify-center items-center">
-                                    <SmallButton color="Red" onClick={this.ResultsStore.deleteAllResults}>
-                                        <TrashIcon className="w-6 h-6" />
-                                    </SmallButton>
+                                    <Button color="Red" onClick={this.ResultsStore.deleteAllResults}>
+                                        Delete
+                                    </Button>
                                 </div>
                             </div>
                         </th>

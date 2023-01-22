@@ -1,8 +1,8 @@
 import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
-import { ResultsStore } from "../stores/ResultsStore";
-import { SmallButton } from "./SmallButton";
+import { ResultsStore } from "../../stores/ResultsStore";
+import { SmallButton } from "../common/SmallButton";
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
@@ -29,10 +29,10 @@ class TimeFlagger extends React.Component<ITimeFlaggerProps> {
 
         return (
             <div className="flex flex-row gap-3">
-                <SmallButton onClick={() => this.ResultsStore.addPenalty(latestResult, null)}><CheckIcon className="w-6 h-6" /></SmallButton>
+                <SmallButton onClick={() => this.ResultsStore.addPenalty(latestResult, null)}><CheckIcon /></SmallButton>
                 <SmallButton onClick={() => this.ResultsStore.addPenalty(latestResult, '+2')}>+2</SmallButton>
                 <SmallButton onClick={() => this.ResultsStore.addPenalty(latestResult, 'dnf')}>DNF</SmallButton>
-                <SmallButton onClick={() => this.props.resultsStore.removeResult(latestResult)}><XMarkIcon className="w-6 h-6" /></SmallButton>
+                <SmallButton onClick={() => this.props.resultsStore.removeResult(latestResult)}><XMarkIcon /></SmallButton>
             </div>
         );
     }
