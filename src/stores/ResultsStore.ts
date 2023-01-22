@@ -1,10 +1,13 @@
-import { action, flow, makeAutoObservable, runInAction, toJS } from "mobx";
+import { flow, makeAutoObservable } from "mobx";
 import { IPenaltyTypes, IResult } from "../models/IResult";
 import ScrambleService from "../services/ScrambleService";
 
 export class ResultsStore {
     _results: IResult[] = [];
     scramble: string = "";
+    prevScramble: string = "";
+    nextScramble: string = "";
+    canGetPrevScramble: boolean = false;
     selectedEvent: string = "333";
 
     constructor() {
@@ -19,6 +22,9 @@ export class ResultsStore {
 
     addResult = (result: IResult) => {
         this._results.push(result);
+
+        this.prevScramble = this.scramble;
+        this.canGetPrevScramble = true;
         this.generateScramble(this.selectedEvent);
     };
 
@@ -67,6 +73,26 @@ export class ResultsStore {
 
     *generateScramble(event: string) {
         this.scramble = yield ScrambleService.getScramble(event);
-        console.log("generate scramble:", this.scramble);
+    }
+
+    getPrevScramble() {
+        this.nextScramble = this.scramble;
+        this.scramble = this.prevScramble;
+        this.canGetPrevScramble = false;
+    }
+
+    getNextScramble() {
+        if (this.nextScramble === "") {
+            this.generateScramble(this.selectedEvent);
+        } else {
+            this.scramble = this.nextScramble;
+            this.nextScramble = "";
+        }
+        this.prevScramble = this.scramble;
+        this.canGetPrevScramble = true;
+    }
+
+    scrambleToClipboard() {
+        navigator.clipboard.writeText(this.scramble);
     }
 }

@@ -1,7 +1,6 @@
-import { flow, makeObservable, observable } from "mobx";
+import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
-import ScrambleService from "../services/ScrambleService";
 import { ResultsStore } from "../stores/ResultsStore";
 
 export interface IScrambleProps {
@@ -20,11 +19,40 @@ class Scramble extends React.Component<IScrambleProps> {
     }
 
     componentDidMount() {
-        this.props.resultsStore.generateScramble(this.props.resultsStore.selectedEvent);
+        this.props.resultsStore.generateScramble(
+            this.props.resultsStore.selectedEvent
+        );
     }
 
     render() {
-        return <div className="text-3xl">{this.props.resultsStore.scramble}</div>;
+        return (
+            <div className="text-3xl flex flex-row gap-8">
+                <div
+                    className={
+                        this.props.resultsStore.canGetPrevScramble
+                            ? "cursor-pointer"
+                            : "pointer-events-none text-slate-300"
+                    }
+                    onClick={() => this.props.resultsStore.getPrevScramble()}
+                >
+                    {"<"}
+                </div>
+                <div
+                    className="cursor-pointer"
+                    onClick={() =>
+                        this.props.resultsStore.scrambleToClipboard()
+                    }
+                >
+                    {this.props.resultsStore.scramble}
+                </div>
+                <div
+                    className="cursor-pointer"
+                    onClick={() => this.props.resultsStore.getNextScramble()}
+                >
+                    {">"}
+                </div>
+            </div>
+        );
     }
 }
 
