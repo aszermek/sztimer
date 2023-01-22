@@ -24,7 +24,7 @@ class App extends React.Component {
                     <div className="col-span-4 overflow-hidden">
                         <div className="flex flex-col gap-4 items-center pt-8">
                             <Logo />
-                            <Scramble event="333" />
+                            <Scramble event={this.ResultsStore.selectedEvent} />
                             <div className="h-[35vw] flex flex-col items-center justify-center">
                                 <Timer
                                     resultsStore={this.ResultsStore}

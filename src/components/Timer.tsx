@@ -161,27 +161,31 @@ class Timer extends React.Component<ITimerProps> {
             );
         }
 
-        if (results.length) {
-            return (
-                <div className="text-9xl font-vt323">
-                    {this.isRunningTimer ? (
-                        <TimeFormatter time={this.elapsedTime} />
-                    ) : (
+        if (!this.isRunningTimer) {
+            if (results.length === 0) {
+                return (
+                    <div className="text-9xl font-vt323">
+                        <TimeFormatter time={0} />
+                    </div>
+                );
+            } else {
+                return (
+                    <div className="text-9xl font-vt323">
                         <TimeFormatter
                             time={latestResult.time}
                             penalty={latestResult.penalty}
                             displayTimeOnDnf
                         />
-                    )}
+                    </div>
+                );
+            }
+        } else {
+            return (
+                <div className="text-9xl font-vt323">
+                    <TimeFormatter time={this.elapsedTime} />
                 </div>
             );
         }
-
-        return (
-            <div className={`text-9xl font-vt323`}>
-                <TimeFormatter time={this.elapsedTime} />
-            </div>
-        );
     }
 }
 

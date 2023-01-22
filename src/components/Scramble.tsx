@@ -2,35 +2,28 @@ import { flow, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 import ScrambleService from "../services/ScrambleService";
+import { ResultsStore } from "../stores/ResultsStore";
 
 export interface IScrambleProps {
     event: any;
 }
 
 class Scramble extends React.Component<IScrambleProps> {
-    scramble: string = "";
+    ResultsStore: ResultsStore;
+
     constructor(props: IScrambleProps) {
         super(props);
-        makeObservable(this, {
-            scramble: observable,
-            generateScramble: flow,
-        });
+        makeObservable(this, {});
+
+        this.ResultsStore = new ResultsStore();
     }
 
     componentDidMount() {
-        this.generateScramble();
-    }
-
-    public update(key: keyof this, value: any) {
-        this[key] = value;
-    }
-
-    *generateScramble() {
-        this.scramble = yield ScrambleService.getScramble(this.props.event);
+        this.ResultsStore.generateScramble(this.ResultsStore.selectedEvent);
     }
 
     render() {
-        return <div className="text-3xl">{this.scramble}</div>;
+        return <div className="text-3xl">{this.ResultsStore.scramble}</div>;
     }
 }
 

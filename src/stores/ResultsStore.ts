@@ -1,11 +1,17 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { action, flow, makeAutoObservable, runInAction, toJS } from "mobx";
 import { IPenaltyTypes, IResult } from "../models/IResult";
+import ScrambleService from "../services/ScrambleService";
 
 export class ResultsStore {
     _results: IResult[] = [];
+    scramble: string = "";
+    selectedEvent: string = "333";
 
     constructor() {
-        makeAutoObservable(this, {});
+        makeAutoObservable(this, {
+            addResult: action,
+            generateScramble: flow,
+        });
     }
 
     public update(key: keyof this, value: any) {
@@ -14,6 +20,7 @@ export class ResultsStore {
 
     addResult = (result: IResult) => {
         this._results.push(result);
+        this.generateScramble(this.selectedEvent);
     };
 
     addPenalty = (result: IResult, penalty: IPenaltyTypes) => {
@@ -58,4 +65,9 @@ export class ResultsStore {
             (array.length - 2);
         return avg;
     };
+
+    *generateScramble(event: string) {
+        console.log("generate scramble");
+        this.scramble = yield ScrambleService.getScramble(event);
+    }
 }
