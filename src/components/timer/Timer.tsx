@@ -3,7 +3,7 @@ import { observer } from "mobx-react";
 import * as React from "react";
 import { IPenaltyTypes, IResult } from "../../models/IResult";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { TimeFormatter } from "../common/TimeFormatter";
+import { TimeFormatter } from "../utils/TimeFormatter";
 
 export interface ITimerProps {
     inspection?: boolean;

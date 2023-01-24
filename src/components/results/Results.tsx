@@ -4,9 +4,9 @@ import { observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { Button } from "../common/Button";
-import { SmallButton } from "../common/SmallButton";
-import { TimeFormatter } from "../common/TimeFormatter";
+import { Button } from "../UI/Button";
+import { SmallButton } from "../UI/SmallButton";
+import { TimeFormatter } from "../utils/TimeFormatter";
 
 export interface IResultsProps {
     results?: IResult[];
@@ -59,7 +59,7 @@ class Results extends React.Component<IResultsProps> {
                                     <TimeFormatter time={mean} />
                                 </div>
                                 <div className="flex justify-center items-center">
-                                    <Button color="Red" onClick={this.ResultsStore.deleteAllResults}>
+                                    <Button color="red" onClick={this.ResultsStore.deleteAllResults}>
                                         Delete
                                     </Button>
                                 </div>

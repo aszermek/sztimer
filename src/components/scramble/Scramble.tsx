@@ -3,7 +3,7 @@ import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { SmallButton } from "../common/SmallButton";
+import { SmallButton } from "../UI/SmallButton";
 
 export interface IScrambleProps {
     event: any;
@@ -28,7 +28,7 @@ class Scramble extends React.Component<IScrambleProps> {
 
     render() {
         return (
-            <div className="text-3xl flex flex-row gap-8">
+            <div className="text-3xl text-center flex flex-row gap-8">
                 {this.props.resultsStore.canGetPrevScramble && <SmallButton
                     onClick={() => this.props.resultsStore.getPrevScramble()}
                 >

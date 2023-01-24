@@ -2,7 +2,7 @@ import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { SmallButton } from "../common/SmallButton";
+import { SmallButton } from "../UI/SmallButton";
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
