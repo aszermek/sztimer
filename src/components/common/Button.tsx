@@ -4,8 +4,8 @@ import { ButtonColors } from "./SmallButton";
 export interface IButtonProps {
     color?: ButtonColors;
     onClick?: () => void;
-    icon?: any;
-    children: any;
+    icon?: React.ReactNode;
+    children: React.ReactNode;
 }
 
 export class Button extends React.Component<IButtonProps> {

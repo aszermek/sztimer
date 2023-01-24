@@ -5,7 +5,7 @@ export type ButtonColors = "White" | "Red";
 export interface ISmallButtonProps {
     color?: ButtonColors;
     onClick?: () => void;
-    children: any;
+    children: React.ReactNode;
 }
 
 export class SmallButton extends React.Component<ISmallButtonProps> {
