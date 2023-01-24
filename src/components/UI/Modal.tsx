@@ -6,7 +6,7 @@ export interface IModalProps {
     header?: string;
     footer?: React.ReactNode;
     children: React.ReactNode;
-    isOpen?: boolean;
+    isOpen: boolean;
     onDismiss?: () => void;
     size?: any;
     scrollable?: boolean;

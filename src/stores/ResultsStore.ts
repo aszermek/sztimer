@@ -9,6 +9,7 @@ export class ResultsStore {
     nextScramble: string = "";
     canGetPrevScramble: boolean = false;
     selectedEvent: string = "333";
+    isOpenDeleteModal: boolean = false;
 
     constructor() {
         makeAutoObservable(this, {
@@ -48,6 +49,7 @@ export class ResultsStore {
 
     deleteAllResults = () => {
         this._results = [];
+        this.isOpenDeleteModal = false;
     }
 
     calculateAvg = (array: IResult[]): number | string => {

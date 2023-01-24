@@ -5,11 +5,12 @@ import * as React from "react";
 import { IResult } from "../../models/IResult";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
+import Modal from "../UI/Modal";
 import { SmallButton } from "../UI/SmallButton";
 import { TimeFormatter } from "../utils/TimeFormatter";
 
 export interface IResultsProps {
-    results?: IResult[];
+    ResultsStore: ResultsStore;
 }
 
 class Results extends React.Component<IResultsProps> {
@@ -27,7 +28,8 @@ class Results extends React.Component<IResultsProps> {
     }
 
     render() {
-        const { results } = this.props;
+        const ResultsStore = this.props.ResultsStore;
+        const results = ResultsStore._results;
 
         if (!results) {
             return null;
@@ -46,80 +48,106 @@ class Results extends React.Component<IResultsProps> {
                 }, 0) / validSolveCount;
 
         return (
-            <table className="table-auto m-auto">
-                <thead>
-                    <tr>
-                        <th colSpan={4} className="p-3">
-                            <div className="flex flex-row gap-4">
-                                <div className="flex justify-center items-center">
-                                    {"Solves: "}
-                                    {validSolveCount}/{solveCount}
-                                    <br />
-                                    {"Mean: "}
-                                    <TimeFormatter time={mean} />
+            <>
+                <Modal
+                    header="Confirm delete"
+                    footer={
+                        <Button
+                            color="red"
+                            onClick={ResultsStore.deleteAllResults}
+                        >
+                            Delete
+                        </Button>
+                    }
+                    isOpen={ResultsStore.isOpenDeleteModal}
+                    onDismiss={() => ResultsStore.update("isOpenDeleteModal", false)}
+                >
+                    Are you sure you want to delete all results from current
+                    session?
+                </Modal>
+                <table className="table-auto m-auto">
+                    <thead>
+                        <tr>
+                            <th colSpan={4} className="p-3">
+                                <div className="flex flex-row gap-4">
+                                    <div className="flex justify-center items-center">
+                                        {"Solves: "}
+                                        {validSolveCount}/{solveCount}
+                                        <br />
+                                        {"Mean: "}
+                                        <TimeFormatter time={mean} />
+                                    </div>
+                                    <div className="flex justify-center items-center">
+                                        <Button
+                                            color="red"
+                                            onClick={() => ResultsStore.update(
+                                                "isOpenDeleteModal",
+                                                true
+                                            )}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div className="flex justify-center items-center">
-                                    <Button color="red" onClick={this.ResultsStore.deleteAllResults}>
-                                        Delete
-                                    </Button>
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>#</th>
-                        <th>time</th>
-                        <th>ao5</th>
-                        <th>ao12</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {(() => {
-                        const rows = [];
-                        for (let i = results.length - 1; i >= 0; i--) {
-                            const result = results[i];
-                            let previousFive: IResult[] = results.slice(
-                                Math.max(0, i - 4),
-                                i + 1
-                            );
-                            let previousTwelve: IResult[] = results.slice(
-                                Math.max(0, i - 11),
-                                i + 1
-                            );
-                            let avgFive: number | string | null =
-                                previousFive.length >= 5
-                                    ? this.ResultsStore.calculateAvg(
-                                          previousFive
-                                      )
-                                    : null;
-                            let avgTwelve: number | string | null =
-                                previousTwelve.length >= 12
-                                    ? this.ResultsStore.calculateAvg(
-                                          previousTwelve
-                                      )
-                                    : null;
-                            rows.push(
-                                <tr key={i}>
-                                    <td className="p-2 text-right">{i + 1}</td>
-                                    <td className="p-2 text-center">
-                                        <TimeFormatter
-                                            time={result.time}
-                                            penalty={result.penalty}
-                                        />
-                                    </td>
-                                    <td className="p-2 text-center">
-                                        <TimeFormatter time={avgFive} />
-                                    </td>
-                                    <td className="p-2 text-center">
-                                        <TimeFormatter time={avgTwelve} />
-                                    </td>
-                                </tr>
-                            );
-                        }
-                        return rows;
-                    })()}
-                </tbody>
-            </table>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>time</th>
+                            <th>ao5</th>
+                            <th>ao12</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {(() => {
+                            const rows = [];
+                            for (let i = results.length - 1; i >= 0; i--) {
+                                const result = results[i];
+                                let previousFive: IResult[] = results.slice(
+                                    Math.max(0, i - 4),
+                                    i + 1
+                                );
+                                let previousTwelve: IResult[] = results.slice(
+                                    Math.max(0, i - 11),
+                                    i + 1
+                                );
+                                let avgFive: number | string | null =
+                                    previousFive.length >= 5
+                                        ? ResultsStore.calculateAvg(
+                                              previousFive
+                                          )
+                                        : null;
+                                let avgTwelve: number | string | null =
+                                    previousTwelve.length >= 12
+                                        ? ResultsStore.calculateAvg(
+                                              previousTwelve
+                                          )
+                                        : null;
+                                rows.push(
+                                    <tr key={i}>
+                                        <td className="p-2 text-right">
+                                            {i + 1}
+                                        </td>
+                                        <td className="p-2 text-center">
+                                            <TimeFormatter
+                                                time={result.time}
+                                                penalty={result.penalty}
+                                            />
+                                        </td>
+                                        <td className="p-2 text-center">
+                                            <TimeFormatter time={avgFive} />
+                                        </td>
+                                        <td className="p-2 text-center">
+                                            <TimeFormatter time={avgTwelve} />
+                                        </td>
+                                    </tr>
+                                );
+                            }
+                            return rows;
+                        })()}
+                    </tbody>
+                </table>
+            </>
         );
     }
 }

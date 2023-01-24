@@ -40,7 +40,7 @@ class App extends React.Component {
                         </div>
                     </div>
                     <Card>
-                        <Results results={this.ResultsStore._results} />
+                        <Results ResultsStore={this.ResultsStore} />
                     </Card>
                 </div>
             </>
