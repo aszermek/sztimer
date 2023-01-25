@@ -1,9 +1,6 @@
-import { action, makeAutoObservable, makeObservable, observable, runInAction } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
-import { IPenaltyTypes, IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
-import { ResultsStore } from "../../stores/ResultsStore";
 import { TimerStore } from "../../stores/TimerStore";
 import { TimeFormatter } from "../utils/TimeFormatter";
 

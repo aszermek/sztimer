@@ -1,6 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { IPenaltyTypes, IResult } from "../models/IResult";
-import ScrambleService from "../services/ScrambleService";
 import MainStore from "./MainStore";
 
 export class TimerStore {

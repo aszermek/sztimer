@@ -1,14 +1,12 @@
-import { TrashIcon } from "@heroicons/react/24/solid";
-import { makeAutoObservable, makeObservable } from "mobx";
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
 import Modal from "../UI/Modal";
-import { SmallButton } from "../UI/SmallButton";
 import { TimeFormatter } from "../utils/TimeFormatter";
+import DetailedResultsModal from "./DetailedResultsModal";
 
 export interface IResultsProps {
     MainStore?: MainStore;
@@ -60,33 +58,7 @@ class Results extends React.Component<IResultsProps> {
                     Are you sure you want to delete all results from current
                     session?
                 </Modal>
-                <Modal
-                    header="Result details"
-                    footer={
-                        <Button
-                            color="green"
-                            onClick={() =>
-                                ResultsStore.update("isOpenResultModal", false)
-                            }
-                        >
-                            Close
-                        </Button>
-                    }
-                    onDismiss={() =>
-                        ResultsStore.update("isOpenResultModal", false)
-                    }
-                    isOpen={ResultsStore.isOpenResultModal}
-                >
-                    {ResultsStore.openResult && (
-                        <>
-                            <TimeFormatter
-                                time={ResultsStore.openResult.time}
-                            />{" "}
-                            ({ResultsStore.openResult.date.toLocaleString()}){" - "}
-                            {ResultsStore.openResult.scramble}
-                        </>
-                    )}
-                </Modal>
+                <DetailedResultsModal ResultsStore={ResultsStore} />
                 <table className="table-auto m-auto">
                     <thead>
                         <tr>
@@ -127,24 +99,22 @@ class Results extends React.Component<IResultsProps> {
                             const rows = [];
                             for (let i = results.length - 1; i >= 0; i--) {
                                 const result = results[i];
-                                let previousFive: IResult[] = results.slice(
+                                let currentFive: IResult[] = results.slice(
                                     Math.max(0, i - 4),
                                     i + 1
                                 );
-                                let previousTwelve: IResult[] = results.slice(
+                                let currentTwelve: IResult[] = results.slice(
                                     Math.max(0, i - 11),
                                     i + 1
                                 );
                                 let avgFive: number | string | null =
-                                    previousFive.length >= 5
-                                        ? ResultsStore.calculateAvg(
-                                              previousFive
-                                          )
+                                    currentFive.length >= 5
+                                        ? ResultsStore.calculateAvg(currentFive)
                                         : null;
                                 let avgTwelve: number | string | null =
-                                    previousTwelve.length >= 12
+                                    currentTwelve.length >= 12
                                         ? ResultsStore.calculateAvg(
-                                              previousTwelve
+                                              currentTwelve
                                           )
                                         : null;
                                 rows.push(
@@ -152,25 +122,37 @@ class Results extends React.Component<IResultsProps> {
                                         <td className="p-2 text-right">
                                             {i + 1}
                                         </td>
-                                        <td className="p-2 text-center">
-                                            <div
-                                                className="cursor-pointer"
-                                                onClick={() =>
-                                                    ResultsStore.showSingle(
-                                                        result
-                                                    )
-                                                }
-                                            >
-                                                <TimeFormatter
-                                                    time={result.time}
-                                                    penalty={result.penalty}
-                                                />
-                                            </div>
+                                        <td
+                                            className="p-2 text-center cursor-pointer"
+                                            onClick={() =>
+                                                ResultsStore.openDetails([
+                                                    result
+                                                ])
+                                            }
+                                        >
+                                            <TimeFormatter
+                                                time={result.time}
+                                                penalty={result.penalty}
+                                            />
                                         </td>
-                                        <td className="p-2 text-center">
+                                        <td
+                                            className="p-2 text-center cursor-pointer"
+                                            onClick={() =>
+                                                ResultsStore.openDetails(
+                                                    currentFive
+                                                )
+                                            }
+                                        >
                                             <TimeFormatter time={avgFive} />
                                         </td>
-                                        <td className="p-2 text-center">
+                                        <td
+                                            className="p-2 text-center cursor-pointer"
+                                            onClick={() =>
+                                                ResultsStore.openDetails(
+                                                    currentTwelve
+                                                )
+                                            }
+                                        >
                                             <TimeFormatter time={avgTwelve} />
                                         </td>
                                     </tr>
@@ -185,4 +167,4 @@ class Results extends React.Component<IResultsProps> {
     }
 }
 
-export default (observer(Results));
+export default observer(Results);

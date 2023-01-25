@@ -1,9 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { makeAutoObservable, makeObservable } from "mobx";
-import { inject, observer } from "mobx-react";
+import { observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
-import { ResultsStore } from "../../stores/ResultsStore";
 import { ScrambleStore } from "../../stores/ScrambleStore";
 import { SmallButton } from "../UI/SmallButton";
 

@@ -1,6 +1,5 @@
-import { flow, makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { IPenaltyTypes, IResult } from "../models/IResult";
-import ScrambleService from "../services/ScrambleService";
 import MainStore from "./MainStore";
 
 export class ResultsStore {
@@ -8,7 +7,7 @@ export class ResultsStore {
     _results: IResult[] = [];
     isOpenDeleteModal: boolean = false;
     isOpenResultModal: boolean = false;
-    openResult: IResult | null = null;
+    openResults: IResult[] = [];
 
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;
@@ -22,6 +21,8 @@ export class ResultsStore {
 
     addResult = (result: IResult) => {
         this._results.push(result);
+
+        this.MainStore.ScrambleStore.getNewScramble();
     };
 
     addPenalty = (result: IResult, penalty: IPenaltyTypes) => {
@@ -72,8 +73,8 @@ export class ResultsStore {
         return avg;
     };
 
-    showSingle = (result: IResult) => {
+    openDetails = (results: IResult[]) => {
         this.isOpenResultModal = true;
-        this.openResult = result;
+        this.openResults = results;
     }
 }

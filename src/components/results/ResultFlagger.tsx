@@ -1,11 +1,9 @@
-import { makeAutoObservable, makeObservable } from "mobx";
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { observer } from "mobx-react";
 import * as React from "react";
+import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { SmallButton } from "../UI/SmallButton";
-import { CheckIcon } from '@heroicons/react/24/solid'
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import MainStore from "../../stores/MainStore";
 
 export interface IResultFlaggerProps {
     MainStore?: MainStore;
