@@ -1,8 +1,9 @@
 import { TrashIcon } from "@heroicons/react/24/solid";
-import { makeObservable } from "mobx";
-import { observer } from "mobx-react";
+import { makeAutoObservable, makeObservable } from "mobx";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
+import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
 import Modal from "../UI/Modal";
@@ -10,19 +11,11 @@ import { SmallButton } from "../UI/SmallButton";
 import { TimeFormatter } from "../utils/TimeFormatter";
 
 export interface IResultsProps {
-    ResultsStore: ResultsStore;
+    MainStore?: MainStore;
+    ResultsStore?: ResultsStore;
 }
 
 class Results extends React.Component<IResultsProps> {
-    ResultsStore: ResultsStore;
-
-    constructor(props: IResultsProps) {
-        super(props);
-        makeObservable(this, {});
-
-        this.ResultsStore = new ResultsStore();
-    }
-
     public update(key: keyof this, value: any) {
         this[key] = value;
     }
@@ -60,10 +53,39 @@ class Results extends React.Component<IResultsProps> {
                         </Button>
                     }
                     isOpen={ResultsStore.isOpenDeleteModal}
-                    onDismiss={() => ResultsStore.update("isOpenDeleteModal", false)}
+                    onDismiss={() =>
+                        ResultsStore.update("isOpenDeleteModal", false)
+                    }
                 >
                     Are you sure you want to delete all results from current
                     session?
+                </Modal>
+                <Modal
+                    header="Result details"
+                    footer={
+                        <Button
+                            color="green"
+                            onClick={() =>
+                                ResultsStore.update("isOpenResultModal", false)
+                            }
+                        >
+                            Close
+                        </Button>
+                    }
+                    onDismiss={() =>
+                        ResultsStore.update("isOpenResultModal", false)
+                    }
+                    isOpen={ResultsStore.isOpenResultModal}
+                >
+                    {ResultsStore.openResult && (
+                        <>
+                            <TimeFormatter
+                                time={ResultsStore.openResult.time}
+                            />{" "}
+                            ({ResultsStore.openResult.date.toLocaleString()}){" - "}
+                            {ResultsStore.openResult.scramble}
+                        </>
+                    )}
                 </Modal>
                 <table className="table-auto m-auto">
                     <thead>
@@ -80,10 +102,12 @@ class Results extends React.Component<IResultsProps> {
                                     <div className="flex justify-center items-center">
                                         <Button
                                             color="red"
-                                            onClick={() => ResultsStore.update(
-                                                "isOpenDeleteModal",
-                                                true
-                                            )}
+                                            onClick={() =>
+                                                ResultsStore.update(
+                                                    "isOpenDeleteModal",
+                                                    true
+                                                )
+                                            }
                                         >
                                             Delete
                                         </Button>
@@ -129,10 +153,19 @@ class Results extends React.Component<IResultsProps> {
                                             {i + 1}
                                         </td>
                                         <td className="p-2 text-center">
-                                            <TimeFormatter
-                                                time={result.time}
-                                                penalty={result.penalty}
-                                            />
+                                            <div
+                                                className="cursor-pointer"
+                                                onClick={() =>
+                                                    ResultsStore.showSingle(
+                                                        result
+                                                    )
+                                                }
+                                            >
+                                                <TimeFormatter
+                                                    time={result.time}
+                                                    penalty={result.penalty}
+                                                />
+                                            </div>
                                         </td>
                                         <td className="p-2 text-center">
                                             <TimeFormatter time={avgFive} />
@@ -152,4 +185,4 @@ class Results extends React.Component<IResultsProps> {
     }
 }
 
-export default observer(Results);
+export default (observer(Results));

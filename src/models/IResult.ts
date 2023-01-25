@@ -6,5 +6,5 @@ export interface IResult {
     penalty?: IPenaltyTypes;
     scramble?: string;
     comment?: string;
-    date?: Date;
+    date: Date;
 }

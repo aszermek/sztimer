@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export type ButtonColors = "white" | "red" | "green";
+export type ButtonColors = "white" | "red" | "green" | "grey";
 
 export interface ISmallButtonProps {
     color?: ButtonColors;
@@ -10,7 +10,7 @@ export interface ISmallButtonProps {
 
 export class SmallButton extends React.Component<ISmallButtonProps> {
     public static defaultProps: Partial<ISmallButtonProps> = {
-        color: 'white'
+        color: 'grey'
     };
     
     render() {
@@ -23,6 +23,7 @@ export class SmallButton extends React.Component<ISmallButtonProps> {
                     ${color === "white" && `bg-white text-black`}
                     ${color === "red" && `bg-red-600 text-white`}
                     ${color === "green" && `bg-green-600 text-white`}
+                    ${color === "grey" && `bg-slate-100/20 text-black shadow-emboss active:shadow-embossHover`}
                 `}
                 onClick={onClick}
             >

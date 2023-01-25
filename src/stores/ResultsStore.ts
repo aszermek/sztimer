@@ -1,20 +1,19 @@
 import { flow, makeAutoObservable } from "mobx";
 import { IPenaltyTypes, IResult } from "../models/IResult";
 import ScrambleService from "../services/ScrambleService";
+import MainStore from "./MainStore";
 
 export class ResultsStore {
+    MainStore: MainStore;
     _results: IResult[] = [];
-    scramble: string = "";
-    prevScramble: string = "";
-    nextScramble: string = "";
-    canGetPrevScramble: boolean = false;
-    selectedEvent: string = "333";
     isOpenDeleteModal: boolean = false;
+    isOpenResultModal: boolean = false;
+    openResult: IResult | null = null;
 
-    constructor() {
-        makeAutoObservable(this, {
-            generateScramble: flow,
-        });
+    constructor(mainStore: MainStore) {
+        this.MainStore = mainStore;
+
+        makeAutoObservable(this, {});
     }
 
     public update(key: keyof this, value: any) {
@@ -23,10 +22,6 @@ export class ResultsStore {
 
     addResult = (result: IResult) => {
         this._results.push(result);
-
-        this.prevScramble = this.scramble;
-        this.canGetPrevScramble = true;
-        this.generateScramble(this.selectedEvent);
     };
 
     addPenalty = (result: IResult, penalty: IPenaltyTypes) => {
@@ -77,28 +72,8 @@ export class ResultsStore {
         return avg;
     };
 
-    *generateScramble(event: string) {
-        this.scramble = yield ScrambleService.getScramble(event);
-    }
-
-    getPrevScramble() {
-        this.nextScramble = this.scramble;
-        this.scramble = this.prevScramble;
-        this.canGetPrevScramble = false;
-    }
-
-    getNextScramble() {
-        if (this.nextScramble === "") {
-            this.generateScramble(this.selectedEvent);
-        } else {
-            this.scramble = this.nextScramble;
-            this.nextScramble = "";
-        }
-        this.prevScramble = this.scramble;
-        this.canGetPrevScramble = true;
-    }
-
-    scrambleToClipboard() {
-        navigator.clipboard.writeText(this.scramble);
+    showSingle = (result: IResult) => {
+        this.isOpenResultModal = true;
+        this.openResult = result;
     }
 }
