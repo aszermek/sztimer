@@ -11,13 +11,15 @@ export interface IModalProps {
     children: React.ReactNode;
     isOpen: boolean;
     onDismiss?: () => void;
-    size?: any;
+    size?: number;
     scrollable?: boolean;
 }
 
 class Modal extends React.Component<IModalProps> {
     MainStore: MainStore;
-    public static defaultProps: Partial<IModalProps> = {};
+    public static defaultProps: Partial<IModalProps> = {
+        // size: 6
+    };
 
     constructor(props: IModalProps) {
         super(props);
@@ -68,13 +70,15 @@ class Modal extends React.Component<IModalProps> {
             return null;
         }
 
+        console.log(size)
+
         return (
             <>
                 <div className="fixed inset-0 h-screen z-10 bg-black/75" />
                 <div
-                    className="
-					fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px]
-					"
+                    className={`
+					fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-${size}/12
+					`}
                 >
                     <Card>
                         <div className="flex row justify-between">

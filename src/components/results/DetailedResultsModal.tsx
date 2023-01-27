@@ -31,6 +31,7 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
                         Close
                     </Button>
                 }
+                size={8}
                 onDismiss={() =>
                     ResultsStore.update("isOpenResultModal", false)
                 }
