@@ -14,10 +14,6 @@ export interface IResultsProps {
 }
 
 class Results extends React.Component<IResultsProps> {
-    public update(key: keyof this, value: any) {
-        this[key] = value;
-    }
-
     render() {
         const ResultsStore = this.props.ResultsStore;
         const results = ResultsStore._results;

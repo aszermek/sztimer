@@ -15,10 +15,10 @@ export class TimerStore {
     timerIntervalId: number | undefined;
     inspectionIntervalId: number | undefined;
     cachedInspectionPenalty: IPenaltyTypes = null;
-    
+
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;
-        
+
         makeAutoObservable(this, {});
     }
 
@@ -27,31 +27,39 @@ export class TimerStore {
     }
 
     handleKeyUp = (event: KeyboardEvent) => {
-        this.update("isSpacebarPressed", false);
-        if (event.key === " ") {
-            if (!this.justStopped && !this.isRunningTimer && this.canRestart) {
-                if (this.withInspection && !this.isRunningInspection) {
-                    this.startCountdown();
+        if (!this.MainStore.isOpenAnyModal) {
+            this.update("isSpacebarPressed", false);
+            if (event.key === " ") {
+                if (
+                    !this.justStopped &&
+                    !this.isRunningTimer &&
+                    this.canRestart
+                ) {
+                    if (this.withInspection && !this.isRunningInspection) {
+                        this.startCountdown();
+                    } else {
+                        this.startTimer();
+                    }
                 } else {
-                    this.startTimer();
+                    this.update("justStopped", false);
                 }
-            } else {
-                this.update("justStopped", false);
             }
         }
     };
 
     handleKeyDown = (event: KeyboardEvent) => {
-        this.update("isSpacebarPressed", true);
-        if (this.isRunningTimer) {
-            this.stopTimer();
-            if (event.key === " ") {
-                this.update("justStopped", true);
-            }
-            if (event.key === "Escape") {
-                const results = this.MainStore.ResultsStore._results;
-                const latestResult = results[results.length - 1];
-                this.MainStore.ResultsStore.addPenalty(latestResult, "dnf");
+        if (!this.MainStore.isOpenAnyModal) {
+            this.update("isSpacebarPressed", true);
+            if (this.isRunningTimer) {
+                this.stopTimer();
+                if (event.key === " ") {
+                    this.update("justStopped", true);
+                }
+                if (event.key === "Escape") {
+                    const results = this.MainStore.ResultsStore._results;
+                    const latestResult = results[results.length - 1];
+                    this.MainStore.ResultsStore.addPenalty(latestResult, "dnf");
+                }
             }
         }
     };
@@ -101,7 +109,7 @@ export class TimerStore {
         this.MainStore.ResultsStore.addResult({
             time: this.elapsedTime,
             scramble: this.MainStore.ScrambleStore.scramble,
-            date: new Date()
+            date: new Date(),
         } as IResult);
 
         const results = this.MainStore.ResultsStore._results;

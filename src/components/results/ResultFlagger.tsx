@@ -11,8 +11,6 @@ export interface IResultFlaggerProps {
 }
 
 class ResultFlagger extends React.Component<IResultFlaggerProps> {
-	ResultsStore: ResultsStore;
-
     render() {
         const ResultsStore = this.props.ResultsStore;
         const results = ResultsStore._results;

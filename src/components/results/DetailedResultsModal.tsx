@@ -12,8 +12,6 @@ export interface IDetailedResultsModalProps {
 }
 
 class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
-    ResultsStore: ResultsStore;
-
     render() {
         const ResultsStore = this.props.ResultsStore;
         const results = ResultsStore.openResults;

@@ -13,16 +13,36 @@ export interface ITimerProps {
 class Timer extends React.Component<ITimerProps> {
     componentDidMount() {
         document.addEventListener("keyup", this.props.TimerStore.handleKeyUp);
-        document.addEventListener("keydown", this.props.TimerStore.handleKeyDown);
+        document.addEventListener(
+            "keydown",
+            this.props.TimerStore.handleKeyDown
+        );
 
         if (this.props.inspection) {
             this.props.TimerStore.withInspection = true;
         }
+
+        // if (this.props.MainStore.ResultsStore.isOpenResultModal) {
+        //     document.removeEventListener(
+        //         "keyup",
+        //         this.props.TimerStore.handleKeyUp
+        //     );
+        //     document.removeEventListener(
+        //         "keydown",
+        //         this.props.TimerStore.handleKeyDown
+        //     );
+        // }
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keyup", this.props.TimerStore.handleKeyUp);
-        document.removeEventListener("keydown", this.props.TimerStore.handleKeyDown);
+        document.removeEventListener(
+            "keyup",
+            this.props.TimerStore.handleKeyUp
+        );
+        document.removeEventListener(
+            "keydown",
+            this.props.TimerStore.handleKeyDown
+        );
     }
 
     render() {
@@ -34,7 +54,8 @@ class Timer extends React.Component<ITimerProps> {
         if (TimerStore.isRunningInspection) {
             return (
                 <div className="text-9xl font-vt323">
-                    {TimerStore.inspectionTime >= 1 && TimerStore.inspectionTime}
+                    {TimerStore.inspectionTime >= 1 &&
+                        TimerStore.inspectionTime}
                     {TimerStore.inspectionTime < 1 &&
                         TimerStore.inspectionTime >= -1 &&
                         "+2"}

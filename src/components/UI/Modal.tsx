@@ -1,5 +1,8 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { makeObservable } from "mobx";
+import { observer } from "mobx-react";
 import * as React from "react";
+import MainStore from "../../stores/MainStore";
 import { Card } from "./Card";
 
 export interface IModalProps {
@@ -13,21 +16,36 @@ export interface IModalProps {
 }
 
 class Modal extends React.Component<IModalProps> {
+    MainStore: MainStore;
     public static defaultProps: Partial<IModalProps> = {};
 
     constructor(props: IModalProps) {
         super(props);
+
+        this.MainStore = new MainStore();
     }
 
     componentDidMount(): void {
         if (this.props.isOpen) {
-            document.removeEventListener("keydown", this.handleKeyDown);
+            document.addEventListener("keydown", this.handleKeyDown);
+            this.MainStore.update("isOpenAnyModal", true);
+            console.log(this.MainStore.isOpenAnyModal, "cdm isopen")
+        } else {
+            this.MainStore.update("isOpenAnyModal", false);
+            console.log(this.MainStore.isOpenAnyModal, "cdm not open")
         }
     }
 
     componentWillUnmount(): void {
         document.removeEventListener("keydown", this.handleKeyDown);
+        this.MainStore.update("isOpenAnyModal", false);
+        console.log(this.MainStore.isOpenAnyModal, "cwun")
     }
+
+    // componentDidUpdate(prevProps: Readonly<IModalProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    //     this.MainStore.update("isOpenAnyModal", prevProps.isOpen);
+    //     console.log(this.MainStore.isOpenAnyModal, "cdu")
+    // }
 
     handleKeyDown = (event: KeyboardEvent) => {
         if (this.props.onDismiss && event.key === "Escape") {
@@ -79,4 +97,4 @@ class Modal extends React.Component<IModalProps> {
     }
 }
 
-export default Modal;
+export default observer(Modal);
