@@ -31,17 +31,17 @@ class Modal extends React.Component<IModalProps> {
         if (this.props.isOpen) {
             document.addEventListener("keydown", this.handleKeyDown);
             this.MainStore.update("isOpenAnyModal", true);
-            console.log(this.MainStore.isOpenAnyModal, "cdm isopen")
+            console.log(this.MainStore.isOpenAnyModal, "cdm isopen");
         } else {
             this.MainStore.update("isOpenAnyModal", false);
-            console.log(this.MainStore.isOpenAnyModal, "cdm not open")
+            console.log(this.MainStore.isOpenAnyModal, "cdm not open");
         }
     }
 
     componentWillUnmount(): void {
         document.removeEventListener("keydown", this.handleKeyDown);
         this.MainStore.update("isOpenAnyModal", false);
-        console.log(this.MainStore.isOpenAnyModal, "cwun")
+        console.log(this.MainStore.isOpenAnyModal, "cwun");
     }
 
     // componentDidUpdate(prevProps: Readonly<IModalProps>, prevState: Readonly<{}>, snapshot?: any): void {
@@ -70,14 +70,15 @@ class Modal extends React.Component<IModalProps> {
             return null;
         }
 
-        console.log(size)
+        let sizeClassNames = ["w-1/12", "w-2/12", "w-3/12", "w-4/12", "w-5/12", "w-6/12", "w-7/12", "w-8/12", "w-9/12", "w-10/12", "w-11/12", "w-full"];
+        let sizeClassName = sizeClassNames[size - 1];
 
         return (
             <>
                 <div className="fixed inset-0 h-screen z-10 bg-black/75" />
                 <div
                     className={`
-					fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-${size}/12
+					fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${sizeClassName}
 					`}
                 >
                     <Card>
@@ -93,7 +94,9 @@ class Modal extends React.Component<IModalProps> {
                             </div>
                         </div>
                         <div className="py-4">{children}</div>
-                        <div className="flex row gap-2 justify-end">{footer}</div>
+                        <div className="flex row gap-2 justify-end">
+                            {footer}
+                        </div>
                     </Card>
                 </div>
             </>
