@@ -17,23 +17,25 @@ class Scramble extends React.Component<IScrambleProps> {
     }
 
     render() {
+        const ScrambleStore = this.props.ScrambleStore;
+
         return (
             <div className="text-3xl text-center flex flex-row gap-8">
-                {this.props.ScrambleStore.canGetPrevScramble && <SmallButton
-                    onClick={() => this.props.ScrambleStore.goToPrevScramble()}
+                {ScrambleStore.canGetPrevScramble && <SmallButton
+                    onClick={() => ScrambleStore.goToPrevScramble()}
                 >
                     <ChevronLeftIcon />
                 </SmallButton>}
                 <div
                     className="cursor-pointer"
                     onClick={() =>
-                        this.props.ScrambleStore.scrambleToClipboard()
+                        ScrambleStore.scrambleToClipboard()
                     }
                 >
-                    {this.props.ScrambleStore.scramble}
+                    {ScrambleStore.isLoading ? "..." : ScrambleStore.scramble}
                 </div>
                 <SmallButton
-                    onClick={() => this.props.ScrambleStore.goToNextScramble()}
+                    onClick={() => ScrambleStore.goToNextScramble()}
                 >
                     <ChevronRightIcon />
                 </SmallButton>

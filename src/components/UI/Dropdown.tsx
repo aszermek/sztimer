@@ -1,9 +1,10 @@
-import { action, makeObservable, observable } from "mobx";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { action, computed, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 
 export interface IDropdownOption {
-    key: string;
+    key: string | number;
     value: string;
     icon?: React.ElementType;
 }
@@ -13,7 +14,7 @@ export interface IDropdownProps {
     options?: IDropdownOption[];
     selectedKey?: string;
     onClick?: () => void;
-    onChanged?: () => void;
+    onChanged?: (key: string | number, option: IDropdownOption) => void;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
@@ -32,19 +33,19 @@ class Dropdown extends React.Component<IDropdownProps> {
             update: action,
             onClick: action,
             onChanged: action,
-            setSelectedKey: action,
+            selectedOption: computed
         });
     }
 
     public update(key: keyof this, value: any) {
         this[key] = value;
 
-        if (key === 'isOpen') {
+        if (key === "isOpen") {
             setTimeout(() => {
                 if (value) {
-                    document.addEventListener('click', this.onClickOutside)
+                    document.addEventListener("click", this.onClickOutside);
                 } else {
-                    document.removeEventListener('click', this.onClickOutside)
+                    document.removeEventListener("click", this.onClickOutside);
                 }
             }, 10);
         }
@@ -58,40 +59,40 @@ class Dropdown extends React.Component<IDropdownProps> {
     };
 
     onClickOutside = (e: MouseEvent) => {
-        const path = ((e as any).path as HTMLDivElement[]) || e.composedPath ? e.composedPath() : [];
+        const path =
+            ((e as any).path as HTMLDivElement[]) || e.composedPath
+                ? e.composedPath()
+                : [];
         const isInDropdown = path.some((p) => p === this.dropdownRef);
 
         if (!isInDropdown) {
-            this.update('isOpen', false)
+            this.update("isOpen", false);
         }
-    }
+    };
 
     onChanged = (option: IDropdownOption) => {
-        this.setSelectedKey(option.key);
+        this.update("selectedKey", option.key);
         if (this.props.onChanged) {
-            this.props.onChanged();
+            this.props.onChanged(option.key, option);
         }
+        this.update("isOpen", false);
     };
 
-    setSelectedKey = (key: string) => {
-        this.selectedKey = key;
-    };
+    get selectedOption(): IDropdownOption {
+        return this.props.options.find((option) => option.key === this.selectedKey);
+    }
 
     render() {
-        const { label, options, selectedKey, onClick, onChanged } =
-            this.props;
-
-        const selectedOption = options?.find(
-            (option) => option.key === selectedKey
-        );
+        const { label, options, selectedKey, onClick, onChanged } = this.props;
 
         return (
             <div className="relative w-48">
                 <button
-                    className="bg-slate-200 p-2 rounded-lg w-full"
+                    className="bg-slate-200 p-2 rounded-lg w-full flex justify-between"
                     onClick={this.onClick}
                 >
-                    {selectedOption ? selectedOption.value : label}
+                    {selectedKey ? this.selectedOption.value : label}
+                    <ChevronDownIcon className="w-6 h-6" />
                 </button>
                 {this.isOpen && (
                     <div

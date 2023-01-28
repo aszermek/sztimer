@@ -5,7 +5,6 @@ import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
-import Dropdown from "../UI/Dropdown";
 import Modal from "../UI/Modal";
 import { SmallButton } from "../UI/SmallButton";
 import { TimeFormatter } from "../utils/TimeFormatter";
@@ -62,7 +61,6 @@ class Results extends React.Component<IResultsProps> {
                     <thead>
                         <tr>
                             <th colSpan={4} className="p-3">
-                                        <Dropdown options={[{key: "222", value: "2x2x2"}, {key: "333", value: "3x3x3"}]} label="Event" />
                                 <div className="flex flex-row gap-4">
                                     <div className="flex justify-center items-center">
                                         {"Solves: "}
