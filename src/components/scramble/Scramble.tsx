@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";

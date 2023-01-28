@@ -6,6 +6,7 @@ import MainStore from "../../stores/MainStore";
 import { Card } from "./Card";
 
 export interface IModalProps {
+    MainStore?: MainStore;
     header?: string;
     footer?: React.ReactNode;
     children: React.ReactNode;
@@ -30,22 +31,15 @@ class Modal extends React.Component<IModalProps> {
     componentDidMount(): void {
         if (this.props.isOpen) {
             document.addEventListener("keydown", this.handleKeyDown);
-            this.MainStore.update("isOpenAnyModal", true);
-            console.log(this.MainStore.isOpenAnyModal, "cdm isopen");
-        } else {
-            this.MainStore.update("isOpenAnyModal", false);
-            console.log(this.MainStore.isOpenAnyModal, "cdm not open");
         }
     }
 
     componentWillUnmount(): void {
         document.removeEventListener("keydown", this.handleKeyDown);
-        this.MainStore.update("isOpenAnyModal", false);
-        console.log(this.MainStore.isOpenAnyModal, "cwun");
     }
 
     // componentDidUpdate(prevProps: Readonly<IModalProps>, prevState: Readonly<{}>, snapshot?: any): void {
-    //     this.MainStore.update("isOpenAnyModal", prevProps.isOpen);
+    //     this.MainStore.update("isOpenAnyModal", !prevProps.isOpen);
     //     console.log(this.MainStore.isOpenAnyModal, "cdu")
     // }
 

@@ -1,10 +1,13 @@
+import { TrashIcon } from "@heroicons/react/20/solid";
 import { observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
+import Dropdown from "../UI/Dropdown";
 import Modal from "../UI/Modal";
+import { SmallButton } from "../UI/SmallButton";
 import { TimeFormatter } from "../utils/TimeFormatter";
 import DetailedResultsModal from "./DetailedResultsModal";
 
@@ -61,6 +64,7 @@ class Results extends React.Component<IResultsProps> {
                             <th colSpan={4} className="p-3">
                                 <div className="flex flex-row gap-4">
                                     <div className="flex justify-center items-center">
+                                        {/* <Dropdown options={[{key: "222", value: "2x2x2"}, {key: "333", value: "3x3x3"}]} label="Event" /> */}
                                         {"Solves: "}
                                         {validSolveCount}/{solveCount}
                                         <br />
@@ -68,7 +72,7 @@ class Results extends React.Component<IResultsProps> {
                                         <TimeFormatter time={mean} />
                                     </div>
                                     <div className="flex justify-center items-center">
-                                        <Button
+                                        <SmallButton
                                             color="red"
                                             onClick={() =>
                                                 ResultsStore.update(
@@ -77,8 +81,8 @@ class Results extends React.Component<IResultsProps> {
                                                 )
                                             }
                                         >
-                                            Delete
-                                        </Button>
+                                            <TrashIcon />
+                                        </SmallButton>
                                     </div>
                                 </div>
                             </th>
@@ -122,7 +126,7 @@ class Results extends React.Component<IResultsProps> {
                                             className="p-2 text-center cursor-pointer"
                                             onClick={() =>
                                                 ResultsStore.openDetails([
-                                                    result
+                                                    result,
                                                 ])
                                             }
                                         >

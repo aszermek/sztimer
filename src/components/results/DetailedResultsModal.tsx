@@ -38,8 +38,8 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
                 isOpen={ResultsStore.isOpenResultModal}
             >
                 <>
-                    {results.map((result) => (
-                        <div>
+                    {results.map((result, index) => (
+                        <div key={index}>
                             <TimeFormatter time={result.time} /> (
                             {result.date.toLocaleString()}){" - "}
                             {result.scramble}
