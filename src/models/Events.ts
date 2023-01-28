@@ -1,0 +1,1 @@
+export type EventTypes = "2x2x2" | "3x3x3" | "4x4x4" | "5x5x5" | "6x6x6" | "7x7x7" | "megaminx" | "pyraminx" | "square1" | "clock" | "skewb"

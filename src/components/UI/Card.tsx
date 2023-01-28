@@ -10,7 +10,7 @@ export class Card extends React.Component<ICardProps> {
         const { children, className } = this.props;
 
         return (
-            <div className="m-6 p-6 bg-white rounded-xl ">
+            <div className="col-span-3 m-6 p-6 bg-white rounded-xl">
                 <div className={className}>{children}</div>
             </div>
         )

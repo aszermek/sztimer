@@ -1,3 +1,4 @@
+import { TwistyPlayer } from "cubing/twisty";
 import { makeAutoObservable } from "mobx";
 import ScrambleService from "../services/ScrambleService";
 import MainStore from "./MainStore";
@@ -21,6 +22,7 @@ export class ScrambleStore {
 
     *scrambleGenerator() {
         this.scramble = yield ScrambleService.getScramble(this.MainStore.selectedEvent);
+        this.drawScramble();
     }
 
     getNewScramble() {
@@ -48,5 +50,16 @@ export class ScrambleStore {
 
     scrambleToClipboard() {
         navigator.clipboard.writeText(this.scramble);
+    }
+
+    drawScramble() {
+        const player = new TwistyPlayer({
+            puzzle: "3x3x3",
+            alg: this.scramble,
+            visualization: "2D",
+            background: "none",
+            controlPanel: "none",
+        });
+        document.getElementById("viewer").replaceChildren(player);
     }
 }
