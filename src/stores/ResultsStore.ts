@@ -13,6 +13,8 @@ export class ResultsStore {
         this.MainStore = mainStore;
 
         makeAutoObservable(this, {});
+
+        this.loadResultsFromLocalStorage();
     }
 
     public update(key: keyof this, value: any) {
@@ -27,9 +29,20 @@ export class ResultsStore {
         );
     }
 
+    loadResultsFromLocalStorage = () => {
+        const storedResults = localStorage.getItem("results");
+        if (storedResults) {
+            this._results = JSON.parse(storedResults);
+        }
+    }
+
+    saveResultsToLocalStorage = () => {
+        localStorage.setItem("results", JSON.stringify(this._results));
+    }
+
     addResult = (result: IResult) => {
         this._results.push(result);
-
+        this.saveResultsToLocalStorage();
         this.MainStore.ScrambleStore.getNewScramble();
     };
 
@@ -41,14 +54,17 @@ export class ResultsStore {
             result.time -= 2;
         }
         result.penalty = penalty;
+        this.saveResultsToLocalStorage();
     };
 
     addComment = (result: IResult, comment: string) => {
         result.comment = comment;
+        this.saveResultsToLocalStorage();
     };
 
     removeResult = (result: IResult) => {
         this._results.splice(this._results.indexOf(result));
+        this.saveResultsToLocalStorage();
     };
 
     deleteAllResultsFromSession = () => {
@@ -57,6 +73,7 @@ export class ResultsStore {
                 result.session !== this.MainStore.selectedSession ||
                 result.event !== this.MainStore.selectedEvent
         );
+        this.saveResultsToLocalStorage();
         this.isOpenDeleteModal = false;
     };
 
