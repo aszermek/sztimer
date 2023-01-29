@@ -5,6 +5,7 @@ import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
+import { Icon } from "../UI/Icon";
 import Modal from "../UI/Modal";
 import { SmallButton } from "../UI/SmallButton";
 import { TimeFormatter } from "../utils/TimeFormatter";
@@ -57,7 +58,7 @@ class Results extends React.Component<IResultsProps> {
                     session?
                 </Modal>
                 <DetailedResultsModal ResultsStore={ResultsStore} />
-                <table className="table-auto m-auto">
+                <table className="table-auto m-auto h-full">
                     <thead>
                         <tr>
                             <th colSpan={4} className="p-3">
@@ -79,7 +80,7 @@ class Results extends React.Component<IResultsProps> {
                                                 )
                                             }
                                         >
-                                            <TrashIcon />
+                                            <Icon icon={TrashIcon} />
                                         </SmallButton>
                                     </div>
                                 </div>

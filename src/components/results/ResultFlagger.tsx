@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
+import { Icon } from '../UI/Icon';
 import { SmallButton } from "../UI/SmallButton";
 
 export interface IResultFlaggerProps {
@@ -21,10 +22,10 @@ class ResultFlagger extends React.Component<IResultFlaggerProps> {
 
         return (
             <div className="flex flex-row gap-3">
-                <SmallButton onClick={() => ResultsStore.addPenalty(latestResult, null)}><CheckIcon /></SmallButton>
+                <SmallButton onClick={() => ResultsStore.addPenalty(latestResult, null)}><Icon icon={CheckIcon} /></SmallButton>
                 <SmallButton onClick={() => ResultsStore.addPenalty(latestResult, '+2')}>+2</SmallButton>
                 <SmallButton onClick={() => ResultsStore.addPenalty(latestResult, 'dnf')}>DNF</SmallButton>
-                <SmallButton onClick={() => ResultsStore.removeResult(latestResult)}><XMarkIcon /></SmallButton>
+                <SmallButton onClick={() => ResultsStore.removeResult(latestResult)}><Icon icon={XMarkIcon} /></SmallButton>
             </div>
         );
     }

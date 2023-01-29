@@ -1,9 +1,8 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { makeObservable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
-import { Card } from "./Card";
+import Card from "./Card";
 
 export interface IModalProps {
     MainStore?: MainStore;

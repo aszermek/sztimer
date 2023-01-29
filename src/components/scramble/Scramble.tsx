@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { ScrambleStore } from "../../stores/ScrambleStore";
+import { Icon } from "../UI/Icon";
 import { SmallButton } from "../UI/SmallButton";
 
 export interface IScrambleProps {
@@ -26,7 +27,7 @@ class Scramble extends React.Component<IScrambleProps> {
                         onClick={() => ScrambleStore.goToPrevScramble()}
                     >
                         <div className="w-full">
-                            <ChevronLeftIcon />
+                            <Icon icon={ChevronLeftIcon} />
                         </div>
                     </SmallButton>
                 )}
@@ -38,7 +39,7 @@ class Scramble extends React.Component<IScrambleProps> {
                 </div>
                 <SmallButton onClick={() => ScrambleStore.goToNextScramble()}>
                     <div className="w-full">
-                        <ChevronRightIcon />
+                        <Icon icon={ChevronRightIcon} />
                     </div>
                 </SmallButton>
             </div>

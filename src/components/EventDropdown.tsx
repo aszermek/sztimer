@@ -14,27 +14,30 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
         this.props.MainStore.ScrambleStore.scrambleGenerator();
     };
 
-    onChangedSession = (key: string | number,  option: IDropdownOption) => {
+    onChangedSession = (key: string | number, option: IDropdownOption) => {
         this.props.MainStore.update("selectedSession", key);
     };
 
     render() {
         const MainStore = this.props.MainStore;
         const selectedEvent = MainStore.selectedEvent;
-        const selectedEventSessions = Events.find(event => event.key === selectedEvent).sessions;
+        const selectedEventSessions = Events.find(
+            (event) => event.key === selectedEvent
+        ).sessions;
 
         const optionsEvent = Events.map((event) => {
             return {
                 key: event.key,
                 value: event.label,
+                icon: event.icon,
             };
         });
         const optionsSession = selectedEventSessions.map((session) => {
             return {
                 key: session,
-                value: session
-            }
-        })
+                value: session,
+            };
+        });
 
         return (
             <div className="flex gap-2">

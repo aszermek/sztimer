@@ -5,7 +5,7 @@ export interface ICardProps {
     className?: string;
 }
 
-export class Card extends React.Component<ICardProps> {
+class Card extends React.Component<ICardProps> {
     render() {
         const { children, className } = this.props;
 
@@ -16,3 +16,5 @@ export class Card extends React.Component<ICardProps> {
         )
     }
 }
+
+export default Card;

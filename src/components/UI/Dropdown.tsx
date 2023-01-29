@@ -2,11 +2,12 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { action, computed, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
+import { Icon, IIconProps } from "./Icon";
 
 export interface IDropdownOption {
     key: string | number;
     value: string;
-    icon?: React.ElementType;
+    icon?: IIconProps;
 }
 
 export interface IDropdownProps {
@@ -33,7 +34,7 @@ class Dropdown extends React.Component<IDropdownProps> {
             update: action,
             onClick: action,
             onChanged: action,
-            selectedOption: computed
+            selectedOption: computed,
         });
     }
 
@@ -79,7 +80,9 @@ class Dropdown extends React.Component<IDropdownProps> {
     };
 
     get selectedOption(): IDropdownOption {
-        return this.props.options.find((option) => option.key === this.selectedKey);
+        return this.props.options.find(
+            (option) => option.key === this.selectedKey
+        );
     }
 
     render() {
@@ -88,11 +91,20 @@ class Dropdown extends React.Component<IDropdownProps> {
         return (
             <div className="relative w-48">
                 <button
-                    className="bg-slate-200 p-2 rounded-lg w-full flex justify-between"
+                    className="bg-slate-200 p-2 rounded-lg w-full flex justify-between items-center"
                     onClick={this.onClick}
                 >
-                    {selectedKey ? this.selectedOption.value : label}
-                    <ChevronDownIcon className="w-6 h-6" />
+                    {selectedKey ? (
+                        <div className="flex gap-4 items-center mr-4">
+                            {this.selectedOption.icon && (
+                                <Icon {...this.selectedOption.icon} />
+                            )}
+                            {this.selectedOption.value}
+                        </div>
+                    ) : (
+                        label
+                    )}
+                    <Icon icon={ChevronDownIcon} />
                 </button>
                 {this.isOpen && (
                     <div
@@ -102,12 +114,10 @@ class Dropdown extends React.Component<IDropdownProps> {
                         {options.map((option, index) => (
                             <div
                                 key={index}
-                                className="px-4 py-2 hover:bg-gray-300"
+                                className="flex gap-4 p-2 items-center rounded-lg hover:bg-slate-300"
                                 onClick={() => this.onChanged(option)}
                             >
-                                {option.icon && (
-                                    <option.icon className="mr-2" />
-                                )}
+                                {option.icon && <Icon {...option.icon} />}
                                 {option.value}
                             </div>
                         ))}
