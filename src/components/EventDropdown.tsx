@@ -9,24 +9,49 @@ export interface IEventDropdownProps {
 }
 
 class EventDropdown extends React.Component<IEventDropdownProps> {
-    onChanged = (key: string | number, option: IDropdownOption) => {
+    onChangedEvent = (key: string | number, option: IDropdownOption) => {
         this.props.MainStore.update("selectedEvent", key);
         this.props.MainStore.ScrambleStore.scrambleGenerator();
+    };
+
+    onChangedSession = (key: string | number,  option: IDropdownOption) => {
+        this.props.MainStore.update("selectedSession", key);
     };
 
     render() {
         const MainStore = this.props.MainStore;
         const selectedEvent = MainStore.selectedEvent;
-        
+        const selectedEventSessions = Events.find(event => event.key === selectedEvent).sessions;
 
-        const options = Events.map((event) => {
+        const optionsEvent = Events.map((event) => {
             return {
                 key: event.key,
                 value: event.label,
             };
         });
+        const optionsSession = selectedEventSessions.map((session) => {
+            return {
+                key: session,
+                value: session
+            }
+        })
 
-        return <Dropdown options={options} label="Event" selectedKey={selectedEvent} onChanged={this.onChanged} />;
+        return (
+            <div className="flex gap-2">
+                <Dropdown
+                    options={optionsEvent}
+                    label="Event"
+                    selectedKey={selectedEvent}
+                    onChanged={this.onChangedEvent}
+                />
+                <Dropdown
+                    options={optionsSession}
+                    label="Event"
+                    selectedKey={MainStore.selectedSession}
+                    onChanged={this.onChangedSession}
+                />
+            </div>
+        );
     }
 }
 

@@ -18,7 +18,7 @@ export interface IResultsProps {
 class Results extends React.Component<IResultsProps> {
     render() {
         const ResultsStore = this.props.ResultsStore;
-        const results = ResultsStore._results;
+        const results = ResultsStore.filteredResults;
 
         if (!results) {
             return null;
@@ -43,7 +43,7 @@ class Results extends React.Component<IResultsProps> {
                     footer={
                         <Button
                             color="red"
-                            onClick={ResultsStore.deleteAllResults}
+                            onClick={ResultsStore.deleteAllResultsFromSession}
                         >
                             Delete
                         </Button>

@@ -9,6 +9,7 @@ export default class MainStore {
     ScrambleStore: ScrambleStore;
     TimerStore: TimerStore;
     selectedEvent: EventTypes = "333";
+    selectedSession: string = "Regular";
     isOpenAnyModal: boolean = false;
 
     constructor() {

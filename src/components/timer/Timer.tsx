@@ -48,7 +48,7 @@ class Timer extends React.Component<ITimerProps> {
     render() {
         const TimerStore = this.props.TimerStore;
 
-        const results = this.props.MainStore.ResultsStore._results;
+        const results = this.props.MainStore.ResultsStore.filteredResults;
         const latestResult = results[results.length - 1];
 
         if (TimerStore.isRunningInspection) {

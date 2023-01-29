@@ -19,6 +19,14 @@ export class ResultsStore {
         this[key] = value;
     }
 
+    get filteredResults(): IResult[] {
+        return this._results.filter(
+            (result) =>
+                result.event === this.MainStore.selectedEvent &&
+                result.session === this.MainStore.selectedSession
+        );
+    }
+
     addResult = (result: IResult) => {
         this._results.push(result);
 
@@ -43,10 +51,14 @@ export class ResultsStore {
         this._results.splice(this._results.indexOf(result));
     };
 
-    deleteAllResults = () => {
-        this._results = [];
+    deleteAllResultsFromSession = () => {
+        this._results = this._results.filter(
+            (result) =>
+                result.session !== this.MainStore.selectedSession ||
+                result.event !== this.MainStore.selectedEvent
+        );
         this.isOpenDeleteModal = false;
-    }
+    };
 
     calculateAvg = (array: IResult[]): number | string => {
         const dnfResults: IResult[] = array.filter((r) => r.penalty === "dnf");
@@ -76,5 +88,5 @@ export class ResultsStore {
     openDetails = (results: IResult[]) => {
         this.isOpenResultModal = true;
         this.openResults = results;
-    }
+    };
 }

@@ -56,7 +56,7 @@ export class TimerStore {
                     this.update("justStopped", true);
                 }
                 if (event.key === "Escape") {
-                    const results = this.MainStore.ResultsStore._results;
+                    const results = this.MainStore.ResultsStore.filteredResults;
                     const latestResult = results[results.length - 1];
                     this.MainStore.ResultsStore.addPenalty(latestResult, "dnf");
                 }
@@ -110,9 +110,11 @@ export class TimerStore {
             time: this.elapsedTime,
             scramble: this.MainStore.ScrambleStore.scramble,
             date: new Date(),
+            event: this.MainStore.selectedEvent,
+            session: this.MainStore.selectedSession
         } as IResult);
 
-        const results = this.MainStore.ResultsStore._results;
+        const results = this.MainStore.ResultsStore.filteredResults;
         const latestResult = results[results.length - 1];
         if (this.cachedInspectionPenalty) {
             this.MainStore.ResultsStore.addPenalty(
