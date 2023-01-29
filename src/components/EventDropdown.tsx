@@ -11,6 +11,9 @@ export interface IEventDropdownProps {
 class EventDropdown extends React.Component<IEventDropdownProps> {
     onChangedEvent = (key: string | number, option: IDropdownOption) => {
         this.props.MainStore.update("selectedEvent", key);
+        // const selectedEventSessions = Events.find((event) => event.key === key).sessions;
+        // this.props.MainStore.update("selectedSession", selectedEventSessions[0]);
+    
         this.props.MainStore.ScrambleStore.scrambleGenerator();
     };
 

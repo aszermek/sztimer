@@ -11,10 +11,10 @@ export class ScrambleStore {
     prevScramble: string = "";
     nextScramble: string = "";
     canGetPrevScramble: boolean = false;
-    
+
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;
-        
+
         makeAutoObservable(this, {});
     }
 
@@ -25,7 +25,9 @@ export class ScrambleStore {
     *scrambleGenerator() {
         this.isLoading = true;
 
-        this.scramble = yield ScrambleService.getScramble(this.MainStore.selectedEvent);
+        this.scramble = yield ScrambleService.getScramble(
+            this.MainStore.selectedEvent
+        );
         this.drawScramble();
 
         this.isLoading = false;
@@ -59,13 +61,18 @@ export class ScrambleStore {
     }
 
     drawScramble() {
+        const viewerElement = document.getElementById("viewer");
+        if (!viewerElement) return;
+
         const player = new TwistyPlayer({
-            puzzle: Events.find(event => event.key === this.MainStore.selectedEvent).keyForViewer,
+            puzzle: Events.find(
+                (event) => event.key === this.MainStore.selectedEvent
+            ).keyForViewer,
             alg: this.scramble,
             visualization: "2D",
             background: "none",
             controlPanel: "none",
         });
-        document.getElementById("viewer").replaceChildren(player);
+        viewerElement.replaceChildren(player);
     }
 }

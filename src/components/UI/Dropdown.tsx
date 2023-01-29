@@ -87,6 +87,10 @@ class Dropdown extends React.Component<IDropdownProps> {
 
     render() {
         const { label, options, selectedKey, onClick, onChanged } = this.props;
+        const { icon, value } = this.selectedOption || {
+            value: options[0].value,
+            icon: undefined,
+        };
 
         return (
             <div className="relative w-48">
@@ -96,10 +100,8 @@ class Dropdown extends React.Component<IDropdownProps> {
                 >
                     {selectedKey ? (
                         <div className="flex gap-4 items-center mr-4">
-                            {this.selectedOption.icon && (
-                                <Icon {...this.selectedOption.icon} />
-                            )}
-                            {this.selectedOption.value}
+                            {icon && <Icon {...icon} />}
+                            {value}
                         </div>
                     ) : (
                         label
