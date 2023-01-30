@@ -3,13 +3,12 @@ import Logo from "./components/UI/Logo";
 // import "./App.css";
 import EventDropdown from "./components/EventDropdown";
 import ResultFlagger from "./components/results/ResultFlagger";
+import ResultNotifications from "./components/results/ResultNotifications";
 import Results from "./components/results/Results";
 import Scramble from "./components/scramble/Scramble";
 import Timer from "./components/timer/Timer";
 import Card from "./components/UI/Card";
-import Notification from "./components/UI/Notification";
 import MainStore from "./stores/MainStore";
-import { Icon333 } from "./components/assets/CubingIcons/CubingIcons";
 
 class App extends React.Component {
     MainStore: MainStore;
@@ -53,9 +52,7 @@ class App extends React.Component {
                         <div className="flex flex-col gap-4 min-h-full justify-between">
                             <EventDropdown MainStore={MainStore} />
                             <Results ResultsStore={MainStore.ResultsStore} />
-                            <Notification icon={{icon: Icon333}}>
-                                New 3x3x3 (Regular) single PB!
-                            </Notification>
+                            <ResultNotifications ResultsStore={MainStore.ResultsStore} />
                         </div>
                     </Card>
                 </div>

@@ -18,6 +18,8 @@ class ResultNotifications extends React.Component<IResultNotificationsProps> {
         const ResultsStore = this.props.ResultsStore;
         const notifs = ResultsStore.resultNotifications;
 
+        if (!notifs.length) return null;
+
         return (
             <>
                 {notifs.map((notif, index) => {
