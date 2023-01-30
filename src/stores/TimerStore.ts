@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { IPenaltyTypes, IResult } from "../models/IResult";
+import { PenaltyTypes, IResult } from "../models/IResult";
 import MainStore from "./MainStore";
 
 export class TimerStore {
@@ -14,7 +14,7 @@ export class TimerStore {
     inspectionTime: number = 15;
     timerIntervalId: number | undefined;
     inspectionIntervalId: number | undefined;
-    cachedInspectionPenalty: IPenaltyTypes = null;
+    cachedInspectionPenalty: PenaltyTypes = null;
 
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;

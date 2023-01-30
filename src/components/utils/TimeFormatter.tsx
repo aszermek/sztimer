@@ -1,15 +1,16 @@
 import * as React from "react";
-import { IPenaltyTypes } from "../../models/IResult";
+import { PenaltyTypes } from "../../models/IResult";
 
 export interface ITimeFormatterProps {
     time: number | string | null;
-    penalty?: IPenaltyTypes;
+    penalty?: PenaltyTypes;
     displayTimeOnDnf?: boolean;
+    isExcluded?: boolean;
 }
 
 export class TimeFormatter extends React.Component<ITimeFormatterProps> {
     render() {
-        const { time, penalty, displayTimeOnDnf } = this.props;
+        const { time, penalty, displayTimeOnDnf, isExcluded } = this.props;
 
         if (time === "DNF") {
             return "DNF";

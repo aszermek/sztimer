@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { IPenaltyTypes, IResult } from "../models/IResult";
+import { PenaltyTypes, IResult, IResultNotification } from "../models/IResult";
 import MainStore from "./MainStore";
 
 export class ResultsStore {
@@ -8,6 +8,7 @@ export class ResultsStore {
     isOpenDeleteModal: boolean = false;
     isOpenResultModal: boolean = false;
     openResults: IResult[] = [];
+    resultNotifications: IResultNotification[] = [];
 
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;
@@ -46,7 +47,7 @@ export class ResultsStore {
         this.MainStore.ScrambleStore.getNewScramble();
     };
 
-    addPenalty = (result: IResult, penalty: IPenaltyTypes) => {
+    addPenalty = (result: IResult, penalty: PenaltyTypes) => {
         if (result.penalty !== "+2" && penalty === "+2") {
             result.time += 2;
         }
@@ -106,4 +107,8 @@ export class ResultsStore {
         this.isOpenResultModal = true;
         this.openResults = results;
     };
+
+    closeResultNotification = (notif: IResultNotification) => {
+
+    }
 }

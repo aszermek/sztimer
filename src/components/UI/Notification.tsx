@@ -18,8 +18,8 @@ class Notification extends React.Component<INotificationProps> {
 
         return (
             <>
-                <div className="flex justify-between items-center w-full p-3 rounded-lg bg-green-200">
-                    <div className="flex justify-start items-center gap-3 font-bold">
+                <div className="flex justify-between items-center w-full p-3 rounded-lg bg-green-100 hover:bg-green-200 cursor-pointer">
+                    <div className="flex justify-start items-center gap-3 font-bold bg-">
                         <div><Icon {...icon} /></div>
                         <div>{children}</div>
                     </div>
