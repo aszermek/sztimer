@@ -1,14 +1,20 @@
 # szTimer
 
-szTimer is a modern Rubik's cube timer currently in development. It is built using React, TypeScript, MobX and TailwindCSS and uses the [cubing.js](https://github.com/cubing/cubing.js) library to generate scrambles for all current WCA events.
+szTimer is a professional speedcubing timer application currently in development. It is built using modern technologies like React, TypeScript, MobX and TailwindCSS. It uses the [cubing.js](https://github.com/cubing/cubing.js) library to generate scrambles for all current WCA events.
 
-## Features
+## Current features
 
-- Timer for solving Rubik's cube
-- Compliant to WCA rules and support for all current events
-- Generates scrambles using the [cubing.js](https://github.com/cubing/cubing.js) library
+- Timer (with inspection)
+- Compliant to WCA rules and support for all official events
+- Generates and draws scrambles using the [cubing.js](https://github.com/cubing/cubing.js) library
+- Notifications for personal records
 - User-friendly interface
-- Built using modern technologies (React, TypeScript, MobX and TailwindCSS)
+
+## Upcoming features
+
+- Customizable settings
+- Import and export data
+- More detailed statistics
 
 ## Usage
 
