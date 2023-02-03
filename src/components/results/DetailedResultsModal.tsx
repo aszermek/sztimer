@@ -59,15 +59,27 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
                 <>
                     {results.map((result, index) => (
                         <div key={index}>
-                            {result.time === best || result.time === worst ? (
+                            {results.length > 1 && index + 1 + ". "}
+                            {results.length > 1 &&
+                            (result.time === best || result.time === worst) ? (
                                 <>
-                                    (<TimeFormatter time={result.time} penalty={result.penalty} displayTimeOnDnf />)
+                                    (
+                                    <TimeFormatter
+                                        time={result.time}
+                                        penalty={result.penalty}
+                                        displayTimeOnDnf
+                                    />
+                                    )
                                 </>
                             ) : (
-                                <TimeFormatter time={result.time} penalty={result.penalty} displayTimeOnDnf />
-                            )}{" "}
-                            ({result.date.toLocaleString()}){" - "}
-                            {result.scramble}
+                                <TimeFormatter
+                                    time={result.time}
+                                    penalty={result.penalty}
+                                    displayTimeOnDnf
+                                />
+                            )}
+                            {" - "}
+                            {result.scramble} (@{result.date.toLocaleString()})
                         </div>
                     ))}
                 </>
