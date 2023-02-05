@@ -1,10 +1,9 @@
-import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid';
+import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { Icon } from '../UI/Icon';
-import { SmallButton } from "../UI/SmallButton";
+import { Button } from "../UI/Button";
 
 export interface IResultFlaggerProps {
     MainStore?: MainStore;
@@ -22,10 +21,28 @@ class ResultFlagger extends React.Component<IResultFlaggerProps> {
 
         return (
             <div className="flex flex-row gap-3">
-                <SmallButton onClick={() => ResultsStore.addPenalty(latestResult, null)}><Icon icon={CheckIcon} /></SmallButton>
-                <SmallButton onClick={() => ResultsStore.addPenalty(latestResult, '+2')}>+2</SmallButton>
-                <SmallButton onClick={() => ResultsStore.addPenalty(latestResult, 'dnf')}>DNF</SmallButton>
-                <SmallButton onClick={() => ResultsStore.removeResult(latestResult)}><Icon icon={XMarkIcon} /></SmallButton>
+                <Button
+                    regular
+                    onClick={() => ResultsStore.addPenalty(latestResult, null)}
+                    icon={{ icon: CheckIcon }}
+                />
+                <Button
+                    regular
+                    onClick={() => ResultsStore.addPenalty(latestResult, "+2")}
+                >
+                    +2
+                </Button>
+                <Button
+                    regular
+                    onClick={() => ResultsStore.addPenalty(latestResult, "dnf")}
+                >
+                    DNF
+                </Button>
+                <Button
+                    regular
+                    onClick={() => ResultsStore.removeResult(latestResult)}
+                    icon={{ icon: XMarkIcon }}
+                />
             </div>
         );
     }

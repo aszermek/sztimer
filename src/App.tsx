@@ -36,7 +36,7 @@ class App extends React.Component {
                                 ScrambleStore={MainStore.ScrambleStore}
                                 event={MainStore.selectedEvent}
                             />
-                            <div className="h-[35vw] flex flex-col gap-4 items-center justify-center">
+                            <div className="fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 items-center justify-center">
                                 <Timer
                                     MainStore={MainStore}
                                     TimerStore={MainStore.TimerStore}
@@ -48,11 +48,13 @@ class App extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <Card>
-                        <div className="flex flex-col gap-4 min-h-full justify-between">
-                            <EventDropdown MainStore={MainStore} />
-                            <Results ResultsStore={MainStore.ResultsStore} />
-                            <ResultNotifications ResultsStore={MainStore.ResultsStore} />
+                    <Card className="h-full flex flex-col gap-4 overflow-hidden">
+                        <EventDropdown MainStore={MainStore} />
+                        <Results ResultsStore={MainStore.ResultsStore} />
+                        <div className="flex flex-col flex-grow justify-end">
+                            <ResultNotifications
+                                ResultsStore={MainStore.ResultsStore}
+                            />
                         </div>
                     </Card>
                 </div>

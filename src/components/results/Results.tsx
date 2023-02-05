@@ -5,9 +5,7 @@ import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
-import { Icon } from "../UI/Icon";
 import Modal from "../UI/Modal";
-import { SmallButton } from "../UI/SmallButton";
 import { TimeFormatter } from "../utils/TimeFormatter";
 import DetailedResultsModal from "./DetailedResultsModal";
 
@@ -58,7 +56,7 @@ class Results extends React.Component<IResultsProps> {
                     session?
                 </Modal>
                 <DetailedResultsModal ResultsStore={ResultsStore} />
-                <div className="m-auto h-full w-full">
+                <div className="flex flex-col">
                     <div className="p-3 text-left font-semibold">
                         <div className="flex flex-row gap-4 justify-between">
                             <div className="flex justify-center items-center">
@@ -69,7 +67,8 @@ class Results extends React.Component<IResultsProps> {
                                 <TimeFormatter time={mean} />
                             </div>
                             <div className="flex justify-center items-center">
-                                <SmallButton
+                                <Button
+                                    regular
                                     color="red"
                                     onClick={() =>
                                         ResultsStore.update(
@@ -77,19 +76,26 @@ class Results extends React.Component<IResultsProps> {
                                             true
                                         )
                                     }
-                                >
-                                    <Icon icon={TrashIcon} />
-                                </SmallButton>
+                                    icon={{ icon: TrashIcon }}
+                                />
                             </div>
                         </div>
                     </div>
-                    <div className="grid grid-cols-7 gap-2">
-                        <div className="col-span-1 m-1 p-1 text-right">#</div>
-                        <div className="col-span-2 m-1 p-1 text-center">time</div>
-                        <div className="col-span-2 m-1 p-1 text-center">ao5</div>
-                        <div className="col-span-2 m-1 p-1 text-center">ao12</div>
+                    <div className="grid grid-cols-7 gap-2 border-b border-slate-200">
+                        <div className="col-span-1 mx-2 my-1 p-1 text-right">
+                            #
+                        </div>
+                        <div className="col-span-2 mx-2 my-1 p-1 text-center">
+                            time
+                        </div>
+                        <div className="col-span-2 mx-2 my-1 p-1 text-center">
+                            ao5
+                        </div>
+                        <div className="col-span-2 mx-2 my-1 p-1 text-center">
+                            ao12
+                        </div>
                     </div>
-                    <div className="flex flex-col-reverse">
+                    <div className="flex flex-col-reverse max-h-96 overflow-y-auto scroll-smooth [overflow-anchor:none]">
                         {results.map((result, i) => {
                             let currentFive: IResult[] = results.slice(
                                 Math.max(0, i - 4),
@@ -109,14 +115,14 @@ class Results extends React.Component<IResultsProps> {
                                     : null;
                             return (
                                 <div
-                                    className="grid grid-cols-7 gap-2 border-t border-slate-200"
+                                    className="grid grid-cols-7 gap-2 border-b border-slate-200"
                                     key={i}
                                 >
-                                    <div className="col-span-1 m-1 p-1 text-right">
+                                    <div className="col-span-1 mx-2 my-1 p-1 text-right">
                                         {i + 1}
                                     </div>
                                     <div
-                                        className="col-span-2 m-1 p-1 text-center cursor-pointer rounded-3xl hover:bg-slate-100"
+                                        className="col-span-2 mx-2 my-1 p-1 text-center cursor-pointer rounded-3xl hover:bg-slate-100"
                                         onClick={() =>
                                             ResultsStore.openDetails([result])
                                         }
@@ -127,7 +133,7 @@ class Results extends React.Component<IResultsProps> {
                                         />
                                     </div>
                                     <div
-                                        className={`col-span-2 m-1 p-1 text-center ${
+                                        className={`col-span-2 mx-2 my-1 p-1 text-center ${
                                             avgFive &&
                                             `cursor-pointer rounded-3xl hover:bg-slate-100`
                                         }`}
@@ -140,7 +146,7 @@ class Results extends React.Component<IResultsProps> {
                                         <TimeFormatter time={avgFive} />
                                     </div>
                                     <div
-                                        className={`col-span-2 m-1 p-1 text-center ${
+                                        className={`col-span-2 mx-2 my-1 p-1 text-center ${
                                             avgTwelve &&
                                             `cursor-pointer rounded-3xl hover:bg-slate-100`
                                         }`}

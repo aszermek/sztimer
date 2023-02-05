@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from "react";
 
-export type IconSize = 6 | 8 | 12 | 16 | 20 | 24 | 28 | 48 | 72 | 96;
+export type IconSize = "sm" | "md" | "lg";
 
 export interface IIconProps extends HTMLAttributes<HTMLDivElement> {
     icon: React.ElementType | ((p: any) => JSX.Element);
@@ -10,7 +10,7 @@ export interface IIconProps extends HTMLAttributes<HTMLDivElement> {
 
 export class Icon extends React.Component<IIconProps> {
     public static defaultProps: Partial<IIconProps> = {
-        size: 24,
+        size: "md",
     };
 
     public render() {
@@ -22,8 +22,21 @@ export class Icon extends React.Component<IIconProps> {
             return null;
         }
 
+        let className: string = "";
+        switch (size) {
+            case "sm":
+                className = "w-4 h-4";
+                break;
+            case "md":
+                className = "w-5 h-5";
+                break;
+            case "lg":
+                className = "w-6 h-6";
+                break;
+        }
+
         const IconComponent = icon as React.ElementType;
 
-        return <div className="w-5 h-5" onClick={onClick}>{<IconComponent />}</div>;
+        return <div className={className} onClick={onClick}>{<IconComponent />}</div>;
     }
 }

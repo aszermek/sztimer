@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { PenaltyTypes, IResult, IResultNotification } from "../models/IResult";
+import { IResult, IResultNotification, PenaltyTypes } from "../models/IResult";
 import MainStore from "./MainStore";
 
 export class ResultsStore {
@@ -23,11 +23,13 @@ export class ResultsStore {
     }
 
     get filteredResults(): IResult[] {
-        return this._results.filter(
+        const filteredResults = this._results.filter(
             (result) =>
                 result.event === this.MainStore.selectedEvent &&
                 result.session === this.MainStore.selectedSession
         );
+
+        return filteredResults;
     }
 
     calculateAvg = (array: IResult[]): number | string => {
@@ -60,29 +62,31 @@ export class ResultsStore {
         const results = this.filteredResults;
         if (results.length >= length - 1) {
             results.map((result, index) => {
-                let current: IResult[] = results.slice(index - length + 1, index + 1);
+                let current: IResult[] = results.slice(
+                    index - length + 1,
+                    index + 1
+                );
                 if (index >= length - 1) {
                     let avg = this.calculateAvg(current);
                     if (typeof avg === "number") averages.push(avg);
                 }
             });
         }
-        console.log(averages);
         return averages;
-    }
-    
+    };
+
     get ao5s(): number[] {
         return this.getAverages(5);
     }
-    
+
     get ao12s(): number[] {
         return this.getAverages(12);
     }
-    
+
     get ao50s(): number[] {
         return this.getAverages(50);
     }
-    
+
     get ao100s(): number[] {
         return this.getAverages(100);
     }
@@ -132,6 +136,7 @@ export class ResultsStore {
                 result.session !== this.MainStore.selectedSession ||
                 result.event !== this.MainStore.selectedEvent
         );
+        this.resultNotifications = [];
         this.saveResultsToLocalStorage();
         this.isOpenDeleteModal = false;
     };
@@ -223,5 +228,9 @@ export class ResultsStore {
             1
         );
         console.log("close", notif);
+    };
+
+    closeAllResultNotifications = () => {
+        this.resultNotifications = [];
     };
 }

@@ -1,33 +1,43 @@
 import * as React from "react";
-import { ButtonColors } from "./SmallButton";
+import { Icon, IIconProps } from "./Icon";
+
+export type ButtonColors = "white" | "red" | "green" | "grey";
+export type ButtonTypes = "primary" | "secondary";
 
 export interface IButtonProps {
     color?: ButtonColors;
+    type?: ButtonTypes;
+    small?: boolean;
+    regular?: boolean;
     onClick?: () => void;
-    icon?: React.ReactNode;
+    icon?: IIconProps;
     children: React.ReactNode;
 }
 
 export class Button extends React.Component<IButtonProps> {
     public static defaultProps: Partial<IButtonProps> = {
-        color: 'white'
+        color: "grey",
+        type: "primary"
     };
 
     render() {
-        const { color, onClick, icon, children } = this.props;
+        const { color, type, small, regular, onClick, icon, children } = this.props;
 
         return (
             <div
                 className={`
-                    flex justify-center items-center w-fit h-10 px-4 py-2 rounded-xl text-lg cursor-pointer
+                    flex justify-center items-center py-2 gap-3 rounded-xl cursor-pointer
+                    ${small ? "gap-2 h-6 text-sm" : "gap-3 h-10 text-lg"}
+                    ${regular ? (small ? "w-6" : "w-10") : "w-fit"}
                     ${color === "white" && `bg-white text-black`}
-                    ${color === "red" && `bg-red-600 text-white`}
-                    ${color === "green" && `bg-green-600 text-white`}
+                    ${color === "red" && (type === "primary" ? `bg-red-600 text-white` : `bg-white text-red-600`)}
+                    ${color === "green" && (type === "primary" ? `bg-green-600 text-white` : `bg-white text-green-600`)}
+                    ${color === "grey" && `bg-slate-100/20 text-black shadow-emboss active:shadow-embossHover`}
                 `}
                 onClick={onClick}
             >
-                {children}
-                {icon}
+                    {children}
+                    {icon && <Icon size={small ? "sm" : "md"} {...icon} />}
             </div>
         );
     }
