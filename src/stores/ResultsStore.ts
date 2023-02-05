@@ -1,17 +1,22 @@
 import { makeAutoObservable } from "mobx";
 import { IResult, IResultNotification, PenaltyTypes } from "../models/IResult";
+import { StatisticsStore } from "./StatisticsStore";
 import MainStore from "./MainStore";
 
 export class ResultsStore {
     MainStore: MainStore;
+    StatisticsStore: StatisticsStore;
     _results: IResult[] = [];
     isOpenDeleteModal: boolean = false;
     isOpenResultModal: boolean = false;
     openResults: IResult[] = [];
+    detailsRef: HTMLDivElement;
+    isCopiedDetails: boolean = false;
     resultNotifications: IResultNotification[] = [];
 
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;
+        this.StatisticsStore = new StatisticsStore(this)
 
         makeAutoObservable(this, {});
 
@@ -56,40 +61,6 @@ export class ResultsStore {
             (array.length - 2);
         return avg;
     };
-
-    getAverages = (length: number): number[] => {
-        let averages: number[] = [];
-        const results = this.filteredResults;
-        if (results.length >= length - 1) {
-            results.map((result, index) => {
-                let current: IResult[] = results.slice(
-                    index - length + 1,
-                    index + 1
-                );
-                if (index >= length - 1) {
-                    let avg = this.calculateAvg(current);
-                    if (typeof avg === "number") averages.push(avg);
-                }
-            });
-        }
-        return averages;
-    };
-
-    get ao5s(): number[] {
-        return this.getAverages(5);
-    }
-
-    get ao12s(): number[] {
-        return this.getAverages(12);
-    }
-
-    get ao50s(): number[] {
-        return this.getAverages(50);
-    }
-
-    get ao100s(): number[] {
-        return this.getAverages(100);
-    }
 
     loadResultsFromLocalStorage = () => {
         const storedResults = localStorage.getItem("results");
@@ -146,6 +117,20 @@ export class ResultsStore {
         this.openResults = results;
     };
 
+    copyDetails = () => {
+        const textToCopy = this.detailsRef?.innerText;
+        navigator.clipboard.writeText(textToCopy);
+        this.isCopiedDetails = true;
+    }
+
+    closeDetails = () => {
+        this.isOpenResultModal = false;
+        this.openResults = [];
+        if (this.isCopiedDetails) {
+            this.isCopiedDetails = false;
+        }
+    }
+
     checkForPB = () => {
         const results = this.filteredResults;
         const latestResult =
@@ -169,7 +154,7 @@ export class ResultsStore {
             const latestAo5 = this.calculateAvg(results.slice(-5));
             if (
                 typeof latestAo5 === "number" &&
-                latestAo5 === Math.min(...this.ao5s)
+                latestAo5 === Math.min(...this.StatisticsStore.ao5s)
             ) {
                 this.addNotification({
                     type: "ao5",
@@ -182,7 +167,7 @@ export class ResultsStore {
             const latestAo12 = this.calculateAvg(results.slice(-12));
             if (
                 typeof latestAo12 === "number" &&
-                latestAo12 === Math.min(...this.ao12s)
+                latestAo12 === Math.min(...this.StatisticsStore.ao12s)
             ) {
                 this.addNotification({
                     type: "ao12",
@@ -195,7 +180,7 @@ export class ResultsStore {
             const latestAo50 = this.calculateAvg(results.slice(-50));
             if (
                 typeof latestAo50 === "number" &&
-                latestAo50 === Math.min(...this.ao50s)
+                latestAo50 === Math.min(...this.StatisticsStore.ao50s)
             ) {
                 this.addNotification({
                     type: "ao50",
@@ -208,7 +193,7 @@ export class ResultsStore {
             const latestAo100 = this.calculateAvg(results.slice(-100));
             if (
                 typeof latestAo100 === "number" &&
-                latestAo100 === Math.min(...this.ao100s)
+                latestAo100 === Math.min(...this.StatisticsStore.ao100s)
             ) {
                 this.addNotification({
                     type: "ao100",

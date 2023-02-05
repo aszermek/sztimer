@@ -18,7 +18,7 @@ export interface IModalProps {
 class Modal extends React.Component<IModalProps> {
     MainStore: MainStore;
     public static defaultProps: Partial<IModalProps> = {
-        // size: 6
+        scrollable: true,
     };
 
     constructor(props: IModalProps) {
@@ -63,7 +63,20 @@ class Modal extends React.Component<IModalProps> {
             return null;
         }
 
-        let sizeClassNames = ["w-1/12", "w-2/12", "w-3/12", "w-4/12", "w-5/12", "w-6/12", "w-7/12", "w-8/12", "w-9/12", "w-10/12", "w-11/12", "w-full"];
+        let sizeClassNames = [
+            "w-1/12",
+            "w-2/12",
+            "w-3/12",
+            "w-4/12",
+            "w-5/12",
+            "w-6/12",
+            "w-7/12",
+            "w-8/12",
+            "w-9/12",
+            "w-10/12",
+            "w-11/12",
+            "w-full",
+        ];
         let sizeClassName = sizeClassNames[size - 1];
 
         return (
@@ -86,10 +99,12 @@ class Modal extends React.Component<IModalProps> {
                                 />
                             </div>
                         </div>
-                        <div className="py-4">{children}</div>
-                        <div className="flex row gap-2 justify-end">
-                            {footer}
+                        <div className="py-4">
+                            <div className="max-h-[60vh] overflow-auto">
+                                {children}
+                            </div>
                         </div>
+                        <div className="flex justify-end">{footer}</div>
                     </Card>
                 </div>
             </>

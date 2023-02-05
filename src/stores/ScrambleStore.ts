@@ -42,6 +42,7 @@ export class ScrambleStore {
     goToPrevScramble() {
         this.nextScramble = this.scramble;
         this.scramble = this.prevScramble;
+        this.drawScramble();
         this.canGetPrevScramble = false;
     }
 
@@ -50,6 +51,7 @@ export class ScrambleStore {
             this.scrambleGenerator();
         } else {
             this.scramble = this.nextScramble;
+            this.drawScramble();
             this.nextScramble = "";
         }
         this.prevScramble = this.scramble;

@@ -16,6 +16,7 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
     render() {
         const ResultsStore = this.props.ResultsStore;
         const results = ResultsStore.openResults;
+        const stats = ResultsStore.StatisticsStore;
 
         if (!results.length) return null;
 
@@ -41,48 +42,97 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
             <Modal
                 header="Result details"
                 footer={
-                    <Button
-                        color="green"
-                        onClick={() =>
-                            ResultsStore.update("isOpenResultModal", false)
-                        }
-                    >
-                        Close
-                    </Button>
+                    <div className="flex gap-4">
+                        <Button
+                            color="green"
+                            type={
+                                ResultsStore.isCopiedDetails
+                                    ? "secondary"
+                                    : "primary"
+                            }
+                            onClick={ResultsStore.copyDetails}
+                        >
+                            {ResultsStore.isCopiedDetails
+                                ? "Copied to clipboard!"
+                                : "Copy to clipboard"}
+                        </Button>
+                        <Button color="red" onClick={ResultsStore.closeDetails}>
+                            Close
+                        </Button>
+                    </div>
                 }
                 size={8}
-                onDismiss={() =>
-                    ResultsStore.update("isOpenResultModal", false)
-                }
+                onDismiss={ResultsStore.closeDetails}
                 isOpen={ResultsStore.isOpenResultModal}
             >
-                <>
-                    {results.map((result, index) => (
-                        <div key={index}>
-                            {results.length > 1 && index + 1 + ". "}
-                            {results.length > 1 &&
-                            (result.time === best || result.time === worst) ? (
-                                <>
-                                    (
+                <div
+                    className="flex flex-col gap-1"
+                    ref={(detailsRef) => (ResultsStore.detailsRef = detailsRef)}
+                >
+                    {results.length === stats.results.length ? (
+                        <div className="flex flex-col gap-1 mb-2">
+                            <div>
+                                {"Solves: "}
+                                {stats.validSolveCount}/{stats.solveCount}
+                            </div>
+                            <div>
+                                {"Mean: "}
+                                <TimeFormatter time={stats.mean} />
+                            </div>
+                            <div>
+                                {"Best single: "}
+                                <TimeFormatter time={stats.bestSingle} />
+                            </div>
+                            <div>
+                                {"Worst single: "}
+                                <TimeFormatter time={stats.worstSingle} />
+                            </div>
+                            <div>
+                                {"Best average of 5: "}
+                                <TimeFormatter time={stats.bestAo5} />
+                            </div>
+                        </div>
+                    ) : (
+                        results.length > 1 && (
+                            <div className="mb-2">
+                                Average of {results.length}:{" "}
+                                <TimeFormatter
+                                    time={ResultsStore.calculateAvg(results)}
+                                />
+                            </div>
+                        )
+                    )}
+                    {results
+                        .slice()
+                        .reverse()
+                        .map((result, i) => (
+                            <div key={i}>
+                                {results.length > 1 && i + 1 + ". "}
+                                {results.length > 1 &&
+                                (result.time === best ||
+                                    result.time === worst) ? (
+                                    <>
+                                        (
+                                        <TimeFormatter
+                                            time={result.time}
+                                            penalty={result.penalty}
+                                            displayTimeOnDnf
+                                        />
+                                        )
+                                    </>
+                                ) : (
                                     <TimeFormatter
                                         time={result.time}
                                         penalty={result.penalty}
                                         displayTimeOnDnf
                                     />
-                                    )
-                                </>
-                            ) : (
-                                <TimeFormatter
-                                    time={result.time}
-                                    penalty={result.penalty}
-                                    displayTimeOnDnf
-                                />
-                            )}
-                            {" - "}
-                            {result.scramble} (@{result.date.toLocaleString()})
-                        </div>
-                    ))}
-                </>
+                                )}
+                                {" - "}
+                                {result.scramble} (@
+                                {result.date.toLocaleString()})
+                            </div>
+                        ))}
+                </div>
             </Modal>
         );
     }
