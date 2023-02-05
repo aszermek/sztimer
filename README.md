@@ -36,4 +36,4 @@ Contributions are always welcome! If you have any suggestions or bug reports, fe
 
 ## License
 
-szTimer is open source software licensed under the [MIT License](https://github.com/aszermek/szTimer/blob/master/LICENSE).
+szTimer is open source software licensed under the [GPL License](https://github.com/aszermek/sztimer/blob/main/LICENSE.md).
