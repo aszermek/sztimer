@@ -28,7 +28,7 @@ export class Button extends React.Component<IButtonProps> {
                 className={`
                     flex justify-center items-center py-2 gap-3 rounded-xl cursor-pointer
                     ${small ? "gap-2 h-6 text-sm" : "gap-3 h-10 text-lg"}
-                    ${regular ? (small ? "w-6" : "w-10") : "w-fit"}
+                    ${regular ? (small ? "w-6" : "w-10") : "w-fit px-4"}
                     ${color === "white" && `bg-white text-black`}
                     ${color === "red" && (type === "primary" ? `bg-red-600 text-white` : `bg-white text-red-600`)}
                     ${color === "green" && (type === "primary" ? `bg-green-600 text-white` : `bg-white text-green-600`)}
