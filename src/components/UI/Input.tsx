@@ -1,4 +1,4 @@
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { action, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
@@ -7,6 +7,7 @@ import { Icon, IIconProps } from "./Icon";
 export interface IInputProps {
     label?: string;
     value?: string | number;
+    icon?: IIconProps;
     onChange?: (newValue: string | number) => void;
     onSubmit?: (value: string | number) => void;
     isTimer?: boolean;
@@ -27,6 +28,7 @@ class Input extends React.Component<IInputProps> {
             update: action,
             onChange: action,
             onFocus: action,
+            onBlur: action,
             onSubmit: action,
         });
     }
@@ -62,29 +64,53 @@ class Input extends React.Component<IInputProps> {
         this.update("isFocused", true);
     };
 
+    onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        this.update("isFocused", false);
+    };
+
     onSubmit = (value: string | number) => {
         if (this.props.onSubmit) {
             this.props.onSubmit(value);
         }
     };
 
+    onClickIcon = () => {
+        if (this.isFocused) {
+            this.onSubmit(this.value);
+        }
+    }
+
     render() {
-        const { label, value, onChange, isTimer } = this.props;
+        const { label, value, icon, onChange, isTimer } = this.props;
 
         return (
-            <div className={`flex ${isTimer && "justify-center"}`}>
+            <div className={`relative flex ${isTimer && "justify-center"}`}>
                 <input
                     className={`
-                        flex border border-slate-400 align-center
+                        flex align-center rounded-lg shadow-[inset_1px_0px_rgb(148 163 184)] border border-slate-400
                         ${
                             isTimer
                                 ? "w-1/2 rounded-lg p-3 font-vt323 text-9xl text-center shadow-emboss"
-                                : "rounded-md px-2 py-1"
+                                : "w-full rounded-lg p-2"
                         }
                     `}
                     onFocus={this.onFocus}
+                    onBlur={this.onBlur}
                     onChange={this.onChange}
                 />
+                {!this.isFocused && !this.value && (
+                    <div className="absolute left-0 px-2 h-full flex items-center text-slate-400">
+                        {label}
+                    </div>
+                )}
+                <div
+                    className={`absolute right-0 px-2 py-1 h-full flex items-center ${
+                        !this.isFocused ? "text-slate-400" : "cursor-pointer"
+                    }`}
+                    onClick={this.onClickIcon}
+                >
+                    <Icon {...icon} />
+                </div>
             </div>
         );
     }

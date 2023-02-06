@@ -4,7 +4,7 @@ import MainStore from "./MainStore";
 
 export class TimerStore {
     MainStore: MainStore;
-    withInspection: boolean = false;
+    withInspection: boolean = true;
     isManualEnter: boolean = false;
     isRunningTimer: boolean = false;
     isRunningInspection: boolean = false;

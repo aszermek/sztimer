@@ -1,3 +1,4 @@
+import { PlusIcon } from "@heroicons/react/20/solid";
 import { observer } from "mobx-react";
 import * as React from "react";
 import { Events } from "../models/Events";
@@ -28,19 +29,26 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
             (event) => event.key === selectedEvent
         ).sessions;
 
-        const optionsEvent = Events.map((event) => {
+        const optionsEvent: IDropdownOption[] = Events.map((event) => {
             return {
                 key: event.key,
                 value: event.label,
                 icon: event.icon,
             };
         });
-        const optionsSession = selectedEventSessions.map((session) => {
-            return {
+        const optionsSession: IDropdownOption[] = selectedEventSessions.map((session) => {
+            const sessions = {
                 key: session,
                 value: session,
             };
+
+            return sessions;
         });
+        // optionsSession.push({
+        //     key: "addSession",
+        //     value: "Add session",
+        //     icon: {icon: PlusIcon}
+        // })
 
         return (
             <div className="flex gap-2">
@@ -55,6 +63,7 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
                     label="Event"
                     selectedKey={MainStore.selectedSession}
                     onChange={this.onChangeSession}
+                    newOption
                 />
             </div>
         );

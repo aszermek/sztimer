@@ -1,8 +1,9 @@
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { action, computed, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
 import { Icon, IIconProps } from "./Icon";
+import Input from "./Input";
 
 export interface IDropdownOption {
     key: string | number;
@@ -16,6 +17,8 @@ export interface IDropdownProps {
     selectedKey?: string;
     onClick?: () => void;
     onChange?: (key: string | number, option: IDropdownOption) => void;
+    newOption?: boolean;
+    onSubmitNewOption?: () => void;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
@@ -86,7 +89,7 @@ class Dropdown extends React.Component<IDropdownProps> {
     }
 
     render() {
-        const { label, options, selectedKey, onClick, onChange } = this.props;
+        const { label, options, selectedKey, onClick, onChange, newOption, onSubmitNewOption } = this.props;
         const { icon, value } = this.selectedOption || {
             value: options[0].value,
             icon: undefined,
@@ -123,6 +126,7 @@ class Dropdown extends React.Component<IDropdownProps> {
                                 {option.value}
                             </div>
                         ))}
+                        {newOption && <div className="flex items-center rounded-lg z-10"><Input label="Add session" icon={{icon: PlusIcon}} /></div>}
                     </div>
                 )}
             </div>

@@ -1,3 +1,4 @@
+import { PlusIcon } from "@heroicons/react/20/solid";
 import { observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
@@ -41,7 +42,7 @@ class Settings extends React.Component<ISettingsProps> {
                     value={MainStore.TimerStore.isManualEnter}
                     onChange={this.onChangeTimerEnter}
                 />
-                <Input />
+                <Input label="asd" icon={{icon: PlusIcon}} />
             </div>
         );
     }
