@@ -6,11 +6,10 @@ import ResultFlagger from "./components/results/ResultFlagger";
 import ResultNotifications from "./components/results/ResultNotifications";
 import Results from "./components/results/Results";
 import Scramble from "./components/scramble/Scramble";
-import Timer from "./components/timer/Timer";
+import Settings from "./components/settings/Settings";
 import Card from "./components/UI/Card";
 import MainStore from "./stores/MainStore";
-import Checkbox from "./components/UI/Checkbox";
-import Input from "./components/UI/Input";
+import Timer from "./components/timer/Timer";
 
 class App extends React.Component {
     MainStore: MainStore;
@@ -30,8 +29,7 @@ class App extends React.Component {
                             id="viewer"
                             className="flex w-full justify-center"
                         />
-                        <Checkbox value={true} label="Inspection" />
-                        <Input />
+                        <Settings MainStore={MainStore} />
                     </Card>
                     <div className="col-span-6 overflow-hidden px-8">
                         <div className="flex flex-col gap-8 items-center pt-8">
@@ -41,14 +39,7 @@ class App extends React.Component {
                                 event={MainStore.selectedEvent}
                             />
                             <div className="fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 items-center justify-center">
-                                <Timer
-                                    MainStore={MainStore}
-                                    TimerStore={MainStore.TimerStore}
-                                    inspection
-                                />
-                                <ResultFlagger
-                                    ResultsStore={MainStore.ResultsStore}
-                                />
+                                <Timer MainStore={MainStore} />
                             </div>
                         </div>
                     </div>

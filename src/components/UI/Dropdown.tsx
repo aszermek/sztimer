@@ -15,7 +15,7 @@ export interface IDropdownProps {
     options?: IDropdownOption[];
     selectedKey?: string;
     onClick?: () => void;
-    onChanged?: (key: string | number, option: IDropdownOption) => void;
+    onChange?: (key: string | number, option: IDropdownOption) => void;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
@@ -33,7 +33,7 @@ class Dropdown extends React.Component<IDropdownProps> {
             isOpen: observable,
             update: action,
             onClick: action,
-            onChanged: action,
+            onChange: action,
             selectedOption: computed,
         });
     }
@@ -71,10 +71,10 @@ class Dropdown extends React.Component<IDropdownProps> {
         }
     };
 
-    onChanged = (option: IDropdownOption) => {
+    onChange = (option: IDropdownOption) => {
         this.update("selectedKey", option.key);
-        if (this.props.onChanged) {
-            this.props.onChanged(option.key, option);
+        if (this.props.onChange) {
+            this.props.onChange(option.key, option);
         }
         this.update("isOpen", false);
     };
@@ -86,7 +86,7 @@ class Dropdown extends React.Component<IDropdownProps> {
     }
 
     render() {
-        const { label, options, selectedKey, onClick, onChanged } = this.props;
+        const { label, options, selectedKey, onClick, onChange } = this.props;
         const { icon, value } = this.selectedOption || {
             value: options[0].value,
             icon: undefined,
@@ -117,7 +117,7 @@ class Dropdown extends React.Component<IDropdownProps> {
                             <div
                                 key={index}
                                 className="flex gap-4 p-2 items-center rounded-lg hover:bg-slate-300"
-                                onClick={() => this.onChanged(option)}
+                                onClick={() => this.onChange(option)}
                             >
                                 {option.icon && <Icon {...option.icon} />}
                                 {option.value}

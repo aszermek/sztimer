@@ -5,6 +5,7 @@ import MainStore from "./MainStore";
 export class TimerStore {
     MainStore: MainStore;
     withInspection: boolean = false;
+    isManualEnter: boolean = false;
     isRunningTimer: boolean = false;
     isRunningInspection: boolean = false;
     isSpacebarPressed: boolean = false;
@@ -111,7 +112,7 @@ export class TimerStore {
             scramble: this.MainStore.ScrambleStore.scramble,
             date: new Date(),
             event: this.MainStore.selectedEvent,
-            session: this.MainStore.selectedSession
+            session: this.MainStore.selectedSession,
         } as IResult);
 
         const results = this.MainStore.ResultsStore.filteredResults;
@@ -124,5 +125,17 @@ export class TimerStore {
         }
 
         this.cachedInspectionPenalty = null;
+    };
+
+    onSubmitManualTime = (value: string | number) => {
+        console.log("submitting manual time", value, typeof value)
+            this.MainStore.ResultsStore.addResult({
+                time: Number(value),
+                scramble: this.MainStore.ScrambleStore.scramble,
+                date: new Date(),
+                event: this.MainStore.selectedEvent,
+                session: this.MainStore.selectedSession,
+            } as IResult);
+        
     };
 }
