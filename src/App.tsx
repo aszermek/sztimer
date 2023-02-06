@@ -9,6 +9,8 @@ import Scramble from "./components/scramble/Scramble";
 import Timer from "./components/timer/Timer";
 import Card from "./components/UI/Card";
 import MainStore from "./stores/MainStore";
+import Checkbox from "./components/UI/Checkbox";
+import Input from "./components/UI/Input";
 
 class App extends React.Component {
     MainStore: MainStore;
@@ -23,11 +25,13 @@ class App extends React.Component {
         return (
             <>
                 <div className="grid grid-cols-12 bg-slate-200 h-screen">
-                    <Card>
+                    <Card className="h-full flex flex-col gap-4 overflow-hidden">
                         <div
                             id="viewer"
                             className="flex w-full justify-center"
                         />
+                        <Checkbox value={true} label="Inspection" />
+                        <Input />
                     </Card>
                     <div className="col-span-6 overflow-hidden px-8">
                         <div className="flex flex-col gap-8 items-center pt-8">
