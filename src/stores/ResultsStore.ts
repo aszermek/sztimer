@@ -16,7 +16,7 @@ export class ResultsStore {
 
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;
-        this.StatisticsStore = new StatisticsStore(this)
+        this.StatisticsStore = new StatisticsStore(this);
 
         makeAutoObservable(this, {});
 
@@ -97,6 +97,10 @@ export class ResultsStore {
     };
 
     removeResult = (result: IResult) => {
+        if (this.isOpenResultModal) {
+            this.update("isOpenResultModal", false);
+        }
+
         this._results.splice(this._results.indexOf(result));
         this.saveResultsToLocalStorage();
     };
@@ -121,7 +125,7 @@ export class ResultsStore {
         const textToCopy = this.detailsRef?.innerText;
         navigator.clipboard.writeText(textToCopy);
         this.isCopiedDetails = true;
-    }
+    };
 
     closeDetails = () => {
         this.isOpenResultModal = false;
@@ -129,7 +133,7 @@ export class ResultsStore {
         if (this.isCopiedDetails) {
             this.isCopiedDetails = false;
         }
-    }
+    };
 
     checkForPB = () => {
         const results = this.filteredResults;
