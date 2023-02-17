@@ -4,6 +4,11 @@ import { observer } from "mobx-react";
 import * as React from "react";
 import { Icon, IIconProps } from "./Icon";
 
+export interface IInputAlertProps {
+    label?: string;
+    icon?: IIconProps;
+}
+
 export interface IInputProps {
     label?: string;
     value?: string | number;
@@ -11,6 +16,7 @@ export interface IInputProps {
     onChange?: (newValue: string | number) => void;
     onSubmit?: (value: string | number) => void;
     isTimer?: boolean;
+    error?: IInputAlertProps;
 }
 
 class Input extends React.Component<IInputProps> {
@@ -69,6 +75,10 @@ class Input extends React.Component<IInputProps> {
     };
 
     onSubmit = (value: string | number) => {
+        if (!this.props.error) {
+            this.value = "";
+        }
+
         if (this.props.onSubmit) {
             this.props.onSubmit(value);
         }
@@ -77,40 +87,54 @@ class Input extends React.Component<IInputProps> {
     onClickIcon = () => {
         if (this.isFocused) {
             this.onSubmit(this.value);
+            console.log("click icon", this.value);
         }
-    }
+    };
 
     render() {
-        const { label, value, icon, onChange, isTimer } = this.props;
+        const { label, value, icon, onChange, isTimer, error } = this.props;
 
         return (
-            <div className={`relative flex ${isTimer && "justify-center"}`}>
-                <input
-                    className={`
-                        flex align-center rounded-lg shadow-[inset_1px_0px_rgb(148 163 184)] border border-slate-400
-                        ${
-                            isTimer
-                                ? "w-1/2 rounded-lg p-3 font-vt323 text-9xl text-center shadow-emboss"
-                                : "w-full rounded-lg p-2"
-                        }
+            <div className={`flex flex-col gap-2 ${isTimer && "justify-center w-1/2"}`}>
+                <div className={`relative`}>
+                    <input
+                        className={`
+                    flex align-center rounded-lg border border-slate-400 w-full
+                    ${
+                        isTimer
+                            ? "rounded-lg p-3 font-vt323 text-9xl text-center shadow-emboss"
+                            : "rounded-lg p-2"
+                    }
+                    ${error ? "border-red-600" : "border-slate-400"}
                     `}
-                    onFocus={this.onFocus}
-                    onBlur={this.onBlur}
-                    onChange={this.onChange}
-                />
-                {!this.isFocused && !this.value && (
-                    <div className="absolute left-0 px-2 h-full flex items-center text-slate-400">
-                        {label}
+                        onFocus={this.onFocus}
+                        onBlur={this.onBlur}
+                        onChange={this.onChange}
+                        value={this.value}
+                    />
+                    {!this.isFocused && !this.value && (
+                        <div className="absolute inset-y-0 left-0 px-2 h-full flex items-center text-slate-400 pointer-events-none">
+                            {label}
+                        </div>
+                    )}
+                    <div
+                        className={`absolute inset-y-0 right-0 px-2 py-1 h-full flex items-center ${
+                            !this.isFocused
+                                ? "text-slate-400"
+                                : "cursor-pointer"
+                        }`}
+                        onClick={this.onClickIcon}
+                    >
+                        <Icon {...icon} />
+                    </div>
+                </div>
+
+                {error && (
+                    <div className="flex justify-between gap-3 text-red-600">
+                        {error.label}
+                        <Icon {...error.icon} />
                     </div>
                 )}
-                <div
-                    className={`absolute right-0 px-2 py-1 h-full flex items-center ${
-                        !this.isFocused ? "text-slate-400" : "cursor-pointer"
-                    }`}
-                    onClick={this.onClickIcon}
-                >
-                    <Icon {...icon} />
-                </div>
             </div>
         );
     }

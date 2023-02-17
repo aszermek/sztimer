@@ -16,6 +16,8 @@ export class TimerStore {
     timerIntervalId: number | undefined;
     inspectionIntervalId: number | undefined;
     cachedInspectionPenalty: PenaltyTypes = null;
+    manualTimeError: string | undefined;
+    isOpenManualInfoModal: boolean = false;
 
     constructor(mainStore: MainStore) {
         this.MainStore = mainStore;
@@ -127,15 +129,86 @@ export class TimerStore {
         this.cachedInspectionPenalty = null;
     };
 
+    parseTime = (enteredTime: string): number | undefined => {
+        const regex = new RegExp(/^(\d*[:]?)(\d*[:]?)(\d*[,.]?)(\d*$)/);
+        if (!regex.test(enteredTime)) return;
+
+        if (enteredTime.includes(".") || enteredTime.includes(",")) {
+            // Add the value directly
+            return parseFloat(enteredTime);
+        } else {
+            // Add the last two digits as decimal places
+            return parseFloat(
+                enteredTime.slice(0, -2) + "." + enteredTime.slice(-2)
+            );
+        }
+    };
+
     onSubmitManualTime = (value: string | number) => {
-        console.log("submitting manual time", value, typeof value)
-            this.MainStore.ResultsStore.addResult({
-                time: Number(value),
-                scramble: this.MainStore.ScrambleStore.scramble,
-                date: new Date(),
-                event: this.MainStore.selectedEvent,
-                session: this.MainStore.selectedSession,
-            } as IResult);
-        
+        //if (dnf)
+        //if x.xx+
+        //if contains !(digit, ".", ",") invalid
+
+        //^\d*([,.]\d*)?$
+
+        const resultData = {
+            scramble: this.MainStore.ScrambleStore.scramble,
+            date: new Date(),
+            event: this.MainStore.selectedEvent,
+            session: this.MainStore.selectedSession,
+        } as IResult;
+
+        const valueAsString = value as string;
+
+        const error = "Invalid format";
+
+        const isDnfFormat: boolean =
+            valueAsString.toLowerCase().slice(0, 4) === "dnf(" &&
+            valueAsString.slice(-1) === ")";
+
+        const isPlusTwoFormat: boolean =
+            valueAsString.slice(-1) === "+";
+
+        if (isDnfFormat) {
+            const time = valueAsString.slice(4, -1);
+            const parsedTime = this.parseTime(time);
+
+            if (!parsedTime) {
+                this.manualTimeError = error;
+            } else {
+                this.MainStore.ResultsStore.addResult({
+                    ...resultData,
+                    time: parsedTime,
+                    penalty: "dnf"
+                } as IResult);
+                this.manualTimeError = undefined;
+            }
+        } else if (isPlusTwoFormat) {
+            const time = valueAsString.slice(0, -1);
+            const parsedTime = this.parseTime(time);
+
+            if (!parsedTime) {
+                this.manualTimeError = error;
+            } else {
+                this.MainStore.ResultsStore.addResult({
+                    ...resultData,
+                    time: parsedTime,
+                    penalty: "+2"
+                } as IResult);
+                this.manualTimeError = undefined;
+            }
+        } else {
+            const parsedTime = this.parseTime(valueAsString);
+
+            if (!parsedTime) {
+                this.manualTimeError = error;
+            } else {
+                this.MainStore.ResultsStore.addResult({
+                    ...resultData,
+                    time: parsedTime,
+                } as IResult);
+                this.manualTimeError = undefined;
+            }
+        }
     };
 }

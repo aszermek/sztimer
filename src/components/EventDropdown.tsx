@@ -24,10 +24,7 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
 
     render() {
         const MainStore = this.props.MainStore;
-        const selectedEvent = MainStore.selectedEvent;
-        const selectedEventSessions = Events.find(
-            (event) => event.key === selectedEvent
-        ).sessions;
+        const { selectedEvent, selectedEventSessions } = MainStore;
 
         const optionsEvent: IDropdownOption[] = Events.map((event) => {
             return {
@@ -64,6 +61,7 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
                     selectedKey={MainStore.selectedSession}
                     onChange={this.onChangeSession}
                     newOption
+                    onSubmitNewOption={MainStore.addNewSession}
                 />
             </div>
         );

@@ -14,11 +14,21 @@ class Timer extends React.Component<ITimerProps> {
         const MainStore = this.props.MainStore;
 
         if (MainStore.TimerStore.isManualEnter) {
-            return <ManualTimer TimerStore={MainStore.TimerStore} />
+            return (
+                <>
+                    <ManualTimer TimerStore={MainStore.TimerStore} />
+                    <div className="mt-2">
+                        <ResultFlagger ResultsStore={MainStore.ResultsStore} />
+                    </div>
+                </>
+            );
         }
-        return <><SpacebarTimer TimerStore={MainStore.TimerStore} /><ResultFlagger
-        ResultsStore={MainStore.ResultsStore}
-    /></>
+        return (
+            <>
+                <SpacebarTimer TimerStore={MainStore.TimerStore} />
+                <ResultFlagger ResultsStore={MainStore.ResultsStore} />
+            </>
+        );
     }
 }
 

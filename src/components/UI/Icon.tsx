@@ -37,6 +37,6 @@ export class Icon extends React.Component<IIconProps> {
 
         const IconComponent = icon as React.ElementType;
 
-        return <div className={className} onClick={onClick}>{<IconComponent />}</div>;
+        return <div className={`${className} ${onClick && "cursor-pointer"}`} onClick={onClick}>{<IconComponent />}</div>;
     }
 }

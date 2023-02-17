@@ -18,7 +18,7 @@ export interface IDropdownProps {
     onClick?: () => void;
     onChange?: (key: string | number, option: IDropdownOption) => void;
     newOption?: boolean;
-    onSubmitNewOption?: () => void;
+    onSubmitNewOption?: (value: string) => void;
 }
 
 class Dropdown extends React.Component<IDropdownProps> {
@@ -89,7 +89,15 @@ class Dropdown extends React.Component<IDropdownProps> {
     }
 
     render() {
-        const { label, options, selectedKey, onClick, onChange, newOption, onSubmitNewOption } = this.props;
+        const {
+            label,
+            options,
+            selectedKey,
+            onClick,
+            onChange,
+            newOption,
+            onSubmitNewOption,
+        } = this.props;
         const { icon, value } = this.selectedOption || {
             value: options[0].value,
             icon: undefined,
@@ -126,7 +134,15 @@ class Dropdown extends React.Component<IDropdownProps> {
                                 {option.value}
                             </div>
                         ))}
-                        {newOption && <div className="flex items-center rounded-lg z-10"><Input label="Add session" icon={{icon: PlusIcon}} /></div>}
+                        {newOption && (
+                            <div className="flex items-center rounded-lg z-10">
+                                <Input
+                                    label="Add session"
+                                    icon={{ icon: PlusIcon }}
+                                    onSubmit={() => onSubmitNewOption(value)}
+                                />
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
