@@ -6,6 +6,7 @@ import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
 import Modal from "../UI/Modal";
 import { TimeFormatter } from "../utils/TimeFormatter";
+import ResultFlagger from "./ResultFlagger";
 
 export interface IDetailedResultsModalProps {
     MainStore?: MainStore;
@@ -42,23 +43,33 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
             <Modal
                 header="Result details"
                 footer={
-                    <div className="flex gap-4">
-                        <Button
-                            color="green"
-                            type={
-                                ResultsStore.isCopiedDetails
-                                    ? "secondary"
-                                    : "primary"
-                            }
-                            onClick={ResultsStore.copyDetails}
-                        >
-                            {ResultsStore.isCopiedDetails
-                                ? "Copied to clipboard!"
-                                : "Copy to clipboard"}
-                        </Button>
-                        <Button color="red" onClick={ResultsStore.closeDetails}>
-                            Close
-                        </Button>
+                    <div className="flex w-full justify-between">
+                        {results.length === 1 && (
+                            <div className="flex">
+                                <ResultFlagger result={results[0]} />
+                            </div>
+                        )}
+                        <div className="flex gap-4">
+                            <Button
+                                color="green"
+                                type={
+                                    ResultsStore.isCopiedDetails
+                                        ? "secondary"
+                                        : "primary"
+                                }
+                                onClick={ResultsStore.copyDetails}
+                            >
+                                {ResultsStore.isCopiedDetails
+                                    ? "Copied to clipboard!"
+                                    : "Copy to clipboard"}
+                            </Button>
+                            <Button
+                                color="red"
+                                onClick={ResultsStore.closeDetails}
+                            >
+                                Close
+                            </Button>
+                        </div>
                     </div>
                 }
                 size={8}

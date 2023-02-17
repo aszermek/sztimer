@@ -75,13 +75,13 @@ class Input extends React.Component<IInputProps> {
     };
 
     onSubmit = (value: string | number) => {
-        if (!this.props.error) {
-            this.value = "";
-        }
-
         if (this.props.onSubmit) {
             this.props.onSubmit(value);
         }
+        
+        setTimeout(() => {if (!this.props.error || this.props.error === undefined) {
+            this.value = "";
+        }}, 10)
     };
 
     onClickIcon = () => {
@@ -95,17 +95,21 @@ class Input extends React.Component<IInputProps> {
         const { label, value, icon, onChange, isTimer, error } = this.props;
 
         return (
-            <div className={`flex flex-col gap-2 ${isTimer && "justify-center w-1/2"}`}>
+            <div
+                className={`flex flex-col gap-2 ${
+                    isTimer && "justify-center w-1/2"
+                }`}
+            >
                 <div className={`relative`}>
                     <input
                         className={`
-                    flex align-center rounded-lg border border-slate-400 w-full
+                    flex align-center rounded-lg w-full outline outline-1 outline-slate-400
                     ${
                         isTimer
                             ? "rounded-lg p-3 font-vt323 text-9xl text-center shadow-emboss"
                             : "rounded-lg p-2"
                     }
-                    ${error ? "border-red-600" : "border-slate-400"}
+                    ${error ? "outline-red-600 focus:outline-2" : "outline-slate-400 focus:outline-2 focus:outline-black"}
                     `}
                         onFocus={this.onFocus}
                         onBlur={this.onBlur}
@@ -125,7 +129,7 @@ class Input extends React.Component<IInputProps> {
                         }`}
                         onClick={this.onClickIcon}
                     >
-                        <Icon {...icon} />
+                        {!isTimer && <Icon {...icon} />}
                     </div>
                 </div>
 

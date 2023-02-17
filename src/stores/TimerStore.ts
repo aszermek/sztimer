@@ -145,70 +145,44 @@ export class TimerStore {
     };
 
     onSubmitManualTime = (value: string | number) => {
-        //if (dnf)
-        //if x.xx+
-        //if contains !(digit, ".", ",") invalid
-
-        //^\d*([,.]\d*)?$
-
         const resultData = {
             scramble: this.MainStore.ScrambleStore.scramble,
             date: new Date(),
             event: this.MainStore.selectedEvent,
             session: this.MainStore.selectedSession,
-        } as IResult;
+        };
 
         const valueAsString = value as string;
 
+        const isDnfFormat =
+            valueAsString.toLowerCase().startsWith("dnf(") &&
+            valueAsString.endsWith(")");
+        const isPlusTwoFormat = valueAsString.endsWith("+");
+
         const error = "Invalid format";
 
-        const isDnfFormat: boolean =
-            valueAsString.toLowerCase().slice(0, 4) === "dnf(" &&
-            valueAsString.slice(-1) === ")";
-
-        const isPlusTwoFormat: boolean =
-            valueAsString.slice(-1) === "+";
+        let penalty = null;
+        let time = valueAsString;
 
         if (isDnfFormat) {
-            const time = valueAsString.slice(4, -1);
-            const parsedTime = this.parseTime(time);
-
-            if (!parsedTime) {
-                this.manualTimeError = error;
-            } else {
-                this.MainStore.ResultsStore.addResult({
-                    ...resultData,
-                    time: parsedTime,
-                    penalty: "dnf"
-                } as IResult);
-                this.manualTimeError = undefined;
-            }
+            time = time.slice(4, -1);
+            penalty = "dnf";
         } else if (isPlusTwoFormat) {
-            const time = valueAsString.slice(0, -1);
-            const parsedTime = this.parseTime(time);
+            time = time.slice(0, -1);
+            penalty = "+2";
+        }
 
-            if (!parsedTime) {
-                this.manualTimeError = error;
-            } else {
-                this.MainStore.ResultsStore.addResult({
-                    ...resultData,
-                    time: parsedTime,
-                    penalty: "+2"
-                } as IResult);
-                this.manualTimeError = undefined;
-            }
+        const parsedTime = this.parseTime(time);
+
+        if (!parsedTime) {
+            this.manualTimeError = error;
         } else {
-            const parsedTime = this.parseTime(valueAsString);
-
-            if (!parsedTime) {
-                this.manualTimeError = error;
-            } else {
-                this.MainStore.ResultsStore.addResult({
-                    ...resultData,
-                    time: parsedTime,
-                } as IResult);
-                this.manualTimeError = undefined;
-            }
+            this.MainStore.ResultsStore.addResult({
+                ...resultData,
+                time: parsedTime,
+                penalty: penalty as PenaltyTypes,
+            });
+            this.manualTimeError = undefined;
         }
     };
 }
