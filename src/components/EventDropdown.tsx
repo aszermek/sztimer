@@ -1,5 +1,5 @@
 import { PlusIcon } from "@heroicons/react/20/solid";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { Events } from "../models/Events";
 import MainStore from "../stores/MainStore";
@@ -68,4 +68,4 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
     }
 }
 
-export default observer(EventDropdown);
+export default inject('MainStore')(observer(EventDropdown));

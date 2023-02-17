@@ -1,5 +1,5 @@
 import { InformationCircleIcon } from "@heroicons/react/20/solid";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { TimerStore } from "../../stores/TimerStore";
@@ -97,4 +97,4 @@ class ManualTimer extends React.Component<IManualTimerProps> {
     }
 }
 
-export default observer(ManualTimer);
+export default inject('TimerStore')(observer(ManualTimer));

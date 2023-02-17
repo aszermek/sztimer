@@ -1,5 +1,5 @@
 import { PlusIcon } from "@heroicons/react/20/solid";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import Checkbox from "../UI/Checkbox";
@@ -48,4 +48,4 @@ class Settings extends React.Component<ISettingsProps> {
     }
 }
 
-export default observer(Settings);
+export default inject('MainStore')(observer(Settings));

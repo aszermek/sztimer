@@ -1,5 +1,5 @@
 import { TrashIcon } from "@heroicons/react/20/solid";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
@@ -10,7 +10,6 @@ import { TimeFormatter } from "../utils/TimeFormatter";
 import DetailedResultsModal from "./DetailedResultsModal";
 
 export interface IResultsProps {
-    MainStore?: MainStore;
     ResultsStore?: ResultsStore;
 }
 
@@ -164,4 +163,4 @@ class Results extends React.Component<IResultsProps> {
     }
 }
 
-export default observer(Results);
+export default inject('ResultsStore')(observer(Results));

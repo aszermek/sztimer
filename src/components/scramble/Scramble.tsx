@@ -1,12 +1,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { ScrambleStore } from "../../stores/ScrambleStore";
 import { Button } from "../UI/Button";
 
 export interface IScrambleProps {
-    MainStore?: MainStore;
     ScrambleStore?: ScrambleStore;
     event: any;
 }
@@ -44,4 +43,4 @@ class Scramble extends React.Component<IScrambleProps> {
     }
 }
 
-export default observer(Scramble);
+export default inject('ScrambleStore')(observer(Scramble));

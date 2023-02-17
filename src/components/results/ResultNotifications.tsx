@@ -1,5 +1,5 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { Events } from "../../models/Events";
 import MainStore from "../../stores/MainStore";
@@ -8,7 +8,6 @@ import { Button } from "../UI/Button";
 import Notification from "../UI/Notification";
 
 export interface IResultNotificationsProps {
-    MainStore?: MainStore;
     ResultsStore?: ResultsStore;
 }
 
@@ -43,4 +42,4 @@ class ResultNotifications extends React.Component<IResultNotificationsProps> {
     }
 }
 
-export default observer(ResultNotifications);
+export default inject('ResultsStore')(observer(ResultNotifications));

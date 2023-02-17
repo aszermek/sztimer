@@ -1,4 +1,4 @@
-import { observer } from "mobx-react";
+import { inject, observer, Provider } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import ResultFlagger from "../results/ResultFlagger";
@@ -13,23 +13,27 @@ class Timer extends React.Component<ITimerProps> {
     render() {
         const MainStore = this.props.MainStore;
 
-        if (MainStore.TimerStore.isManualEnter) {
-            return (
-                <>
-                    <ManualTimer TimerStore={MainStore.TimerStore} />
-                    <div className="mt-2">
-                        <ResultFlagger ResultsStore={MainStore.ResultsStore} />
-                    </div>
-                </>
-            );
-        }
+        const results = MainStore.ResultsStore.filteredResults;
+        const latestResult = results[results.length - 1];
+
         return (
             <>
-                <SpacebarTimer TimerStore={MainStore.TimerStore} />
-                <ResultFlagger ResultsStore={MainStore.ResultsStore} />
+                <Provider
+                    TimerStore={MainStore.TimerStore}
+                    ResultsStore={MainStore.ResultsStore}
+                >
+                    {MainStore.TimerStore.isManualEnter ? (
+                        <ManualTimer />
+                    ) : (
+                        <SpacebarTimer />
+                    )}
+                    <div className="mt-2">
+                        <ResultFlagger result={latestResult} />
+                    </div>
+                </Provider>
             </>
         );
     }
 }
 
-export default observer(Timer);
+export default inject("MainStore")(observer(Timer));

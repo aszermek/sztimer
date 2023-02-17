@@ -1,46 +1,44 @@
 import { CheckIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
+import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
 
 export interface IResultFlaggerProps {
-    MainStore?: MainStore;
     ResultsStore?: ResultsStore;
+    result: IResult;
 }
 
 class ResultFlagger extends React.Component<IResultFlaggerProps> {
     render() {
-        const ResultsStore = this.props.ResultsStore;
-        const results = ResultsStore.filteredResults;
+        const { ResultsStore, result } = this.props;
 
-        if (!results.length) return null;
-
-        const latestResult = results[results.length - 1];
+        if (!result) return null;
 
         return (
             <div className="flex flex-row gap-3">
                 <Button
                     regular
-                    onClick={() => ResultsStore.addPenalty(latestResult, null)}
+                    onClick={() => ResultsStore.addPenalty(result, null)}
                     icon={{ icon: CheckIcon }}
                 />
                 <Button
                     regular
-                    onClick={() => ResultsStore.addPenalty(latestResult, "+2")}
+                    onClick={() => ResultsStore.addPenalty(result, "+2")}
                 >
                     +2
                 </Button>
                 <Button
                     regular
-                    onClick={() => ResultsStore.addPenalty(latestResult, "dnf")}
+                    onClick={() => ResultsStore.addPenalty(result, "dnf")}
                 >
                     DNF
                 </Button>
                 <Button
                     regular
-                    onClick={() => ResultsStore.removeResult(latestResult)}
+                    onClick={() => ResultsStore.removeResult(result)}
                     icon={{ icon: XMarkIcon }}
                 />
             </div>
@@ -48,4 +46,4 @@ class ResultFlagger extends React.Component<IResultFlaggerProps> {
     }
 }
 
-export default observer(ResultFlagger);
+export default inject('ResultsStore')(observer(ResultFlagger));

@@ -1,4 +1,4 @@
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { TimerStore } from "../../stores/TimerStore";
@@ -86,4 +86,4 @@ class SpacebarTimer extends React.Component<ISpacebarTimerProps> {
     }
 }
 
-export default observer(SpacebarTimer);
+export default inject('TimerStore')(observer(SpacebarTimer));
