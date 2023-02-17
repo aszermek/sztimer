@@ -81,10 +81,10 @@ class Modal extends React.Component<IModalProps> {
 
         return (
             <>
-                <div className="fixed inset-0 h-screen z-10 bg-black/75" />
+                <div className="fixed inset-0 h-screen z-30 bg-black/75" />
                 <div
                     className={`
-					fixed z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${sizeClassName}
+					fixed z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ${sizeClassName}
 					`}
                 >
                     <Card>
