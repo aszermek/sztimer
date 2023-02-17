@@ -101,7 +101,7 @@ export class ResultsStore {
             this.update("isOpenResultModal", false);
         }
 
-        this._results.splice(this._results.indexOf(result));
+        this._results.splice(this._results.indexOf(result), 1);
         this.saveResultsToLocalStorage();
     };
 
