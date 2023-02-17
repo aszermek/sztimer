@@ -42,7 +42,7 @@ class Settings extends React.Component<ISettingsProps> {
                     value={MainStore.TimerStore.isManualEnter}
                     onChange={this.onChangeTimerEnter}
                 />
-                <Input label="asd" icon={{icon: PlusIcon}} />
+                {/* <Input label="asd" icon={{icon: PlusIcon}} /> */}
             </div>
         );
     }

@@ -129,19 +129,40 @@ export class TimerStore {
         this.cachedInspectionPenalty = null;
     };
 
+    parseSeconds = (seconds: string): number => {
+        const formattedSeconds = seconds.replace(",", ".");
+        if (formattedSeconds.includes(".")) {
+            return parseFloat(formattedSeconds);
+        } else {
+            return parseFloat(
+                formattedSeconds.slice(0, -2) + "." + formattedSeconds.slice(-2)
+            );
+        }
+    };
+
     parseTime = (enteredTime: string): number | undefined => {
         const regex = new RegExp(/^(\d*[:]?)(\d*[:]?)(\d*[,.]?)(\d*$)/);
         if (!regex.test(enteredTime)) return;
 
-        if (enteredTime.includes(".") || enteredTime.includes(",")) {
-            // Add the value directly
-            return parseFloat(enteredTime);
+        const timeComponents = enteredTime.split(":");
+        let hours = 0,
+            minutes = 0,
+            seconds = 0;
+
+        if (timeComponents.length === 3) {
+            hours = parseInt(timeComponents[0]);
+            minutes = parseInt(timeComponents[1]);
+            seconds = this.parseSeconds(timeComponents[2]);
+        } else if (timeComponents.length === 2) {
+            minutes = parseInt(timeComponents[0]);
+            seconds = this.parseSeconds(timeComponents[1]);
         } else {
-            // Add the last two digits as decimal places
-            return parseFloat(
-                enteredTime.slice(0, -2) + "." + enteredTime.slice(-2)
-            );
+            seconds = this.parseSeconds(timeComponents[0]);
         }
+
+        const totalSeconds = hours * 60 * 60 + minutes * 60 + seconds;
+
+        return totalSeconds;
     };
 
     onSubmitManualTime = (value: string | number) => {
