@@ -49,7 +49,7 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
                                 <ResultFlagger result={results[0]} />
                             </div>
                         )}
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 w-full justify-end">
                             <Button
                                 color="green"
                                 type={
@@ -139,8 +139,11 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
                                     />
                                 )}
                                 {" - "}
-                                {result.scramble} (@
-                                {result.date.toLocaleString()})
+                                {result.scramble}
+                                {" - "}
+                                @{result.date.toLocaleString()}
+                                {" "}
+                                {result.comment && `(${result.comment})`}
                             </div>
                         ))}
                 </div>

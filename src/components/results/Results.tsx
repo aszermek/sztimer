@@ -1,10 +1,10 @@
-import { TrashIcon } from "@heroicons/react/20/solid";
+import { ChatBubbleLeftIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
-import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
 import { Button } from "../UI/Button";
+import { Icon } from "../UI/Icon";
 import Modal from "../UI/Modal";
 import { TimeFormatter } from "../utils/TimeFormatter";
 import DetailedResultsModal from "./DetailedResultsModal";
@@ -117,15 +117,25 @@ class Results extends React.Component<IResultsProps> {
                                         {results.length - i}
                                     </div>
                                     <div
-                                        className="col-span-2 mx-2 my-1 p-1 text-center cursor-pointer rounded-3xl hover:bg-slate-100"
+                                        className="col-span-2 flex gap-1 mx-2 my-1 p-1 justify-center text-center cursor-pointer rounded-3xl hover:bg-slate-100"
                                         onClick={() =>
                                             ResultsStore.openDetails([result])
                                         }
+                                        title={result.comment && result.comment}
                                     >
+                                        {result.comment && (
+                                            <div className="w-3" />
+                                        )}
                                         <TimeFormatter
                                             time={result.time}
                                             penalty={result.penalty}
                                         />
+                                        {result.comment && (
+                                            <Icon
+                                                icon={ChatBubbleLeftIcon}
+                                                size="xs"
+                                            />
+                                        )}
                                     </div>
                                     <div
                                         className={`col-span-2 mx-2 my-1 p-1 text-center ${
@@ -163,4 +173,4 @@ class Results extends React.Component<IResultsProps> {
     }
 }
 
-export default inject('ResultsStore')(observer(Results));
+export default inject("ResultsStore")(observer(Results));

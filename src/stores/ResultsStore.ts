@@ -7,6 +7,7 @@ export class ResultsStore {
     MainStore: MainStore;
     StatisticsStore: StatisticsStore;
     _results: IResult[] = [];
+    isOpenCommentInput: boolean = false;
     isOpenDeleteModal: boolean = false;
     isOpenResultModal: boolean = false;
     openResults: IResult[] = [];
@@ -94,6 +95,7 @@ export class ResultsStore {
     addComment = (result: IResult, comment: string) => {
         result.comment = comment;
         this.saveResultsToLocalStorage();
+        this.isOpenCommentInput = false;
     };
 
     removeResult = (result: IResult) => {

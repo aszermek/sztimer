@@ -1,6 +1,6 @@
 import React, { HTMLAttributes } from "react";
 
-export type IconSize = "sm" | "md" | "lg";
+export type IconSize = "xs" | "sm" | "md" | "lg";
 
 export interface IIconProps extends HTMLAttributes<HTMLDivElement> {
     icon: React.ElementType | ((p: any) => JSX.Element);
@@ -24,6 +24,9 @@ export class Icon extends React.Component<IIconProps> {
 
         let className: string = "";
         switch (size) {
+            case "xs":
+                className = "w-3 h-3";
+                break;
             case "sm":
                 className = "w-4 h-4";
                 break;
@@ -37,6 +40,13 @@ export class Icon extends React.Component<IIconProps> {
 
         const IconComponent = icon as React.ElementType;
 
-        return <div className={`${className} ${onClick && "cursor-pointer"}`} onClick={onClick}>{<IconComponent />}</div>;
+        return (
+            <div
+                className={`${className} ${onClick && "cursor-pointer"}`}
+                onClick={onClick}
+            >
+                {<IconComponent />}
+            </div>
+        );
     }
 }

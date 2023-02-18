@@ -32,7 +32,7 @@ export class Button extends React.Component<IButtonProps> {
                     ${color === "white" && `bg-white text-black`}
                     ${color === "red" && (type === "primary" ? `bg-red-600 text-white` : `bg-white text-red-600`)}
                     ${color === "green" && (type === "primary" ? `bg-green-600 text-white` : `bg-white text-green-600`)}
-                    ${color === "grey" && `bg-slate-100/20 text-black shadow-emboss active:shadow-embossHover`}
+                    ${color === "grey" && `bg-slate-200/50 text-black shadow-emboss active:shadow-embossHover`}
                 `}
                 onClick={onClick}
             >

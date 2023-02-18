@@ -1,4 +1,3 @@
-import { CheckIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { action, makeObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import * as React from "react";
@@ -17,13 +16,14 @@ export interface IInputProps {
     onSubmit?: (value: string | number) => void;
     isTimer?: boolean;
     error?: IInputAlertProps;
+    forceFocus?: boolean;
 }
 
 class Input extends React.Component<IInputProps> {
     public static defaultProps: Partial<IInputProps> = {};
 
     value: string | number = this.props.value;
-    isFocused: boolean = false;
+    isFocused: boolean = this.props.forceFocus;
 
     constructor(props: IInputProps) {
         super(props);
@@ -41,6 +41,9 @@ class Input extends React.Component<IInputProps> {
 
     componentDidMount() {
         document.addEventListener("keydown", this.handleKeyDown);
+        if (this.props.forceFocus) {
+            this.onFocus();
+        }
     }
 
     componentWillUnmount() {
@@ -66,7 +69,7 @@ class Input extends React.Component<IInputProps> {
         }
     };
 
-    onFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    onFocus = (e?: React.FocusEvent<HTMLInputElement>) => {
         this.update("isFocused", true);
     };
 
@@ -94,7 +97,8 @@ class Input extends React.Component<IInputProps> {
     };
 
     render() {
-        const { label, value, icon, onChange, isTimer, error } = this.props;
+        const { label, value, icon, onChange, isTimer, error, forceFocus } =
+            this.props;
 
         return (
             <div
@@ -121,6 +125,7 @@ class Input extends React.Component<IInputProps> {
                         onBlur={this.onBlur}
                         onChange={this.onChange}
                         value={this.value}
+                        autoFocus={forceFocus}
                     />
                     {!this.isFocused && !this.value && (
                         <div className="absolute inset-y-0 left-0 px-2 h-full flex items-center text-slate-400 pointer-events-none">
@@ -128,12 +133,8 @@ class Input extends React.Component<IInputProps> {
                         </div>
                     )}
                     <div
-                        className={`absolute inset-y-0 right-0 px-2 py-1 h-full flex items-center ${
-                            !this.isFocused
-                                ? "text-slate-400"
-                                : "cursor-pointer"
-                        }`}
-                        onClick={this.onClickIcon}
+                        className={`absolute inset-y-0 right-0 px-2 py-1 h-full flex gap-2 items-center text-slate-400 hover:text-black cursor-pointer`}
+                        onClick={icon.onClick}
                     >
                         {!isTimer && <Icon {...icon} />}
                     </div>
