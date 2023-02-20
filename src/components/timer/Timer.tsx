@@ -36,4 +36,4 @@ class Timer extends React.Component<ITimerProps> {
     }
 }
 
-export default inject("MainStore")(observer(Timer));
+export default inject('MainStore')(observer(Timer));

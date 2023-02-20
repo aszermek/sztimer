@@ -110,4 +110,4 @@ class ManualTimer extends React.Component<IManualTimerProps> {
     }
 }
 
-export default inject("TimerStore")(observer(ManualTimer));
+export default inject('TimerStore')(observer(ManualTimer));

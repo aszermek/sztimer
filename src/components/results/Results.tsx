@@ -43,7 +43,7 @@ class Results extends React.Component<IResultsProps> {
                     Are you sure you want to delete all results from the current
                     session?
                 </Modal>
-                <DetailedResultsModal ResultsStore={ResultsStore} />
+                <DetailedResultsModal />
                 <div className="flex flex-col">
                     <div className="py-2 text-left font-semibold">
                         <div className="flex flex-row gap-4 justify-between">
@@ -173,4 +173,4 @@ class Results extends React.Component<IResultsProps> {
     }
 }
 
-export default inject("ResultsStore")(observer(Results));
+export default inject('ResultsStore')(observer(Results));

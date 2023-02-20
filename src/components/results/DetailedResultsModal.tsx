@@ -1,4 +1,4 @@
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
@@ -152,4 +152,4 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
     }
 }
 
-export default observer(DetailedResultsModal);
+export default inject("ResultsStore")(observer(DetailedResultsModal));

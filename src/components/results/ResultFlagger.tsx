@@ -80,4 +80,4 @@ class ResultFlagger extends React.Component<IResultFlaggerProps> {
     }
 }
 
-export default inject("ResultsStore")(observer(ResultFlagger));
+export default inject('ResultsStore')(observer(ResultFlagger));

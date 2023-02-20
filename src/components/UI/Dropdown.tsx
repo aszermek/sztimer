@@ -139,7 +139,7 @@ class Dropdown extends React.Component<IDropdownProps> {
                                 <Input
                                     label="Add session"
                                     icon={{ icon: PlusIcon }}
-                                    onSubmit={() => onSubmitNewOption(value)}
+                                    onSubmit={(value) => onSubmitNewOption(value.toString())}
                                 />
                             </div>
                         )}

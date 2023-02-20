@@ -109,7 +109,7 @@ class Input extends React.Component<IInputProps> {
                 <div className={`relative`}>
                     <input
                         className={`
-                        flex align-center rounded-lg w-full outline outline-1 outline-slate-400
+                        flex align-center rounded-lg w-full border border-1 border-slate-400
                         ${
                             isTimer
                                 ? "rounded-lg p-3 font-vt323 text-9xl text-center shadow-emboss"
@@ -117,8 +117,8 @@ class Input extends React.Component<IInputProps> {
                         }
                         ${
                             error
-                                ? "outline-red-600 focus:outline-2"
-                                : "outline-slate-400 focus:outline-2 focus:outline-black"
+                                ? "border-red-600 focus:border-2 outline-none"
+                                : "border-slate-400 focus:border-2 focus:border-black outline-none"
                         }
                         `}
                         onFocus={this.onFocus}
@@ -134,7 +134,7 @@ class Input extends React.Component<IInputProps> {
                     )}
                     <div
                         className={`absolute inset-y-0 right-0 px-2 py-1 h-full flex gap-2 items-center text-slate-400 hover:text-black cursor-pointer`}
-                        onClick={icon.onClick}
+                        onClick={icon?.onClick}
                     >
                         {!isTimer && <Icon {...icon} />}
                     </div>

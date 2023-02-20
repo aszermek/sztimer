@@ -93,6 +93,7 @@ export class ResultsStore {
     };
 
     addComment = (result: IResult, comment: string) => {
+        console.log(comment)
         result.comment = comment;
         this.saveResultsToLocalStorage();
         this.isOpenCommentInput = false;
