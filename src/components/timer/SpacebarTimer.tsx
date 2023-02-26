@@ -45,9 +45,10 @@ class SpacebarTimer extends React.Component<ISpacebarTimerProps> {
         const results = TimerStore.MainStore.ResultsStore.filteredResults;
         const latestResult = results[results.length - 1];
 
+        // inspection
         if (TimerStore.isRunningInspection) {
             return (
-                <div className="text-9xl font-vt323">
+                <div className={`text-9xl font-vt323 ${TimerStore.isSpacebarPressed && "text-green-500"}`}>
                     {TimerStore.inspectionTime >= 1 &&
                         TimerStore.inspectionTime}
                     {TimerStore.inspectionTime < 1 &&
@@ -58,16 +59,19 @@ class SpacebarTimer extends React.Component<ISpacebarTimerProps> {
             );
         }
 
+        // timer not running
         if (!TimerStore.isRunningTimer) {
+            // no results yet (show 0.00)
             if (results.length === 0) {
                 return (
-                    <div className="text-9xl font-vt323">
+                    <div className={`text-9xl font-vt323 ${TimerStore.isSpacebarPressed && "text-green-500"}`}>
                         <TimeFormatter time={0} />
                     </div>
                 );
+            // session has results (show latest)
             } else {
                 return (
-                    <div className="text-9xl font-vt323">
+                    <div className={`text-9xl font-vt323 ${TimerStore.isSpacebarPressed && "text-green-500"}`}>
                         <TimeFormatter
                             time={latestResult.time}
                             penalty={latestResult.penalty}
@@ -76,6 +80,7 @@ class SpacebarTimer extends React.Component<ISpacebarTimerProps> {
                     </div>
                 );
             }
+        // timer running
         } else {
             return (
                 <div className="text-9xl font-vt323">

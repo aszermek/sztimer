@@ -51,18 +51,24 @@ export class TimerStore {
     };
 
     handleKeyDown = (event: KeyboardEvent) => {
-        if (!this.MainStore.isOpenAnyModal) {
-            this.update("isSpacebarPressed", true);
-            if (this.isRunningTimer) {
-                this.stopTimer();
-                if (event.key === " ") {
-                    this.update("justStopped", true);
-                }
-                if (event.key === "Escape") {
-                    const results = this.MainStore.ResultsStore.filteredResults;
-                    const latestResult = results[results.length - 1];
-                    this.MainStore.ResultsStore.addPenalty(latestResult, "dnf");
-                }
+        if (this.MainStore.isOpenAnyModal) return;
+        
+        if (this.isRunningTimer) {
+            this.stopTimer();
+            if (event.key === " ") {
+                this.update("justStopped", true);
+            }
+            if (event.key === "Escape") {
+                const results = this.MainStore.ResultsStore.filteredResults;
+                const latestResult = results[results.length - 1];
+                this.MainStore.ResultsStore.addPenalty(latestResult, "dnf");
+            }
+        } else if (
+            (this.withInspection && this.isRunningInspection) ||
+            !this.withInspection
+        ) {
+            if (event.key === " ") {
+                this.update("isSpacebarPressed", true);
             }
         }
     };
