@@ -10,6 +10,7 @@ import Timer from "./components/timer/Timer";
 import Card from "./components/UI/Card";
 import MainStore from "./stores/MainStore";
 import { Provider } from "mobx-react";
+import Chart from "./components/results/Chart";
 
 class App extends React.Component {
     MainStore: MainStore;
@@ -23,7 +24,7 @@ class App extends React.Component {
         const MainStore = this.MainStore;
         return (
             <>
-                <Provider MainStore={MainStore} ScrambleStore={MainStore.ScrambleStore} ResultsStore={MainStore.ResultsStore}>
+                <Provider MainStore={MainStore} ScrambleStore={MainStore.ScrambleStore} ResultsStore={MainStore.ResultsStore} StatisticsStore={MainStore.ResultsStore.StatisticsStore}>
                     <div className="grid grid-cols-12 bg-slate-200 h-screen">
                         <Card className="h-full flex flex-col gap-4 overflow-hidden">
                             <div
@@ -31,6 +32,7 @@ class App extends React.Component {
                                 className="flex w-full justify-center"
                             />
                             <Settings />
+                            <Chart />
                         </Card>
                         <div className="col-span-6 overflow-hidden px-8">
                             <div className="flex flex-col gap-8 items-center pt-8">
