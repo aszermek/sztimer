@@ -1,6 +1,15 @@
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import { Line, LineChart, XAxis, YAxis } from "recharts";
+import {
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from "recharts";
 import { StatisticsStore } from "../../stores/StatisticsStore";
 
 export interface IChartProps {
@@ -10,16 +19,26 @@ export interface IChartProps {
 class Chart extends React.Component<IChartProps> {
     render() {
         const { StatisticsStore } = this.props;
-        const results = StatisticsStore.results;
+        const chartData = StatisticsStore.chartData;
+
+        console.log(chartData);
 
         return (
-            <LineChart width={300} height={200} data={results}>
-                <Line dataKey="time" />
-                <XAxis dataKey="id" />
-                <YAxis />
-            </LineChart>
-        )
+            <ResponsiveContainer width="100%" maxHeight={200}>
+                <LineChart data={chartData} margin={{ top: 12, right: 4, bottom: 12, left: 4 }}>
+                    {/* <XAxis dataKey="id" /> */}
+                    <YAxis />
+                    <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                    <Legend wrapperStyle={{ paddingTop: "12px" }} />
+                    <Tooltip />
+
+                    <Line dataKey="single" stroke="#000000" activeDot={{r: 8}} />
+                    <Line dataKey="avgFive" stroke="#dc2626" dot={false} />
+                    <Line dataKey="avgTwelve" stroke="#2563eb" dot={false} />
+                </LineChart>
+            </ResponsiveContainer>
+        );
     }
 }
 
-export default inject('StatisticsStore')(observer(Chart));
+export default inject("StatisticsStore")(observer(Chart));

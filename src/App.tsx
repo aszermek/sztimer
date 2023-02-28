@@ -24,7 +24,12 @@ class App extends React.Component {
         const MainStore = this.MainStore;
         return (
             <>
-                <Provider MainStore={MainStore} ScrambleStore={MainStore.ScrambleStore} ResultsStore={MainStore.ResultsStore} StatisticsStore={MainStore.ResultsStore.StatisticsStore}>
+                <Provider
+                    MainStore={MainStore}
+                    ScrambleStore={MainStore.ScrambleStore}
+                    ResultsStore={MainStore.ResultsStore}
+                    StatisticsStore={MainStore.ResultsStore.StatisticsStore}
+                >
                     <div className="grid grid-cols-12 bg-slate-200 h-screen">
                         <Card className="h-full flex flex-col gap-4 overflow-hidden">
                             <div
@@ -37,9 +42,7 @@ class App extends React.Component {
                         <div className="col-span-6 overflow-hidden px-8">
                             <div className="flex flex-col gap-8 items-center pt-8">
                                 <Logo />
-                                <Scramble
-                                    event={MainStore.selectedEvent}
-                                />
+                                <Scramble event={MainStore.selectedEvent} />
                                 <div className="fixed z-20 inset-y-0 flex flex-col gap-4 items-center justify-center">
                                     <Timer />
                                 </div>

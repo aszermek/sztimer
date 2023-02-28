@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { IChartData } from "../models/IChartData";
 import { IResult } from "../models/IResult";
 import { ResultsStore } from "./ResultsStore";
 
@@ -69,11 +70,43 @@ export class StatisticsStore {
     }
 
     get bestSingle(): number {
-        return Math.min(...this.results.map(r => r.time));
+        return Math.min(...this.results.map((r) => r.time));
     }
 
     get worstSingle(): number {
-        return Math.max(...this.results.map(r => r.time));
+        return Math.max(...this.results.map((r) => r.time));
+    }
+
+    get chartData() {
+        let chartData: IChartData[] = [];
+
+        this.results.map((result, i) => {
+            let currentFive: IResult[] = this.results.slice(
+                Math.max(0, i - 4),
+                i + 1
+            );
+            let currentTwelve: IResult[] = this.results.slice(
+                Math.max(0, i - 11),
+                i + 1
+            );
+            let avgFive: number | string | null =
+                currentFive.length >= 5
+                    ? this.ResultsStore.calculateAvg(currentFive)
+                    : null;
+            let avgTwelve: number | string | null =
+                currentTwelve.length >= 12
+                    ? this.ResultsStore.calculateAvg(currentTwelve)
+                    : null;
+
+            chartData.push({
+                id: i,
+                single: result.penalty === "dnf" ? null : result.time,
+                avgFive,
+                avgTwelve,
+            });
+        });
+
+        return chartData;
     }
 
     getAverages = (length: number): number[] => {
