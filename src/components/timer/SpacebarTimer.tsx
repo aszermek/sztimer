@@ -45,10 +45,14 @@ class SpacebarTimer extends React.Component<ISpacebarTimerProps> {
         const results = TimerStore.MainStore.ResultsStore.filteredResults;
         const latestResult = results[results.length - 1];
 
-        // inspection
         if (TimerStore.isRunningInspection) {
+            // inspection
             return (
-                <div className={`text-9xl font-vt323 ${TimerStore.isSpacebarPressed && "text-green-500"}`}>
+                <div
+                    className={`text-9xl font-vt323 ${
+                        TimerStore.isSpacebarPressed && "text-green-500"
+                    }`}
+                >
                     {TimerStore.inspectionTime >= 1 &&
                         TimerStore.inspectionTime}
                     {TimerStore.inspectionTime < 1 &&
@@ -61,34 +65,42 @@ class SpacebarTimer extends React.Component<ISpacebarTimerProps> {
 
         // timer not running
         if (!TimerStore.isRunningTimer) {
-            // no results yet (show 0.00)
             if (results.length === 0) {
+                // no results yet (show 0.00)
                 return (
-                    <div className={`text-9xl font-vt323 ${TimerStore.isSpacebarPressed && "text-green-500"}`}>
-                        <TimeFormatter time={0} />
+                    <div
+                        className={`text-9xl font-vt323 ${
+                            TimerStore.isSpacebarPressed && "text-green-500"
+                        }`}
+                    >
+                        {TimeFormatter({ time: 0 })}
                     </div>
                 );
-            // session has results (show latest)
             } else {
+                // session has results (show latest)
                 return (
-                    <div className={`text-9xl font-vt323 ${TimerStore.isSpacebarPressed && "text-green-500"}`}>
-                        <TimeFormatter
-                            time={latestResult.time}
-                            penalty={latestResult.penalty}
-                            displayTimeOnDnf
-                        />
+                    <div
+                        className={`text-9xl font-vt323 ${
+                            TimerStore.isSpacebarPressed && "text-green-500"
+                        }`}
+                    >
+                        {TimeFormatter({
+                            time: latestResult.time,
+                            penalty: latestResult.penalty,
+                            displayTimeOnDnf: true,
+                        })}
                     </div>
                 );
             }
-        // timer running
         } else {
+            // timer running
             return (
                 <div className="text-9xl font-vt323">
-                    <TimeFormatter time={TimerStore.elapsedTime} />
+                    {TimeFormatter({ time: TimerStore.elapsedTime })}
                 </div>
             );
         }
     }
 }
 
-export default inject('TimerStore')(observer(SpacebarTimer));
+export default inject("TimerStore")(observer(SpacebarTimer));

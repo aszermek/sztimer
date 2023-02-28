@@ -59,7 +59,7 @@ class Results extends React.Component<IResultsProps> {
                                 {stats.validSolveCount}/{stats.solveCount}
                                 <br />
                                 {"Mean: "}
-                                <TimeFormatter time={stats.mean} />
+                                {TimeFormatter({ time: stats.mean })}
                             </div>
                             <div className="flex justify-center items-center">
                                 <Button
@@ -126,10 +126,10 @@ class Results extends React.Component<IResultsProps> {
                                         {result.comment && (
                                             <div className="w-3" />
                                         )}
-                                        <TimeFormatter
-                                            time={result.time}
-                                            penalty={result.penalty}
-                                        />
+                                        {TimeFormatter({
+                                            time: result.time,
+                                            penalty: result.penalty,
+                                        })}
                                         {result.comment && (
                                             <Icon
                                                 icon={ChatBubbleLeftIcon}
@@ -148,7 +148,7 @@ class Results extends React.Component<IResultsProps> {
                                             )
                                         }
                                     >
-                                        <TimeFormatter time={avgFive} />
+                                        {TimeFormatter({ time: avgFive })}
                                     </div>
                                     <div
                                         className={`col-span-2 mx-2 my-1 p-1 text-center ${
@@ -161,7 +161,7 @@ class Results extends React.Component<IResultsProps> {
                                             )
                                         }
                                     >
-                                        <TimeFormatter time={avgTwelve} />
+                                        {TimeFormatter({ time: avgTwelve })}
                                     </div>
                                 </div>
                             );
@@ -173,4 +173,4 @@ class Results extends React.Component<IResultsProps> {
     }
 }
 
-export default inject('ResultsStore')(observer(Results));
+export default inject("ResultsStore")(observer(Results));

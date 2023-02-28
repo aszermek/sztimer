@@ -99,7 +99,7 @@ export class StatisticsStore {
                     : null;
 
             chartData.push({
-                id: i,
+                id: i + 1,
                 single: result.penalty === "dnf" ? null : result.time,
                 avgFive,
                 avgTwelve,

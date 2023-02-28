@@ -88,28 +88,28 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
                             </div>
                             <div>
                                 {"Mean: "}
-                                <TimeFormatter time={stats.mean} />
+                                {TimeFormatter({ time: stats.mean })}
                             </div>
                             <div>
                                 {"Best single: "}
-                                <TimeFormatter time={stats.bestSingle} />
+                                {TimeFormatter({ time: stats.bestSingle })}
                             </div>
                             <div>
                                 {"Worst single: "}
-                                <TimeFormatter time={stats.worstSingle} />
+                                {TimeFormatter({ time: stats.worstSingle })}
                             </div>
                             <div>
                                 {"Best average of 5: "}
-                                <TimeFormatter time={stats.bestAo5} />
+                                {TimeFormatter({ time: stats.bestAo5 })}
                             </div>
                         </div>
                     ) : (
                         results.length > 1 && (
                             <div className="mb-2">
                                 Average of {results.length}:{" "}
-                                <TimeFormatter
-                                    time={ResultsStore.calculateAvg(results)}
-                                />
+                                {TimeFormatter({
+                                    time: ResultsStore.calculateAvg(results),
+                                })}
                             </div>
                         )
                     )}
@@ -124,25 +124,23 @@ class DetailedResultsModal extends React.Component<IDetailedResultsModalProps> {
                                     result.time === worst) ? (
                                     <>
                                         (
-                                        <TimeFormatter
-                                            time={result.time}
-                                            penalty={result.penalty}
-                                            displayTimeOnDnf
-                                        />
+                                        {TimeFormatter({
+                                            time: result.time,
+                                            penalty: result.penalty,
+                                            displayTimeOnDnf: true,
+                                        })}
                                         )
                                     </>
                                 ) : (
-                                    <TimeFormatter
-                                        time={result.time}
-                                        penalty={result.penalty}
-                                        displayTimeOnDnf
-                                    />
+                                    TimeFormatter({
+                                        time: result.time,
+                                        penalty: result.penalty,
+                                        displayTimeOnDnf: true,
+                                    })
                                 )}
                                 {" - "}
                                 {result.scramble}
-                                {" - "}
-                                @{result.date.toLocaleString()}
-                                {" "}
+                                {" - "}@{result.date.toLocaleString()}{" "}
                                 {result.comment && `(${result.comment})`}
                             </div>
                         ))}
