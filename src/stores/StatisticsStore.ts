@@ -89,11 +89,11 @@ export class StatisticsStore {
                 Math.max(0, i - 11),
                 i + 1
             );
-            let avgFive: number | string | null =
+            let ao5: number | string | null =
                 currentFive.length >= 5
                     ? this.ResultsStore.calculateAvg(currentFive)
                     : null;
-            let avgTwelve: number | string | null =
+            let ao12: number | string | null =
                 currentTwelve.length >= 12
                     ? this.ResultsStore.calculateAvg(currentTwelve)
                     : null;
@@ -101,8 +101,8 @@ export class StatisticsStore {
             chartData.push({
                 id: i + 1,
                 single: result.penalty === "dnf" ? null : result.time,
-                avgFive,
-                avgTwelve,
+                ao5,
+                ao12,
             });
         });
 
