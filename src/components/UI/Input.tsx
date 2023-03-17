@@ -103,7 +103,7 @@ class Input extends React.Component<IInputProps> {
         return (
             <div
                 className={`flex flex-col gap-2 ${
-                    isTimer && "justify-center w-1/2"
+                    isTimer && "justify-center w-2/3 max-w-[640px]"
                 }`}
             >
                 <div className={`relative`}>

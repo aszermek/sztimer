@@ -1,6 +1,6 @@
 export interface IChartData {
     id?: number;
     single?: number;
-    avgFive?: number | string;
-    avgTwelve?: number | string;
+    ao5?: number | string;
+    ao12?: number | string;
 }

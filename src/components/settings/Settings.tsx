@@ -28,7 +28,7 @@ class Settings extends React.Component<ISettingsProps> {
         const MainStore = this.props.MainStore;
 
         return (
-            <div className="flex flex-col p-2 gap-4">
+            <div className="flex flex-col p-1 gap-4">
                 <div className="font-bold">Settings</div>
                 <Checkbox
                     label="Inspection"

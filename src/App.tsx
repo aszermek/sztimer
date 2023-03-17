@@ -43,7 +43,7 @@ class App extends React.Component {
                             <div className="flex flex-col gap-8 items-center pt-8">
                                 <Logo />
                                 <Scramble event={MainStore.selectedEvent} />
-                                <div className="fixed z-20 inset-y-0 flex flex-col gap-4 items-center justify-center">
+                                <div className="fixed z-20 inset-y-0 w-1/2 flex flex-col gap-4 items-center justify-center">
                                     <Timer />
                                 </div>
                             </div>

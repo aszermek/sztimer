@@ -73,7 +73,7 @@ export class ScrambleStore {
             alg: this.scramble,
             visualization: "2D",
             background: "none",
-            controlPanel: "none",
+            controlPanel: "none"
         });
         viewerElement.replaceChildren(player);
     }
