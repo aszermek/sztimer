@@ -106,7 +106,7 @@ class Dropdown extends React.Component<IDropdownProps> {
         return (
             <div className="relative w-48">
                 <button
-                    className="bg-slate-200 p-2 rounded-lg w-full flex justify-between items-center"
+                    className="bg-slate-200 p-3 rounded-lg w-full flex justify-between items-center"
                     onClick={this.onClick}
                 >
                     {selectedKey ? (
@@ -127,7 +127,7 @@ class Dropdown extends React.Component<IDropdownProps> {
                         {options.map((option, index) => (
                             <div
                                 key={index}
-                                className="flex gap-4 p-2 items-center rounded-lg hover:bg-slate-300"
+                                className="flex gap-4 p-2 m-1 items-center rounded-lg hover:bg-slate-300"
                                 onClick={() => this.onChange(option)}
                             >
                                 {option.icon && <Icon {...option.icon} />}
@@ -135,7 +135,7 @@ class Dropdown extends React.Component<IDropdownProps> {
                             </div>
                         ))}
                         {newOption && (
-                            <div className="flex items-center rounded-lg z-10">
+                            <div className="flex m-1 items-center rounded-lg z-10">
                                 <Input
                                     label="Add session"
                                     icon={{ icon: PlusIcon }}
