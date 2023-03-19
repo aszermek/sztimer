@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { TimerStore } from "../../stores/TimerStore";
-import { Button } from "../UI/Button";
+import Button from "../UI/Button";
 import Input from "../UI/Input";
 import Modal from "../UI/Modal";
 import { TimeFormatter } from "../utils/TimeFormatter";

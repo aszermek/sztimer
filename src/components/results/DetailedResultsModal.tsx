@@ -3,7 +3,7 @@ import * as React from "react";
 import { IResult } from "../../models/IResult";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { Button } from "../UI/Button";
+import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import { TimeFormatter } from "../utils/TimeFormatter";
 import ResultFlagger from "./ResultFlagger";

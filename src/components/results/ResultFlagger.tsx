@@ -7,7 +7,7 @@ import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { IResult } from "../../models/IResult";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { Button } from "../UI/Button";
+import Button from "../UI/Button";
 import Input from "../UI/Input";
 
 export interface IResultFlaggerProps {

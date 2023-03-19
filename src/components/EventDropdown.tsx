@@ -52,13 +52,13 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
                 <Dropdown
                     options={optionsEvent}
                     label="Event"
-                    selectedKey={selectedEvent}
+                    initialKey={selectedEvent}
                     onChange={this.onChangeEvent}
                 />
                 <Dropdown
                     options={optionsSession}
                     label="Event"
-                    selectedKey={MainStore.selectedSession}
+                    initialKey={MainStore.selectedSession}
                     onChange={this.onChangeSession}
                     newOption
                     onSubmitNewOption={MainStore.addNewSession}

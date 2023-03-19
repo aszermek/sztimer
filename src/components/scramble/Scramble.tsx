@@ -3,7 +3,7 @@ import { inject, observer } from "mobx-react";
 import * as React from "react";
 import MainStore from "../../stores/MainStore";
 import { ScrambleStore } from "../../stores/ScrambleStore";
-import { Button } from "../UI/Button";
+import Button from "../UI/Button";
 
 export interface IScrambleProps {
     ScrambleStore?: ScrambleStore;

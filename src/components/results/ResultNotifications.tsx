@@ -4,7 +4,7 @@ import * as React from "react";
 import { Events } from "../../models/Events";
 import MainStore from "../../stores/MainStore";
 import { ResultsStore } from "../../stores/ResultsStore";
-import { Button } from "../UI/Button";
+import Button from "../UI/Button";
 import Notification from "../UI/Notification";
 
 export interface IResultNotificationsProps {
