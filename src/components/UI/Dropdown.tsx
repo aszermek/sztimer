@@ -16,7 +16,6 @@ export interface IDropdownProps {
     initialKey?: string;
     onClick?: () => void;
     onChange?: (key: string | number, option: IDropdownOption) => void;
-    newOption?: boolean;
     onSubmitNewOption?: (value: string) => void;
 }
 
@@ -26,7 +25,6 @@ const Dropdown = ({
     initialKey,
     onClick,
     onChange,
-    newOption,
     onSubmitNewOption,
 }: IDropdownProps) => {
     const [selectedKey, setSelectedKey] = useState<string>(initialKey);
@@ -111,14 +109,15 @@ const Dropdown = ({
                             {option.value}
                         </div>
                     ))}
-                    {newOption && (
+                    {onSubmitNewOption && (
                         <div className="flex m-1 items-center rounded-lg z-10">
                             <Input
                                 label="Add session"
                                 icon={{ icon: PlusIcon }}
-                                onSubmit={(value) =>
-                                    onSubmitNewOption(value.toString())
-                                }
+                                onSubmit={(value) => {
+                                    console.log(value);
+                                    onSubmitNewOption(value.toString());
+                                }}
                             />
                         </div>
                     )}

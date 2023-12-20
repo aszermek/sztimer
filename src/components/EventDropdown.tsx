@@ -60,7 +60,6 @@ class EventDropdown extends React.Component<IEventDropdownProps> {
                     label="Event"
                     initialKey={MainStore.selectedSession}
                     onChange={this.onChangeSession}
-                    newOption
                     onSubmitNewOption={MainStore.addNewSession}
                 />
             </div>

@@ -9,6 +9,7 @@ export interface IButtonProps {
     type?: ButtonTypes;
     small?: boolean;
     regular?: boolean;
+    link?: boolean;
     onClick?: () => void;
     icon?: IIconProps;
     children?: React.ReactNode;
@@ -19,6 +20,7 @@ const Button = ({
     type = "primary",
     small,
     regular,
+    link,
     onClick,
     icon,
     children,
@@ -46,6 +48,7 @@ const Button = ({
                     color === "grey" &&
                     `bg-slate-200/50 text-black shadow-emboss active:shadow-embossHover`
                 }
+                ${link && `underline hover:no-underline`}
             `}
             onClick={onClick}
         >

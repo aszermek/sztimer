@@ -72,7 +72,7 @@ const Modal = ({
                         <div className="flex row justify-start font-bold">
                             {header}
                         </div>
-                        <div className="flex row justify-end">
+                        <div className="flex row justify-end -m-1 p-1 rounded-lg hover:bg-slate-100">
                             <XMarkIcon
                                 className="cursor-pointer h-6 w-6"
                                 onClick={onDismiss}

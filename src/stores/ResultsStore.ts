@@ -49,6 +49,7 @@ export class ResultsStore {
         } else {
             worst = Math.max(...array.map((r) => r.time));
         }
+
         let best: number;
         if (dnfResults.length > 0) {
             best = Math.min(
@@ -57,6 +58,7 @@ export class ResultsStore {
         } else {
             best = Math.min(...array.map((r) => r.time));
         }
+        
         const avg: number =
             (array.reduce((a, b) => a + b.time, 0) - (best + worst)) /
             (array.length - 2);

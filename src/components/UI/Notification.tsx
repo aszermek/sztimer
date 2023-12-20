@@ -8,6 +8,7 @@ export interface INotificationProps {
     type?: any;
     children: React.ReactNode;
     onDismiss?: () => void;
+    onClick?: () => void;
 }
 
 const Notification = ({
@@ -15,17 +16,21 @@ const Notification = ({
     type,
     children,
     onDismiss,
+    onClick,
 }: INotificationProps) => {
     return (
         <>
-            <div className="flex justify-between items-center w-full p-3 rounded-lg bg-green-100 hover:bg-green-200 cursor-pointer">
+            <div
+                className="group flex justify-between items-center w-full p-3 rounded-lg bg-green-50 hover:bg-green-100 cursor-pointer"
+                onClick={onClick}
+            >
                 <div className="flex justify-start items-center gap-3 font-bold bg-">
                     <div>
                         <Icon {...icon} />
                     </div>
                     <div>{children}</div>
                 </div>
-                <div className="flex justify-end ml-4">
+                <div className="flex justify-end ml-4 p-1 hover:bg-green-100 group-hover:bg-green-50">
                     <Icon icon={XMarkIcon} onClick={onDismiss} />
                 </div>
             </div>

@@ -20,7 +20,16 @@ class ResultNotifications extends React.Component<IResultNotificationsProps> {
 
         return (
             <div className="flex flex-col gap-2 items-center">
-                <Button small color="red" type="secondary" icon={{icon: TrashIcon}} onClick={ResultsStore.closeAllResultNotifications}>Close all notifications</Button>
+                <Button
+                    small
+                    link
+                    color="red"
+                    type="secondary"
+                    icon={{ icon: TrashIcon }}
+                    onClick={ResultsStore.closeAllResultNotifications}
+                >
+                    Close all notifications
+                </Button>
                 {notifs.map((notif, index) => {
                     const event = Events.find(
                         (event) => event.key === notif.event
@@ -32,6 +41,18 @@ class ResultNotifications extends React.Component<IResultNotificationsProps> {
                                 ResultsStore.closeResultNotification(notif)
                             }
                             icon={event.icon}
+                            onClick={() => {
+                                const pbResultIndex =
+                                    ResultsStore.filteredResults.findIndex(
+                                        (result) => result.id === notif.id
+                                    );
+                                ResultsStore.openDetails(
+                                    ResultsStore.filteredResults.slice(
+                                        pbResultIndex - 5,
+                                        pbResultIndex
+                                    )
+                                );
+                            }}
                         >
                             {event.label} ({notif.session}) {notif.type} PB!
                         </Notification>
@@ -42,4 +63,4 @@ class ResultNotifications extends React.Component<IResultNotificationsProps> {
     }
 }
 
-export default inject('ResultsStore')(observer(ResultNotifications));
+export default inject("ResultsStore")(observer(ResultNotifications));
