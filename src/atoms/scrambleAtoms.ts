@@ -1,4 +1,3 @@
-// scrambleAtoms.ts
 import { events } from "@/types/events";
 import { randomScrambleForEvent } from "cubing/scramble";
 import { TwistyPlayer } from "cubing/twisty";

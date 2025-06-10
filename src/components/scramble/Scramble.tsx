@@ -7,7 +7,7 @@ import {
     scrambleAtom,
     scrambleToClipboardAtom,
 } from "@/atoms/scrambleAtoms";
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { useEffect } from "react";
 import { Button } from "../ui/button";
@@ -32,23 +32,19 @@ export const Scramble: React.FC = () => {
                 <Button
                     variant="outline"
                     size="icon"
-                    onClick={() => goToPrevScramble()}
+                    onClick={goToPrevScramble}
                 >
-                    <CaretLeft className="h-4 w-4" />
+                    <CaretLeftIcon size={16} />
                 </Button>
             )}
             <div
                 className="cursor-pointer shrink-1"
-                onClick={() => scrambleToClipboard()}
+                onClick={scrambleToClipboard}
             >
                 {isLoading ? "..." : scramble}
             </div>
-            <Button
-                variant="outline"
-                size="icon"
-                onClick={() => goToNextScramble()}
-            >
-                <CaretRight className="h-4 w-4" />
+            <Button variant="outline" size="icon" onClick={goToNextScramble}>
+                <CaretRightIcon size={16} />
             </Button>
         </div>
     );

@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import type { PenaltyType, Result, ResultNotification } from "../types/results";
 import { selectedEventAtom, selectedSessionAtom } from "./sessionAtoms";
+import { getNewScrambleAtom } from "./scrambleAtoms";
 
 const getInitialResults = (): Result[] => {
     const stored = localStorage.getItem("results");
@@ -30,11 +31,12 @@ const saveResultsToLocalStorage = (results: Result[]) => {
     localStorage.setItem("results", JSON.stringify(results));
 };
 
-export const addResultAtom = atom(null, (get, set, result: Result) => {
+export const addResultAtom = atom(null, async (get, set, result: Result) => {
     const results = [...get(resultsAtom), result];
     set(resultsAtom, results);
     saveResultsToLocalStorage(results);
-    // Optionally: trigger scramble update, PB check, etc.
+    await getNewScrambleAtom.write!(get, set);
+    // Optionally: trigger PB check, etc.
 });
 
 export const addPenaltyAtom = atom(
