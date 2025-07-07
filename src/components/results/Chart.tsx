@@ -32,11 +32,12 @@ class Chart extends React.Component<IChartProps> {
             if (active && payload && payload.length) {
                 return (
                     <div className="flex flex-row gap-x-4 gap-y-1 flex-wrap w-full bg-white text-sm">
-                        {payload.map((item) => {
+                        {payload.map((item, index) => {
                             return (
-                                <p className={`text-[${item.stroke}]`}>{`${
-                                    item.name
-                                }: ${TimeFormatter({
+                                <p
+                                    key={index}
+                                    className={`text-[${item.stroke}]`}
+                                >{`${item.name}: ${TimeFormatter({
                                     time: item.value as number,
                                 })}`}</p>
                             );

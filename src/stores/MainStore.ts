@@ -19,7 +19,7 @@ export default class MainStore {
         this.ScrambleStore = new ScrambleStore(this);
         this.TimerStore = new TimerStore(this);
 
-        makeAutoObservable(this, {}); 
+        makeAutoObservable(this, {});
 
         this.load();
     }
@@ -29,11 +29,15 @@ export default class MainStore {
     }
 
     load = () => {
-        this.selectedEventSessions = Events.find((event) => event.key === this.selectedEvent).sessions;
-    }
+        this.selectedEventSessions = Events.find(
+            (event) => event.key === this.selectedEvent
+        ).sessions;
+    };
 
     addNewSession = (value: string | number) => {
-        this.selectedEventSessions.push(value.toString());
-        console.log(value)
+        this.selectedEventSessions = [
+            ...this.selectedEventSessions,
+            value.toString(),
+        ];
     };
 }

@@ -58,7 +58,7 @@ export class ResultsStore {
         } else {
             best = Math.min(...array.map((r) => r.time));
         }
-        
+
         const avg: number =
             (array.reduce((a, b) => a + b.time, 0) - (best + worst)) /
             (array.length - 2);
@@ -95,7 +95,6 @@ export class ResultsStore {
     };
 
     addComment = (result: IResult, comment: string) => {
-        console.log(comment)
         result.comment = comment;
         this.saveResultsToLocalStorage();
         this.isOpenCommentInput = false;
@@ -221,7 +220,6 @@ export class ResultsStore {
             this.resultNotifications.indexOf(notif),
             1
         );
-        console.log("close", notif);
     };
 
     closeAllResultNotifications = () => {

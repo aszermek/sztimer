@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Icon, IIconProps } from "./Icon";
 
 export interface IInputAlertProps {
@@ -30,11 +30,27 @@ const Input = ({
     const [value, setValue] = useState<string | number>(initialValue || "");
     const [isFocused, setIsFocused] = useState<boolean>(forceFocus || false);
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (isFocused && event.key === "Enter") {
-            handleSubmit?.(value);
-        }
-    };
+    const handleSubmit = useCallback(
+        (value: string | number) => {
+            onSubmit?.(value);
+
+            setTimeout(() => {
+                if (!error || error === undefined) {
+                    setValue("");
+                }
+            }, 10);
+        },
+        [onSubmit, error]
+    );
+
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent) => {
+            if (isFocused && event.key === "Enter") {
+                handleSubmit(value);
+            }
+        },
+        [isFocused, value, handleSubmit]
+    );
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -53,18 +69,8 @@ const Input = ({
 
     const handleClickIcon = () => {
         if (isFocused) {
-            handleSubmit?.(value);
+            handleSubmit(value);
         }
-    };
-
-    const handleSubmit = (value: string | number) => {
-        onSubmit?.(value);
-
-        setTimeout(() => {
-            if (!error || error === undefined) {
-                setValue("");
-            }
-        }, 10);
     };
 
     useEffect(() => {
@@ -76,7 +82,7 @@ const Input = ({
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
         };
-    }, [isFocused]);
+    }, [isFocused, handleKeyDown]);
 
     return (
         <div
@@ -112,7 +118,7 @@ const Input = ({
                 )}
                 <div
                     className={`absolute inset-y-0 right-0 px-2 py-1 h-full flex gap-2 items-center text-slate-400 hover:text-black cursor-pointer`}
-                    onClick={icon?.onClick}
+                    onClick={handleClickIcon} // Fixed: was icon?.onClick
                 >
                     {!isTimer && <Icon {...icon} />}
                 </div>

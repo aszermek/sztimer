@@ -1,5 +1,4 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
-import { observer } from "mobx-react";
 import * as React from "react";
 import { Icon } from "./Icon";
 

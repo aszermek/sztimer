@@ -37,7 +37,6 @@ const Dropdown = ({
 
     const handleClick = () => {
         setIsOpen(!isOpen);
-        console.log(isOpen);
         if (onClick) {
             onClick();
         }
@@ -115,7 +114,6 @@ const Dropdown = ({
                                 label="Add session"
                                 icon={{ icon: PlusIcon }}
                                 onSubmit={(value) => {
-                                    console.log(value);
                                     onSubmitNewOption(value.toString());
                                 }}
                             />
