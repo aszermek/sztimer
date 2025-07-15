@@ -25,18 +25,18 @@ export interface ComboboxOption {
 export interface ComboboxProps {
     options: ComboboxOption[];
     placeholder?: string;
-    emptyText?: string;
     onChange?: (value: string) => void;
     value?: string;
+    buttonProps?: React.ComponentProps<typeof Button>;
     className?: string;
 }
 
 export const Combobox = ({
     options,
     placeholder = "Select an option...",
-    emptyText = "No results found.",
     onChange,
     value: controlledValue,
+    buttonProps,
     className,
 }: ComboboxProps) => {
     const [open, setOpen] = useState(false);
@@ -60,29 +60,30 @@ export const Combobox = ({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className={cn("w-[200px]", className)}
+                    className={cn("w-[200px] py-3", className)}
+                    {...buttonProps}
                 >
                     {selectedOption?.icon && (
-                        <selectedOption.icon className="mr-2 h-4 w-4 shrink-0" />
+                        <selectedOption.icon className="mr-1 h-full aspect-square size-auto shrink-0" />
                     )}
                     {selectedOption?.label || placeholder}
-                    <CaretUpDownIcon className="opacity-50 h-4 w-4 ml-auto" />
+                    <CaretUpDownIcon className="opacity-50 h-full aspect-square size-auto ml-auto" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
                 <Command>
                     <CommandInput placeholder="Search..." className="h-9" />
                     <CommandList>
-                        <CommandEmpty>{emptyText}</CommandEmpty>
+                        <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup>
                             {options.map((option) => (
                                 <CommandItem
                                     key={option.value}
-                                    value={option.value}
-                                    onSelect={handleSelect}
+                                    value={option.label}
+                                    onSelect={() => handleSelect(option.value)}
                                 >
                                     {option.icon && (
-                                        <option.icon className="mr-2 h-4 w-4 shrink-0" />
+                                        <option.icon className="mr-1 h-4 w-4 shrink-0" />
                                     )}
                                     {option.label}
                                     <CheckIcon

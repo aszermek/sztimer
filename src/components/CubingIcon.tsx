@@ -1,6 +1,7 @@
+import type { IconProps } from "@phosphor-icons/react";
 import React from "react";
 
-export interface CubingIconProps {
+export interface CubingIconProps extends IconProps {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     size?: number;
     onClick?: React.MouseEventHandler<SVGSVGElement>;

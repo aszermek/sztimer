@@ -1,6 +1,4 @@
-import { events } from "@/types/events";
 import { randomScrambleForEvent } from "cubing/scramble";
-import { TwistyPlayer } from "cubing/twisty";
 import { atom } from "jotai";
 import { selectedEventAtom } from "./sessionAtoms";
 
@@ -47,24 +45,4 @@ export const goToNextScrambleAtom = atom(null, async (get, set) => {
 export const scrambleToClipboardAtom = atom(null, (get) => {
     const scramble = get(scrambleAtom);
     navigator.clipboard.writeText(scramble);
-});
-
-export const drawScrambleAtom = atom(null, (get) => {
-    const scramble = get(scrambleAtom);
-    const eventKey = get(selectedEventAtom);
-    const event = events.find((e) => e.key === eventKey);
-    if (!event) return;
-
-    const viewerElement = document.getElementById("viewer");
-    if (!viewerElement) return;
-
-    const player = new TwistyPlayer({
-        puzzle: event.keyForViewer,
-        alg: scramble,
-        visualization: "2D",
-        background: "none",
-        controlPanel: "none",
-    });
-
-    viewerElement.replaceChildren(player);
 });

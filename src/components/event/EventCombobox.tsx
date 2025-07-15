@@ -18,6 +18,7 @@ export const EventCombobox: React.FC = () => {
             value={selectedEvent}
             onChange={(val) => setSelectedEvent(val as EventType)}
             placeholder="Select event..."
+            buttonProps={{ size: "xl" }}
         />
     );
 };

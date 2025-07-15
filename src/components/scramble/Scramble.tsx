@@ -55,7 +55,7 @@ export const Scramble: React.FC = () => {
                     onClick={scrambleToClipboard}
                 >
                     {isLoading ? (
-                        <Skeleton className="w-[80vw] h-4 rounded-full" />
+                        <Skeleton className="w-[80vw] h-4 rounded-full bg-gray-200" />
                     ) : (
                         scramble
                     )}
