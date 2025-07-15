@@ -10,19 +10,7 @@ export const ScramblePreviewSkeleton: React.FC = () => {
     );
 
     return (
-        <div
-            className="
-        grid 
-        grid-cols-[repeat(4,auto)] 
-        grid-rows-[auto_auto_auto_auto] 
-        gap-1
-        justify-center
-        items-center
-        p-2
-        rounded-md
-      "
-            style={{ width: "max-content" }}
-        >
+        <div className="grid grid-cols-[repeat(4,auto)] grid-rows-[auto_auto_auto_auto] gap-1 justify-center items-center p-2 rounded-md h-[256px]">
             <div className="col-start-2 row-start-1">{faceSkeleton}</div>
 
             <div className="col-start-1 row-start-2">{faceSkeleton}</div>
