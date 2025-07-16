@@ -21,7 +21,8 @@ import {
 import { statisticsAtom } from "../../atoms/statisticsAtoms";
 import type { Result } from "../../types/results";
 import { Button } from "../ui/button";
-import ResultFlagger from "./ResultFlagger";
+import { ResultFlagger } from "./ResultFlagger";
+import { ClipboardTextIcon } from "@phosphor-icons/react";
 
 export const DetailedResultsDialog: React.FC = () => {
     const isOpenResultModal = useAtomValue(isOpenResultModalAtom);
@@ -143,24 +144,18 @@ export const DetailedResultsDialog: React.FC = () => {
                 </div>
 
                 <DialogFooter>
-                    <div className="flex w-full justify-between">
+                    <div className="flex w-full justify-between items-center gap-4">
                         {results.length === 1 && (
                             <div className="flex">
                                 <ResultFlagger result={results[0]} />
                             </div>
                         )}
                         <div className="flex gap-4 w-full justify-end">
-                            <Button
-                                color="green"
-                                // type={isCopiedDetails ? "secondary" : "primary"}
-                                onClick={handleCopy}
-                            >
+                            <Button variant="outline" onClick={handleCopy}>
+                                <ClipboardTextIcon />
                                 {isCopiedDetails
                                     ? "Copied to clipboard!"
                                     : "Copy to clipboard"}
-                            </Button>
-                            <Button variant="destructive" onClick={handleClose}>
-                                Close
                             </Button>
                         </div>
                     </div>
