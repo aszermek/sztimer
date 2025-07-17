@@ -47,15 +47,15 @@ export const Scramble: React.FC = () => {
     );
 
     return (
-        <div className="text-3xl text-center">
-            <div className="hidden sm:flex flex-row gap-8 items-center">
+        <div className="ScrambleFontSize text-justify font-code max-w-[1792px]">
+            <div className="hidden sm:flex gap-8 items-center">
                 {prevButton}
                 <div
                     className="cursor-pointer shrink-1"
                     onClick={scrambleToClipboard}
                 >
                     {isLoading ? (
-                        <Skeleton className="w-[80vw] h-4 rounded-full bg-gray-200" />
+                        <Skeleton className="w-[80vw] mt-2 h-4 rounded-full bg-gray-200" />
                     ) : (
                         scramble
                     )}
@@ -74,7 +74,7 @@ export const Scramble: React.FC = () => {
                         scramble
                     )}
                 </div>
-                <div className="flex flex-row gap-4 justify-center">
+                <div className="flex gap-4 justify-center">
                     {prevButton}
                     {nextButton}
                 </div>

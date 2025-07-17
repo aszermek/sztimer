@@ -76,7 +76,10 @@ export const DetailedResultsDialog: React.FC = () => {
                     <DialogTitle>Result details</DialogTitle>
                 </DialogHeader>
 
-                <div className="flex flex-col gap-1" ref={detailsRefCallback}>
+                <div
+                    className="flex flex-col gap-1 max-h-[60vh] overflow-auto"
+                    ref={detailsRefCallback}
+                >
                     {results.length === filteredResults.length ? (
                         <div className="flex flex-col gap-1 mb-2">
                             <div>

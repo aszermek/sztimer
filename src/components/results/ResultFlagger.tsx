@@ -70,7 +70,7 @@ export const ResultFlagger: React.FC<IResultFlaggerProps> = ({ result }) => {
 
     if (isCommentOpen) {
         return (
-            <div className="flex gap-2 items-center w-full">
+            <div className="flex gap-2 items-center w-full max-w-sm">
                 <Input
                     autoFocus
                     value={comment}
@@ -93,7 +93,7 @@ export const ResultFlagger: React.FC<IResultFlaggerProps> = ({ result }) => {
     }
 
     return (
-        <div className="flex flex-row gap-3">
+        <div className="flex gap-3">
             <Button
                 {...commonButtonProps}
                 onClick={handleCommentToggle}

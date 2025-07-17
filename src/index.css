@@ -1,6 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sixtyfour&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
 
 @import "tailwindcss";
 
@@ -12,6 +13,7 @@
     --font-sans: "IBM Plex Sans", sans-serif;
     --font-logo: "Sixtyfour", sans-serif;
     --font-timer: "VT323", sans-serif;
+    --font-code: "JetBrains Mono";
 
     --radius-sm: calc(var(--radius) - 4px);
 
@@ -222,5 +224,8 @@
     }
     body {
         @apply bg-background text-foreground;
+    }
+    .ScrambleFontSize {
+        font-size: min(max(22px, 2.5vw), 30px);
     }
 }

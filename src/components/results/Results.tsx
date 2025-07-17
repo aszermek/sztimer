@@ -45,11 +45,11 @@ export const Results: React.FC = () => {
             <DeleteAllResultsDialog />
             <DetailedResultsDialog />
 
-            <div className="flex flex-col">
-                <div className="py-2 text-left font-semibold">
-                    <div className="flex flex-row gap-4 justify-between">
+            <div className="flex flex-col min-h-0 bg-white text-sm border border-border rounded-md p-4">
+                <div className="text-left font-semibold">
+                    <div className="flex gap-4 justify-between">
                         <div
-                            className="flex justify-center items-center px-2 py-1 cursor-pointer rounded-lg hover:bg-slate-100"
+                            className="flex justify-center items-center cursor-pointer rounded-lg hover:bg-slate-100"
                             onClick={handleStatsClick}
                         >
                             {"Solves: "}
@@ -58,19 +58,19 @@ export const Results: React.FC = () => {
                             {"Mean: "}
                             {TimeFormatter({ time: stats.mean })}
                         </div>
-                        <div className="flex justify-center items-center">
-                            <Button
-                                size="icon"
-                                variant="destructive"
-                                onClick={() => setIsOpenDeleteModal(true)}
-                            >
-                                <TrashIcon size={16} />
-                            </Button>
-                        </div>
+                        <Button
+                            size="icon"
+                            variant="destructive"
+                            onClick={() => setIsOpenDeleteModal(true)}
+                        >
+                            <TrashIcon size={16} />
+                        </Button>
                     </div>
                 </div>
                 <div className="grid grid-cols-7 gap-2 border-b border-slate-200">
-                    <div className="col-span-1 mx-2 my-1 p-1 text-right">#</div>
+                    <div className="col-span-1 mx-2 my-1 p-1 text-right text-xs">
+                        #
+                    </div>
                     <div className="col-span-2 mx-2 my-1 p-1 text-center">
                         time
                     </div>
@@ -81,7 +81,7 @@ export const Results: React.FC = () => {
                         ao12
                     </div>
                 </div>
-                <div className="flex flex-col h-[28rem] flex-shrink overflow-y-auto scroll-smooth [overflow-anchor:none]">
+                <div className="flex flex-col flex-1 overflow-y-auto scroll-smooth [overflow-anchor:none]">
                     {results.map((result, i) => {
                         const currentFive: Result[] = results.slice(i, i + 5);
                         const currentTwelve: Result[] = results.slice(
@@ -102,7 +102,7 @@ export const Results: React.FC = () => {
                                 className="grid grid-cols-7 gap-2 border-b border-slate-200"
                                 key={i}
                             >
-                                <div className="col-span-1 mx-2 my-1 p-1 text-right">
+                                <div className="col-span-1 mx-2 my-1 p-1 text-right text-xs self-end mb-1.5">
                                     {results.length - i}
                                 </div>
                                 <div
