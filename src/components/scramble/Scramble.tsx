@@ -48,7 +48,7 @@ export const Scramble: React.FC = () => {
 
     return (
         <div className="ScrambleFontSize text-justify font-code max-w-[1792px]">
-            <div className="hidden sm:flex gap-8 items-center">
+            <div className="hidden md:flex gap-8 items-center">
                 {prevButton}
                 <div
                     className="cursor-pointer shrink-1"
@@ -63,9 +63,9 @@ export const Scramble: React.FC = () => {
                 {nextButton}
             </div>
 
-            <div className="sm:hidden flex flex-col gap-4">
+            <div className="md:hidden flex flex-col gap-4">
                 <div
-                    className="cursor-pointer text-xl sm:text-lg"
+                    className="cursor-pointer text-xl md:text-lg"
                     onClick={scrambleToClipboard}
                 >
                     {isLoading ? (

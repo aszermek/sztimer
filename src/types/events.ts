@@ -1,4 +1,4 @@
-import type { CubingIconProps } from "@/components/CubingIcon";
+import type { CubingIconProps } from "@/components/common/CubingIcon";
 import {
     CircleNotchIcon,
     DiamondIcon,

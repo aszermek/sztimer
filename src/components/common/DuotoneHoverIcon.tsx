@@ -17,6 +17,7 @@ export const DuotoneHoverIcon = ({
         <div
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            className={props.onClick && "cursor-pointer"}
         >
             <Icon
                 {...props}
