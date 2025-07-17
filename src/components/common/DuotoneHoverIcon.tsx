@@ -1,7 +1,7 @@
 import type { IconProps } from "@phosphor-icons/react";
 import { useState } from "react";
 
-interface IDuotoneHoverIconProps extends IconProps {
+interface DuotoneHoverIconProps extends IconProps {
     icon: React.ComponentType<IconProps>;
     invert?: boolean;
 }
@@ -10,7 +10,7 @@ export const DuotoneHoverIcon = ({
     icon: Icon,
     invert,
     ...props
-}: IDuotoneHoverIconProps) => {
+}: DuotoneHoverIconProps) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (

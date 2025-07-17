@@ -1,7 +1,6 @@
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
@@ -33,11 +32,11 @@ export const DeleteAllResultsDialog: React.FC = () => {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Confirm delete</DialogTitle>
-                    <DialogDescription>
-                        Are you sure you want to delete all results from the
-                        current session?
-                    </DialogDescription>
                 </DialogHeader>
+                <span>
+                    Are you sure you want to delete all results from the current
+                    session?
+                </span>
                 <DialogFooter>
                     <Button variant="destructive" onClick={deleteAllResults}>
                         Delete

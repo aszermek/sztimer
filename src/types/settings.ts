@@ -1,6 +1,6 @@
 import type { EventType } from "./events";
 
-export interface ISettings {
+export interface Settings {
     inspection: boolean;
     isManualEnter: boolean;
     selectedEvent: EventType;

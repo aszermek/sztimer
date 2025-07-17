@@ -11,19 +11,17 @@ import { useEffect, useState } from "react";
 import {
     addCommentAtom,
     addPenaltyAtom,
-    filteredResultsAtom,
-    isOpenCommentInputAtom,
     removeResultAtom,
 } from "../../atoms/resultAtoms";
 import type { Result } from "../../types/results";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-export interface IResultFlaggerProps {
+export interface ResultFlaggerProps {
     result?: Result;
 }
 
-export const ResultFlagger: React.FC<IResultFlaggerProps> = ({ result }) => {
+export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
     const [, addPenalty] = useAtom(addPenaltyAtom);
     const [, addComment] = useAtom(addCommentAtom);
     const [, removeResult] = useAtom(removeResultAtom);
