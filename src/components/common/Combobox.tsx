@@ -31,16 +31,16 @@ export interface ComboboxProps {
     className?: string;
 }
 
-export const Combobox = ({
+export const Combobox: React.FC<ComboboxProps> = ({
     options,
     placeholder = "Select an option...",
     onChange,
     value: controlledValue,
     buttonProps,
     className,
-}: ComboboxProps) => {
-    const [open, setOpen] = useState(false);
-    const [uncontrolledValue, setUncontrolledValue] = useState("");
+}) => {
+    const [open, setOpen] = useState<boolean>(false);
+    const [uncontrolledValue, setUncontrolledValue] = useState<string>("");
 
     const isControlled = controlledValue !== undefined;
     const value = isControlled ? controlledValue : uncontrolledValue;

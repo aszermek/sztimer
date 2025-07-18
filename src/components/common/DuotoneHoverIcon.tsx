@@ -6,12 +6,12 @@ interface DuotoneHoverIconProps extends IconProps {
     invert?: boolean;
 }
 
-export const DuotoneHoverIcon = ({
+export const DuotoneHoverIcon: React.FC<DuotoneHoverIconProps> = ({
     icon: Icon,
     invert,
     ...props
-}: DuotoneHoverIconProps) => {
-    const [isHovered, setIsHovered] = useState(false);
+}) => {
+    const [isHovered, setIsHovered] = useState<boolean>(false);
 
     return (
         <div

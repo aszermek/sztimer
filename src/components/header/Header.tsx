@@ -13,7 +13,8 @@ import {
 import { Settings } from "../settings/Settings";
 
 export const Header: React.FC = () => {
-    const [isOpenSettingsDialog, setIsOpenSettingsDialog] = useState(false);
+    const [isOpenSettingsDialog, setIsOpenSettingsDialog] =
+        useState<boolean>(false);
 
     return (
         <>

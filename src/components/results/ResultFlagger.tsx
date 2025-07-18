@@ -26,8 +26,8 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
     const [, addComment] = useAtom(addCommentAtom);
     const [, removeResult] = useAtom(removeResultAtom);
 
-    const [isCommentOpen, setIsCommentOpen] = useState(false);
-    const [comment, setComment] = useState(result?.comment || "");
+    const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
+    const [comment, setComment] = useState<string>(result?.comment || "");
 
     useEffect(() => {
         setComment(result?.comment || "");

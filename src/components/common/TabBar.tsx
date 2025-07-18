@@ -4,6 +4,7 @@ import {
     TimerIcon,
     WrenchIcon,
 } from "@phosphor-icons/react";
+import type React from "react";
 
 export type TabKey = "timer" | "results" | "stats" | "settings";
 
@@ -19,7 +20,7 @@ interface TabBarProps {
     onChange: (tab: TabKey) => void;
 }
 
-export const TabBar = ({ activeTab, onChange }: TabBarProps) => {
+export const TabBar: React.FC<TabBarProps> = ({ activeTab, onChange }) => {
     return (
         <nav className="flex w-full bg-[#ddff77] border-t border-border justify-around items-center p-2">
             {tabs.map((tab) => (
