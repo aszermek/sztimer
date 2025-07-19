@@ -19,7 +19,7 @@ export const elapsedTimeAtom = atom(0);
 export const inspectionTimeAtom = atom(15);
 export const cachedInspectionPenaltyAtom = atom<PenaltyType>(null);
 export const manualTimeErrorAtom = atom<string | undefined>(undefined);
-export const isOpenManualInfoModalAtom = atom(false);
+export const isOpenManualInfoDialogAtom = atom(false);
 
 export const timerIntervalIdAtom = atom<number | undefined>(undefined);
 export const inspectionIntervalIdAtom = atom<number | undefined>(undefined);

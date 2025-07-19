@@ -1,18 +1,18 @@
 import type { PenaltyType } from "@/types/results";
 
-export interface TimeFormatterProps {
+export interface formatTimeProps {
     time: number | string | null;
     penalty?: PenaltyType;
     displayTimeOnDnf?: boolean;
     isExcluded?: boolean;
 }
 
-export function TimeFormatter({
+export function formatTime({
     time,
     penalty,
     displayTimeOnDnf,
     isExcluded,
-}: TimeFormatterProps): string {
+}: formatTimeProps): string {
     if (time === "DNF") {
         return "DNF";
     }

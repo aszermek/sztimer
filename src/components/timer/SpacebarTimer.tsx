@@ -9,7 +9,7 @@ import {
     isRunningTimerAtom,
     isSpacebarPressedAtom,
 } from "@/atoms/timerAtoms";
-import { TimeFormatter } from "@/utils/TimeFormatter";
+import { formatTime } from "@/lib/formatTime";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { useEffect } from "react";
 
@@ -71,7 +71,7 @@ export const SpacebarTimer: React.FC = () => {
                         isSpacebarPressed ? "text-green-500" : ""
                     }`}
                 >
-                    {TimeFormatter({ time: 0 })}
+                    {formatTime({ time: 0 })}
                 </div>
             );
         } else {
@@ -82,7 +82,7 @@ export const SpacebarTimer: React.FC = () => {
                         isSpacebarPressed ? "text-green-500" : ""
                     }`}
                 >
-                    {TimeFormatter({
+                    {formatTime({
                         time: latestResult.time,
                         penalty: latestResult.penalty,
                         displayTimeOnDnf: true,
@@ -94,7 +94,7 @@ export const SpacebarTimer: React.FC = () => {
         // Timer running
         return (
             <div className="text-9xl font-timer">
-                {TimeFormatter({ time: elapsedTime })}
+                {formatTime({ time: elapsedTime })}
             </div>
         );
     }

@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import type { Result } from "../types/results";
-import { filteredResultsAtom, calculateAvg } from "./resultAtoms";
+import { filteredResultsAtom } from "./resultAtoms";
+import { calculateAvg } from "@/lib/calculateAvg";
 
 const resultsAtom = filteredResultsAtom;
 

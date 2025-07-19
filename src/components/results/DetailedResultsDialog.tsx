@@ -5,34 +5,31 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { TimeFormatter } from "@/utils/TimeFormatter";
+import { formatTime } from "@/lib/formatTime";
+import { ClipboardTextIcon } from "@phosphor-icons/react";
 import { useAtom, useAtomValue } from "jotai";
 import * as React from "react";
+import { useRef, useState } from "react";
 import {
-    calculateAvg,
     closeDetailsAtom,
-    copyDetailsAtom,
-    detailsRefAtom,
     filteredResultsAtom,
-    isCopiedDetailsAtom,
-    isOpenResultModalAtom,
     openResultsAtom,
 } from "../../atoms/resultAtoms";
 import { statisticsAtom } from "../../atoms/statisticsAtoms";
 import type { Result } from "../../types/results";
 import { Button } from "../ui/button";
 import { ResultFlagger } from "./ResultFlagger";
-import { ClipboardTextIcon } from "@phosphor-icons/react";
+import { calculateAvg } from "@/lib/calculateAvg";
 
 export const DetailedResultsDialog: React.FC = () => {
-    const isOpenResultModal = useAtomValue(isOpenResultModalAtom);
     const openResults = useAtomValue(openResultsAtom);
     const filteredResults = useAtomValue(filteredResultsAtom);
     const stats = useAtomValue(statisticsAtom);
-    const isCopiedDetails = useAtomValue(isCopiedDetailsAtom);
+
     const [, closeDetails] = useAtom(closeDetailsAtom);
-    const [, copyDetails] = useAtom(copyDetailsAtom);
-    const [, setDetailsRef] = useAtom(detailsRefAtom);
+
+    const [isCopied, setIsCopied] = useState(false);
+    const detailsRef = useRef<HTMLDivElement | null>(null);
 
     const results = openResults;
 
@@ -41,15 +38,12 @@ export const DetailedResultsDialog: React.FC = () => {
     };
 
     const handleCopy = async () => {
-        await copyDetails();
+        if (detailsRef.current) {
+            await navigator.clipboard.writeText(detailsRef.current.innerText);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        }
     };
-
-    const detailsRefCallback = React.useCallback(
-        (node: HTMLDivElement | null) => {
-            setDetailsRef(node);
-        },
-        [setDetailsRef]
-    );
 
     if (!results.length) return null;
 
@@ -70,7 +64,7 @@ export const DetailedResultsDialog: React.FC = () => {
     }
 
     return (
-        <Dialog open={isOpenResultModal} onOpenChange={handleClose}>
+        <Dialog open={!!openResults?.length} onOpenChange={handleClose}>
             <DialogContent className="max-w-4xl">
                 <DialogHeader>
                     <DialogTitle>Result details</DialogTitle>
@@ -78,7 +72,7 @@ export const DetailedResultsDialog: React.FC = () => {
 
                 <div
                     className="flex flex-col gap-1 max-h-[60vh] overflow-auto"
-                    ref={detailsRefCallback}
+                    ref={detailsRef}
                 >
                     {results.length === filteredResults.length ? (
                         <div className="flex flex-col gap-1 mb-2">
@@ -88,26 +82,26 @@ export const DetailedResultsDialog: React.FC = () => {
                             </div>
                             <div>
                                 {"Mean: "}
-                                {TimeFormatter({ time: stats.mean })}
+                                {formatTime({ time: stats.mean })}
                             </div>
                             <div>
                                 {"Best single: "}
-                                {TimeFormatter({ time: stats.bestSingle })}
+                                {formatTime({ time: stats.bestSingle })}
                             </div>
                             <div>
                                 {"Worst single: "}
-                                {TimeFormatter({ time: stats.worstSingle })}
+                                {formatTime({ time: stats.worstSingle })}
                             </div>
                             <div>
                                 {"Best average of 5: "}
-                                {TimeFormatter({ time: stats.bestAo5 })}
+                                {formatTime({ time: stats.bestAo5 })}
                             </div>
                         </div>
                     ) : (
                         results.length > 1 && (
                             <div className="mb-2">
                                 Average of {results.length}:{" "}
-                                {TimeFormatter({
+                                {formatTime({
                                     time: calculateAvg(results),
                                 })}
                             </div>
@@ -124,7 +118,7 @@ export const DetailedResultsDialog: React.FC = () => {
                                     result.time === worst) ? (
                                     <>
                                         (
-                                        {TimeFormatter({
+                                        {formatTime({
                                             time: result.time,
                                             penalty: result.penalty,
                                             displayTimeOnDnf: true,
@@ -132,7 +126,7 @@ export const DetailedResultsDialog: React.FC = () => {
                                         )
                                     </>
                                 ) : (
-                                    TimeFormatter({
+                                    formatTime({
                                         time: result.time,
                                         penalty: result.penalty,
                                         displayTimeOnDnf: true,
@@ -156,7 +150,7 @@ export const DetailedResultsDialog: React.FC = () => {
                         <div className="flex gap-4 w-full justify-end">
                             <Button variant="outline" onClick={handleCopy}>
                                 <ClipboardTextIcon />
-                                {isCopiedDetails
+                                {isCopied
                                     ? "Copied to clipboard!"
                                     : "Copy to clipboard"}
                             </Button>

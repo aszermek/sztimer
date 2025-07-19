@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import {
     addCommentAtom,
     addPenaltyAtom,
+    closeDetailsAtom,
     removeResultAtom,
 } from "../../atoms/resultAtoms";
 import type { Result } from "../../types/results";
@@ -25,6 +26,7 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
     const [, addPenalty] = useAtom(addPenaltyAtom);
     const [, addComment] = useAtom(addCommentAtom);
     const [, removeResult] = useAtom(removeResultAtom);
+    const [, closeDetails] = useAtom(closeDetailsAtom);
 
     const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
     const [comment, setComment] = useState<string>(result?.comment || "");
@@ -57,6 +59,7 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
 
     const handleRemoveResult = () => {
         if (result) removeResult(result);
+        closeDetails();
     };
 
     if (!result) return null;

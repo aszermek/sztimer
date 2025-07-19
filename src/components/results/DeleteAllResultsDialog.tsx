@@ -10,15 +10,19 @@ import * as React from "react";
 import {
     deleteAllResultsFromSessionAtom,
     filteredResultsAtom,
-    isOpenDeleteModalAtom,
 } from "../../atoms/resultAtoms";
 import { Button } from "../ui/button";
 
-export const DeleteAllResultsDialog: React.FC = () => {
+interface DeleteAllResultsDialogProps
+    extends Partial<React.ComponentProps<typeof Dialog>> {
+    onClose?: () => void;
+}
+
+export const DeleteAllResultsDialog: React.FC<DeleteAllResultsDialogProps> = ({
+    onClose,
+    ...props
+}) => {
     const filteredResults = useAtomValue(filteredResultsAtom);
-    const [isOpenDeleteModal, setIsOpenDeleteModal] = useAtom(
-        isOpenDeleteModalAtom
-    );
     const [, deleteAllResults] = useAtom(deleteAllResultsFromSessionAtom);
 
     const results = [...filteredResults].reverse();
@@ -27,8 +31,13 @@ export const DeleteAllResultsDialog: React.FC = () => {
         return null;
     }
 
+    const handleDelete = () => {
+        deleteAllResults();
+        onClose?.();
+    };
+
     return (
-        <Dialog open={isOpenDeleteModal} onOpenChange={setIsOpenDeleteModal}>
+        <Dialog {...props}>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>Confirm delete</DialogTitle>
@@ -38,7 +47,7 @@ export const DeleteAllResultsDialog: React.FC = () => {
                     session?
                 </span>
                 <DialogFooter>
-                    <Button variant="destructive" onClick={deleteAllResults}>
+                    <Button variant="destructive" onClick={handleDelete}>
                         Delete
                     </Button>
                 </DialogFooter>

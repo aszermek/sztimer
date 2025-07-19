@@ -1,24 +1,22 @@
 import { statisticsAtom } from "@/atoms/statisticsAtoms";
-import { TimeFormatter } from "@/utils/TimeFormatter";
+import { formatTime } from "@/lib/formatTime";
 import { ChatCenteredTextIcon, TrashIcon } from "@phosphor-icons/react";
 import { useAtom, useAtomValue } from "jotai";
 import * as React from "react";
-import {
-    calculateAvg,
-    filteredResultsAtom,
-    isOpenDeleteModalAtom,
-    openDetailsAtom,
-} from "../../atoms/resultAtoms";
+import { useState } from "react";
+import { filteredResultsAtom, openDetailsAtom } from "../../atoms/resultAtoms";
 import type { Result } from "../../types/results";
 import { Button } from "../ui/button";
 import { DeleteAllResultsDialog } from "./DeleteAllResultsDialog";
 import { DetailedResultsDialog } from "./DetailedResultsDialog";
+import { calculateAvg } from "@/lib/calculateAvg";
 
 export const Results: React.FC = () => {
     const filteredResults = useAtomValue(filteredResultsAtom);
     const [, openDetails] = useAtom(openDetailsAtom);
     const stats = useAtomValue(statisticsAtom);
-    const [, setIsOpenDeleteModal] = useAtom(isOpenDeleteModalAtom);
+    const [isOpenDeleteDialog, setIsOpenDeleteDialog] =
+        useState<boolean>(false);
 
     const results = [...filteredResults].reverse();
 
@@ -42,7 +40,11 @@ export const Results: React.FC = () => {
 
     return (
         <>
-            <DeleteAllResultsDialog />
+            <DeleteAllResultsDialog
+                open={isOpenDeleteDialog}
+                onOpenChange={setIsOpenDeleteDialog}
+                onClose={() => setIsOpenDeleteDialog(false)}
+            />
             <DetailedResultsDialog />
 
             <div className="flex flex-col min-h-0 bg-white text-sm border border-border rounded-md p-4">
@@ -56,12 +58,12 @@ export const Results: React.FC = () => {
                             {stats.validSolveCount}/{stats.solveCount}
                             <br />
                             {"Mean: "}
-                            {TimeFormatter({ time: stats.mean })}
+                            {formatTime({ time: stats.mean })}
                         </div>
                         <Button
                             size="icon"
                             variant="destructive"
-                            onClick={() => setIsOpenDeleteModal(true)}
+                            onClick={() => setIsOpenDeleteDialog(true)}
                         >
                             <TrashIcon size={16} />
                         </Button>
@@ -111,7 +113,7 @@ export const Results: React.FC = () => {
                                     title={result.comment && result.comment}
                                 >
                                     {result.comment && <div className="w-3" />}
-                                    {TimeFormatter({
+                                    {formatTime({
                                         time: result.time,
                                         penalty: result.penalty,
                                     })}
@@ -126,7 +128,7 @@ export const Results: React.FC = () => {
                                     }`}
                                     onClick={() => handleAvgClick(currentFive)}
                                 >
-                                    {TimeFormatter({ time: avgFive })}
+                                    {formatTime({ time: avgFive })}
                                 </div>
                                 <div
                                     className={`col-span-2 mx-2 my-1 p-1 text-center ${
@@ -137,7 +139,7 @@ export const Results: React.FC = () => {
                                         handleAvgClick(currentTwelve)
                                     }
                                 >
-                                    {TimeFormatter({ time: avgTwelve })}
+                                    {formatTime({ time: avgTwelve })}
                                 </div>
                             </div>
                         );
