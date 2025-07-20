@@ -8,6 +8,16 @@ export const nextScrambleAtom = atom("");
 export const canGetPrevScrambleAtom = atom(false);
 export const isScrambleLoadingAtom = atom(false);
 
+export const getFirstScrambleAtom = atom(null, async (get, set) => {
+    set(isScrambleLoadingAtom, true);
+
+    const eventId = get(selectedEventAtom);
+    const scramble = (await randomScrambleForEvent(eventId)).toString();
+
+    set(scrambleAtom, scramble);
+    set(isScrambleLoadingAtom, false);
+});
+
 export const getNewScrambleAtom = atom(null, async (get, set) => {
     set(isScrambleLoadingAtom, true);
     const current = get(scrambleAtom);
@@ -40,9 +50,4 @@ export const goToNextScrambleAtom = atom(null, async (get, set) => {
     } else {
         await getNewScrambleAtom.write!(get, set);
     }
-});
-
-export const scrambleToClipboardAtom = atom(null, (get) => {
-    const scramble = get(scrambleAtom);
-    navigator.clipboard.writeText(scramble);
 });

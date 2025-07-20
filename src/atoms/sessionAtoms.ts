@@ -1,7 +1,17 @@
-import { events, type EventType } from "@/types/events";
 import { atom } from "jotai";
+import { events, type EventType } from "@/types/events";
+import { prevScrambleAtom } from "./scrambleAtoms";
 
 export const selectedEventAtom = atom<EventType>("333");
+
+export const setSelectedEventAtom = atom(
+    null,
+    (get, set, newEvent: EventType) => {
+        set(selectedEventAtom, newEvent);
+        set(prevScrambleAtom, "");
+    }
+);
+
 export const selectedSessionAtom = atom<string>("Regular");
 const customSessionsAtom = atom<string[]>([]);
 

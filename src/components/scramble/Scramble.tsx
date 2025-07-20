@@ -1,18 +1,17 @@
 import {
     canGetPrevScrambleAtom,
-    getNewScrambleAtom,
+    getFirstScrambleAtom,
     goToNextScrambleAtom,
     goToPrevScrambleAtom,
     isScrambleLoadingAtom,
     scrambleAtom,
-    scrambleToClipboardAtom,
 } from "@/atoms/scrambleAtoms";
+import { selectedEventAtom } from "@/atoms/sessionAtoms";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
-import { selectedEventAtom } from "@/atoms/sessionAtoms";
 
 export const Scramble: React.FC = () => {
     const scramble = useAtomValue(scrambleAtom);
@@ -20,14 +19,17 @@ export const Scramble: React.FC = () => {
     const canGetPrevScramble = useAtomValue(canGetPrevScrambleAtom);
     const selectedEvent = useAtomValue(selectedEventAtom);
 
-    const generateScramble = useSetAtom(getNewScrambleAtom);
+    const getFirstScramble = useSetAtom(getFirstScrambleAtom);
     const goToPrevScramble = useSetAtom(goToPrevScrambleAtom);
     const goToNextScramble = useSetAtom(goToNextScrambleAtom);
-    const scrambleToClipboard = useSetAtom(scrambleToClipboardAtom);
 
     useEffect(() => {
-        generateScramble();
-    }, [generateScramble, selectedEvent]);
+        getFirstScramble();
+    }, [selectedEvent]);
+
+    const scrambleToClipboard = () => {
+        navigator.clipboard.writeText(scramble);
+    };
 
     const prevButton = (
         <Button
@@ -47,38 +49,36 @@ export const Scramble: React.FC = () => {
     );
 
     return (
-        <div className="ScrambleFontSize text-justify font-code max-w-[1792px]">
-            <div className="hidden md:flex gap-8 items-center">
-                {prevButton}
-                <div
-                    className="cursor-pointer shrink-1"
-                    onClick={scrambleToClipboard}
-                >
-                    {isLoading ? (
-                        <Skeleton className="w-[80vw] mt-2 h-4 rounded-full bg-gray-200" />
-                    ) : (
-                        scramble
-                    )}
-                </div>
-                {nextButton}
-            </div>
+        <div className="ScrambleFontSize text-justify font-code min-h-[45px] max-w-[1792px] flex items-center justify-center">
+            {isLoading ? (
+                <Skeleton className="min-w-[40vw] max-w-[1656px] h-4 rounded-full bg-gray-200" />
+            ) : (
+                <>
+                    <div className="hidden md:flex gap-8 items-center">
+                        {prevButton}
+                        <div
+                            className="cursor-pointer shrink-1"
+                            onClick={scrambleToClipboard}
+                        >
+                            {scramble}
+                        </div>
+                        {nextButton}
+                    </div>
 
-            <div className="md:hidden flex flex-col gap-4">
-                <div
-                    className="cursor-pointer text-xl md:text-lg"
-                    onClick={scrambleToClipboard}
-                >
-                    {isLoading ? (
-                        <Skeleton className="w-full h-[20px]" />
-                    ) : (
-                        scramble
-                    )}
-                </div>
-                <div className="flex gap-4 justify-center">
-                    {prevButton}
-                    {nextButton}
-                </div>
-            </div>
+                    <div className="md:hidden flex flex-col gap-4">
+                        <div
+                            className="cursor-pointer text-xl md:text-lg"
+                            onClick={scrambleToClipboard}
+                        >
+                            {scramble}
+                        </div>
+                        <div className="flex gap-4 justify-center">
+                            {prevButton}
+                            {nextButton}
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
