@@ -97,13 +97,6 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
         <div className="flex gap-3">
             <Button
                 {...commonButtonProps}
-                onClick={handleCommentToggle}
-                className={result.comment ? "border-blue-500" : undefined}
-            >
-                <ChatCenteredTextIcon size={16} />
-            </Button>
-            <Button
-                {...commonButtonProps}
                 onClick={() => handlePenaltyChange(null)}
                 className={
                     result.penalty === null ? "border-green-500" : undefined
@@ -128,6 +121,13 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
                 }
             >
                 DNF
+            </Button>
+            <Button
+                {...commonButtonProps}
+                onClick={handleCommentToggle}
+                className={result.comment ? "border-blue-500" : undefined}
+            >
+                <ChatCenteredTextIcon size={16} />
             </Button>
             <Button {...commonButtonProps} onClick={handleRemoveResult}>
                 <TrashIcon size={16} className="text-red-500" />
