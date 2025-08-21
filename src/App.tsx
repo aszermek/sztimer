@@ -15,7 +15,7 @@ function App() {
                 <Scramble />
             </section>
 
-            <main className="flex flex-col gap-2 md:gap-4 w-full flex-1 min-h-0 max-w-[1478px] mx-auto">
+            <main className="flex flex-col gap-2 md:gap-4 lg:p-4 w-full flex-1 min-h-0 max-w-[1478px] mx-auto">
                 {isDesktop ? <DesktopLayout /> : <MobileLayout />}
             </main>
         </div>
