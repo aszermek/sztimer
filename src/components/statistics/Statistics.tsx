@@ -12,7 +12,9 @@ const StatItem = ({
 }) => (
     <div className="flex flex-col items-center justify-center p-2 bg-gray-100 rounded-md">
         <span className="text-xs text-gray-500">{label}</span>
-        <span className="text-md">{formatTime({ time: value })}</span>
+        <span data-testid={`stat-value-${label}`} className="text-md">
+            {formatTime({ time: value })}
+        </span>
     </div>
 );
 
