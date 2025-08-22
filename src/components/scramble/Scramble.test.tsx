@@ -6,15 +6,7 @@ import {
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider, createStore } from "jotai";
-import {
-    afterEach,
-    beforeEach,
-    describe,
-    expect,
-    it,
-    vi,
-    type Mock,
-} from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Scramble } from "./Scramble";
 
 const { mockGetFirstScramble, mockGoToPrevScramble, mockGoToNextScramble } =

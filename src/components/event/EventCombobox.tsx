@@ -10,7 +10,7 @@ export const EventCombobox: React.FC = () => {
     const options = events.map((event) => ({
         label: event.label,
         value: event.key,
-        icon: event.icon?.icon,
+        icon: event.icon,
     }));
 
     return (
