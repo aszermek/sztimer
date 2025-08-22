@@ -36,9 +36,6 @@ export const LineChart: React.FC = () => {
                 xScale={{ type: "point" }}
                 yScale={{ type: "linear", min: "auto", max: "auto" }}
                 axisLeft={{
-                    legend: "Time (s)",
-                    legendOffset: -45,
-                    legendPosition: "middle",
                     tickValues: 5,
                 }}
                 axisBottom={null}

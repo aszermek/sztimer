@@ -47,7 +47,7 @@ export const Results: React.FC = () => {
             />
             <DetailedResultsDialog />
 
-            <div className="flex flex-col min-h-0 bg-white text-sm border border-border rounded-md p-4">
+            <div className="flex flex-col h-full w-full lg:min-h-0 bg-white text-sm border border-border rounded-md p-4">
                 <div className="text-left font-semibold">
                     <div className="flex gap-4 items-center justify-between">
                         <div

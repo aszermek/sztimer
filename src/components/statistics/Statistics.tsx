@@ -20,7 +20,7 @@ export const Statistics: React.FC = () => {
     const stats = useAtomValue(statisticsAtom);
 
     return (
-        <div className="bg-white border border-border rounded-md h-fit p-4 flex items-center gap-3 justify-between">
+        <div className="bg-white border border-border rounded-md h-fit p-4 flex flex-col lg:flex-row items-center gap-3 lg:justify-between">
             <LineChart />
             <div className="grid grid-cols-2 gap-2">
                 <StatItem label="Best Single" value={stats.bestSingle} />
