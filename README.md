@@ -1,54 +1,55 @@
-# React + TypeScript + Vite
+# szTimer - A Modern Speedcubing Timer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean, fast, and modern web application for speedcubing enthusiasts. Designed for both practice and serious training sessions, `szTimer` provides all the essential tools a cuber needs without the clutter.
 
-Currently, two official plugins are available:
+## [**Live Demo**](https://sztimer.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Key Features
 
-## Expanding the ESLint configuration
+-   **⏱️ Precision Timing**: Choose between spacebar control and manual time entry.
+-   **🧩 Official Scrambles**: Generate scrambles for a wide variety of WCA puzzles.
+-   **📊 Session Analytics**: Track mean, best single, and rolling averages (Ao5, Ao12, etc.).
+-   **📈 Performance Visualization**: Interactive chart to visualize solves and rolling averages over time.
+-   **💾 Persistent History**: Solves are saved locally, preserving your session between visits.
+-   **📱 Responsive Design**: Fully optimized for desktop, tablet, and mobile devices.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This project was built with a modern, type-safe, and efficient technology stack.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+-   **Framework**: [React](https://react.dev/) + [Vite](https://vite.dev/)
+-   **Language**: [TypeScript](https://www.typescriptlang.org/)
+-   **State Management**: [Jotai](https://jotai.org/)
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
+-   **Charting**: [Nivo](https://nivo.rocks/)
+-   **Scrambling Engine**: [cubing.js](https://js.cubing.net/)
+-   **Deployment**: [Vercel](https://vercel.com/)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 💻 Running Locally
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Want to run this project on your own machine? Follow these simple steps.
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/aszermek/sztimer.git
+    cd sztimer
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+The application will now be running on `http://localhost:5173`.
+
+---
+
+Feel free to fork the repository, submit issues, or suggest new features!
