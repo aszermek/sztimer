@@ -2,7 +2,7 @@
 
 A clean, fast, and modern web application for speedcubing enthusiasts. Designed for both practice and serious training sessions, `szTimer` provides all the essential tools a cuber needs without the clutter.
 
-## [**Live Demo**](https://sztimer.vercel.app)
+### [**Live Demo**](https://sztimer.vercel.app)
 
 ## ✨ Key Features
 
@@ -17,9 +17,10 @@ A clean, fast, and modern web application for speedcubing enthusiasts. Designed 
 
 This project was built with a modern, type-safe, and efficient technology stack.
 
--   **Framework**: [React](https://react.dev/) + [Vite](https://vite.dev/)
+-   **Framework**: [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/) + [Vite](https://vite.dev/)
 -   **Language**: [TypeScript](https://www.typescriptlang.org/)
 -   **State Management**: [Jotai](https://jotai.org/)
+-   **Testing**: [Vitest](https://vitest.dev/) + [React Testing Library](https://testing-library.com/react)
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 -   **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
 -   **Charting**: [Nivo](https://nivo.rocks/)
