@@ -4,15 +4,25 @@ import { Input } from "../ui/input";
 
 const parseSeconds = (seconds: string): number => {
     const formattedSeconds = seconds.replace(",", ".");
+
+    // If a decimal is already present, parse it directly.
+    // Example: "12.34" -> 12.34
     if (formattedSeconds.includes(".")) {
         return parseFloat(formattedSeconds);
     }
-    if (formattedSeconds.length > 2) {
-        return parseFloat(
-            formattedSeconds.slice(0, -2) + "." + formattedSeconds.slice(-2)
-        );
+
+    // If there's no decimal, treat the entire string as an integer
+    // representing hundredths of a second, then divide by 100.
+    const hundredths = parseInt(formattedSeconds, 10);
+
+    if (isNaN(hundredths)) {
+        return NaN;
     }
-    return parseFloat("0." + formattedSeconds);
+
+    // '1'   -> 1 / 100   -> 0.01
+    // '74'  -> 74 / 100  -> 0.74
+    // '1074' -> 1074 / 100 -> 10.74
+    return hundredths / 100;
 };
 
 const parseTime = (enteredTime: string): number | undefined => {
