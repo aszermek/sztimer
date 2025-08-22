@@ -22,5 +22,7 @@ export const ScramblePreview: React.FC = () => {
         return <ScramblePreviewSkeleton />;
     }
 
-    return <div ref={previewRef} className="scale-[0.82]" />;
+    return (
+        <div ref={previewRef} className="mx-auto scale-[0.7] xl:scale-[0.82]" />
+    );
 };

@@ -9,7 +9,6 @@ import type { Result } from "../../types/results";
 import { Button } from "../ui/button";
 import { DeleteAllResultsDialog } from "./DeleteAllResultsDialog";
 import { DetailedResultsDialog } from "./DetailedResultsDialog";
-import { calculateAvg } from "@/lib/calculateAvg";
 
 export const Results: React.FC = () => {
     const filteredResults = useAtomValue(filteredResultsAtom);
@@ -19,6 +18,7 @@ export const Results: React.FC = () => {
         useState<boolean>(false);
 
     const results = [...filteredResults].reverse();
+    const originalLength = filteredResults.length;
 
     if (!results) {
         return null;
@@ -33,7 +33,7 @@ export const Results: React.FC = () => {
     };
 
     const handleAvgClick = (avgResults: Result[]) => {
-        if (avgResults.length >= 5) {
+        if (avgResults.length >= 2) {
             openDetails(avgResults);
         }
     };
@@ -49,16 +49,18 @@ export const Results: React.FC = () => {
 
             <div className="flex flex-col min-h-0 bg-white text-sm border border-border rounded-md p-4">
                 <div className="text-left font-semibold">
-                    <div className="flex gap-4 justify-between">
+                    <div className="flex gap-4 items-center justify-between">
                         <div
-                            className="flex justify-center items-center cursor-pointer rounded-lg hover:bg-slate-100"
+                            className="flex justify-center items-center cursor-pointer rounded-lg hover:bg-slate-100 p-2"
                             onClick={handleStatsClick}
                         >
-                            {"Solves: "}
-                            {stats.validSolveCount}/{stats.solveCount}
-                            <br />
-                            {"Mean: "}
-                            {formatTime({ time: stats.mean })}
+                            <div>
+                                {"Solves: "}
+                                {stats.validSolveCount}/{stats.solveCount}
+                                <br />
+                                {"Mean: "}
+                                {formatTime({ time: stats.mean })}
+                            </div>
                         </div>
                         <Button
                             size="icon"
@@ -69,7 +71,7 @@ export const Results: React.FC = () => {
                         </Button>
                     </div>
                 </div>
-                <div className="grid grid-cols-7 gap-2 border-b border-slate-200">
+                <div className="grid grid-cols-7 gap-2 border-b border-slate-200 mt-2">
                     <div className="col-span-1 mx-2 my-1 p-1 text-right text-xs">
                         #
                     </div>
@@ -85,32 +87,21 @@ export const Results: React.FC = () => {
                 </div>
                 <div className="flex flex-col flex-1 overflow-y-auto scroll-smooth [overflow-anchor:none]">
                     {results.map((result, i) => {
-                        const currentFive: Result[] = results.slice(i, i + 5);
-                        const currentTwelve: Result[] = results.slice(
-                            i,
-                            i + 12
-                        );
-                        const avgFive: number | string | null =
-                            currentFive.length >= 5
-                                ? calculateAvg(currentFive)
-                                : null;
-                        const avgTwelve: number | string | null =
-                            currentTwelve.length >= 12
-                                ? calculateAvg(currentTwelve)
-                                : null;
+                        const originalIndex = originalLength - 1 - i;
+                        const resultStats = stats.chartData[originalIndex];
 
                         return (
                             <div
                                 className="grid grid-cols-7 gap-2 border-b border-slate-200"
                                 key={i}
                             >
-                                <div className="col-span-1 mx-2 my-1 p-1 text-right text-xs self-end mb-1.5">
-                                    {results.length - i}
+                                <div className="col-span-1 mx-2 my-1 p-1 text-right text-xs self-center">
+                                    {originalLength - i}
                                 </div>
                                 <div
-                                    className="col-span-2 flex gap-1 mx-2 my-1 p-1 justify-center text-center cursor-pointer rounded-3xl hover:bg-slate-100"
+                                    className="col-span-2 flex gap-1 mx-2 my-1 p-1 justify-center text-center cursor-pointer rounded-3xl hover:bg-slate-100 items-center"
                                     onClick={() => handleResultClick(result)}
-                                    title={result.comment && result.comment}
+                                    title={result.comment}
                                 >
                                     {result.comment && <div className="w-3" />}
                                     {formatTime({
@@ -122,24 +113,28 @@ export const Results: React.FC = () => {
                                     )}
                                 </div>
                                 <div
-                                    className={`col-span-2 mx-2 my-1 p-1 text-center ${
-                                        avgFive &&
-                                        `cursor-pointer rounded-3xl hover:bg-slate-100`
-                                    }`}
-                                    onClick={() => handleAvgClick(currentFive)}
-                                >
-                                    {formatTime({ time: avgFive })}
-                                </div>
-                                <div
-                                    className={`col-span-2 mx-2 my-1 p-1 text-center ${
-                                        avgTwelve &&
-                                        `cursor-pointer rounded-3xl hover:bg-slate-100`
+                                    className={`col-span-2 mx-2 my-1 p-1 text-center self-center ${
+                                        resultStats?.ao5
+                                            ? "cursor-pointer rounded-3xl hover:bg-slate-100"
+                                            : "cursor-default"
                                     }`}
                                     onClick={() =>
-                                        handleAvgClick(currentTwelve)
+                                        handleAvgClick(results.slice(i, i + 5))
                                     }
                                 >
-                                    {formatTime({ time: avgTwelve })}
+                                    {formatTime({ time: resultStats?.ao5 })}
+                                </div>
+                                <div
+                                    className={`col-span-2 mx-2 my-1 p-1 text-center self-center ${
+                                        resultStats?.ao12
+                                            ? "cursor-pointer rounded-3xl hover:bg-slate-100"
+                                            : "cursor-default"
+                                    }`}
+                                    onClick={() =>
+                                        handleAvgClick(results.slice(i, i + 12))
+                                    }
+                                >
+                                    {formatTime({ time: resultStats?.ao12 })}
                                 </div>
                             </div>
                         );

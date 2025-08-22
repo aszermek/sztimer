@@ -14,7 +14,7 @@ export const DesktopLayout: React.FC = () => {
                     <Results />
                 </aside>
             </section>
-            <section className="flex justify-between gap-8">
+            <section className="flex justify-between gap-4">
                 <ScramblePreview />
                 <Statistics />
             </section>

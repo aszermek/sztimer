@@ -10,6 +10,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@nivo/core": "^0.99.0",
+        "@nivo/line": "^0.99.0",
         "@phosphor-icons/react": "^2.1.10",
         "@radix-ui/react-dialog": "^1.1.14",
         "@radix-ui/react-popover": "^1.1.14",
@@ -22,6 +24,7 @@
         "clsx": "^2.1.1",
         "cmdk": "^1.1.1",
         "cubing": "^0.56.0",
+        "date-fns": "^4.1.0",
         "jotai": "^2.12.5",
         "lucide-react": "^0.540.0",
         "motion": "^12.16.0",

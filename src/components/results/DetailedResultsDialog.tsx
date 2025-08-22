@@ -5,6 +5,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import { calculateAvg } from "@/lib/calculateAvg";
 import { formatTime } from "@/lib/formatTime";
 import { ClipboardTextIcon } from "@phosphor-icons/react";
 import { useAtom, useAtomValue } from "jotai";
@@ -16,10 +17,8 @@ import {
     openResultsAtom,
 } from "../../atoms/resultAtoms";
 import { statisticsAtom } from "../../atoms/statisticsAtoms";
-import type { Result } from "../../types/results";
 import { Button } from "../ui/button";
 import { ResultFlagger } from "./ResultFlagger";
-import { calculateAvg } from "@/lib/calculateAvg";
 
 export const DetailedResultsDialog: React.FC = () => {
     const openResults = useAtomValue(openResultsAtom);
@@ -47,24 +46,21 @@ export const DetailedResultsDialog: React.FC = () => {
 
     if (!results.length) return null;
 
-    const dnfResults: Result[] = results.filter((r) => r.penalty === "dnf");
-    let worst: number;
-    if (dnfResults.length > 0) {
-        worst = dnfResults[0].time;
+    const validResultsInDialog = results.filter((r) => r.penalty !== "dnf");
+    const dnfCountInDialog = results.length - validResultsInDialog.length;
+    let worst: number | undefined;
+    if (dnfCountInDialog > 0) {
+        worst = results.find((r) => r.penalty === "dnf")?.time;
     } else {
         worst = Math.max(...results.map((r) => r.time));
     }
-    let best: number;
-    if (dnfResults.length > 0) {
-        best = Math.min(
-            ...results.filter((r) => r.penalty !== "dnf").map((r) => r.time)
-        );
-    } else {
-        best = Math.min(...results.map((r) => r.time));
-    }
+    const best =
+        validResultsInDialog.length > 0
+            ? Math.min(...validResultsInDialog.map((r) => r.time))
+            : undefined;
 
     return (
-        <Dialog open={!!openResults?.length} onOpenChange={handleClose}>
+        <Dialog open={results.length > 0} onOpenChange={handleClose}>
             <DialogContent className="max-w-4xl">
                 <DialogHeader>
                     <DialogTitle>Result details</DialogTitle>
@@ -77,23 +73,20 @@ export const DetailedResultsDialog: React.FC = () => {
                     {results.length === filteredResults.length ? (
                         <div className="flex flex-col gap-1 mb-2">
                             <div>
-                                {"Solves: "}
-                                {stats.validSolveCount}/{stats.solveCount}
+                                Solves: {stats.validSolveCount}/
+                                {stats.solveCount}
                             </div>
+                            <div>Mean: {formatTime({ time: stats.mean })}</div>
                             <div>
-                                {"Mean: "}
-                                {formatTime({ time: stats.mean })}
-                            </div>
-                            <div>
-                                {"Best single: "}
+                                Best single:{" "}
                                 {formatTime({ time: stats.bestSingle })}
                             </div>
                             <div>
-                                {"Worst single: "}
+                                Worst single:{" "}
                                 {formatTime({ time: stats.worstSingle })}
                             </div>
                             <div>
-                                {"Best average of 5: "}
+                                Best average of 5:{" "}
                                 {formatTime({ time: stats.bestAo5 })}
                             </div>
                         </div>
@@ -101,9 +94,7 @@ export const DetailedResultsDialog: React.FC = () => {
                         results.length > 1 && (
                             <div className="mb-2">
                                 Average of {results.length}:{" "}
-                                {formatTime({
-                                    time: calculateAvg(results),
-                                })}
+                                {formatTime({ time: calculateAvg(results) })}
                             </div>
                         )
                     )}
@@ -112,7 +103,8 @@ export const DetailedResultsDialog: React.FC = () => {
                         .reverse()
                         .map((result, i) => (
                             <div key={i}>
-                                {results.length > 1 && i + 1 + ". "}
+                                {results.length > 1 &&
+                                    `${results.length - i}. `}
                                 {results.length > 1 &&
                                 (result.time === best ||
                                     result.time === worst) ? (
@@ -150,9 +142,7 @@ export const DetailedResultsDialog: React.FC = () => {
                         <div className="flex gap-4 w-full justify-end">
                             <Button variant="outline" onClick={handleCopy}>
                                 <ClipboardTextIcon />
-                                {isCopied
-                                    ? "Copied to clipboard!"
-                                    : "Copy to clipboard"}
+                                {isCopied ? "Copied!" : "Copy"}
                             </Button>
                         </div>
                     </div>
