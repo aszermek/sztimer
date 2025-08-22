@@ -68,7 +68,7 @@ export const deleteAllResultsFromSessionAtom = atom(null, (get, set) => {
     set(resultNotificationsAtom, []);
 });
 
-export const openDetailsAtom = atom(null, (get, set, results: Result[]) => {
+export const openDetailsAtom = atom(null, (_, set, results: Result[]) => {
     set(openResultsAtom, results);
 });
 

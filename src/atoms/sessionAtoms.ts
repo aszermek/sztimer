@@ -6,7 +6,7 @@ export const selectedEventAtom = atom<EventType>("333");
 
 export const setSelectedEventAtom = atom(
     null,
-    (get, set, newEvent: EventType) => {
+    (_, set, newEvent: EventType) => {
         set(selectedEventAtom, newEvent);
         set(prevScrambleAtom, "");
     }

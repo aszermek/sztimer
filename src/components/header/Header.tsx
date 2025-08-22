@@ -11,7 +11,6 @@ import {
 } from "@phosphor-icons/react";
 import { useAtomValue } from "jotai";
 import { useState } from "react";
-import { DuotoneHoverIcon } from "../common/DuotoneHoverIcon";
 import { EventCombobox } from "../event/EventCombobox";
 import { Settings } from "../settings/Settings";
 import { Button } from "../ui/button";

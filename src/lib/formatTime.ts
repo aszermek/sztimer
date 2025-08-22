@@ -11,7 +11,6 @@ export function formatTime({
     time,
     penalty,
     displayTimeOnDnf,
-    isExcluded,
 }: formatTimeProps): string {
     if (time === "DNF") {
         return "DNF";
