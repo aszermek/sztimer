@@ -4,7 +4,6 @@ export interface formatTimeProps {
     time: number | string | null;
     penalty?: PenaltyType;
     displayTimeOnDnf?: boolean;
-    isExcluded?: boolean;
 }
 
 export function formatTime({
@@ -12,32 +11,48 @@ export function formatTime({
     penalty,
     displayTimeOnDnf,
 }: formatTimeProps): string {
-    if (time === "DNF") {
-        return "DNF";
+    if (time === "DNF" || time === null || time === undefined) {
+        return time === null || time === undefined ? "" : "DNF";
     }
 
-    if (typeof time === "number") {
-        const hours = Math.floor(time / 3600);
-        const minutes = Math.floor((time % 3600) / 60);
-        const seconds = Math.floor(time % 60);
-        const milliseconds = (time % 1).toFixed(2).substring(2);
-        const formattedTime = `${hours > 0 ? hours + ":" : ""}${
-            hours > 0 && minutes < 10 ? "0" : ""
-        }${minutes > 0 ? minutes + ":" : ""}${
-            minutes > 0 && seconds < 10 ? "0" : ""
-        }${seconds}.${milliseconds}`;
+    const numericTime = typeof time === "string" ? parseFloat(time) : time;
 
-        if (penalty === "dnf") {
-            if (!displayTimeOnDnf) {
-                return "DNF";
-            } else {
-                return `DNF(${formattedTime})`;
-            }
-        }
-        if (penalty === "+2") {
-            return `${formattedTime}+`;
-        }
-        return formattedTime;
+    if (typeof numericTime !== "number" || isNaN(numericTime)) {
+        return "";
     }
-    return "-";
+
+    if (penalty === "dnf") {
+        if (!displayTimeOnDnf) {
+            return "DNF";
+        } else {
+            const originalFormattedTime = formatTime({ time: numericTime });
+            return `DNF(${originalFormattedTime})`;
+        }
+    }
+
+    const hours = Math.floor(numericTime / 3600);
+    const minutes = Math.floor((numericTime % 3600) / 60);
+    const seconds = Math.floor(numericTime % 60);
+
+    const timeAsString = String(numericTime.toFixed(3));
+    const parts = timeAsString.split(".");
+    const hundredthsString = parts[1] || "";
+
+    const milliseconds = hundredthsString.padEnd(2, "0").substring(0, 2);
+
+    let formattedTime = "";
+
+    if (hours > 0) {
+        formattedTime += `${hours}:${String(minutes).padStart(2, "0")}:${String(
+            seconds
+        ).padStart(2, "0")}`;
+    } else if (minutes > 0) {
+        formattedTime += `${minutes}:${String(seconds).padStart(2, "0")}`;
+    } else {
+        formattedTime += `${seconds}`;
+    }
+
+    formattedTime += `.${milliseconds}`;
+
+    return penalty === "+2" ? `${formattedTime}+` : formattedTime;
 }
