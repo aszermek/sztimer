@@ -34,7 +34,6 @@ describe("statisticsAtom", () => {
     it("should calculate basic stats correctly", () => {
         const store = createStore();
         const results = [createResult(10), createResult(15), createResult(20)];
-        // --- THE FIX: Explicitly set ALL source atoms ---
         store.set(resultsAtom, results);
         store.set(selectedEventAtom, "333");
         store.set(selectedSessionAtom, "Default");

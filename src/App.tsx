@@ -1,6 +1,6 @@
 import { Header } from "./components/header/Header";
 import { Scramble } from "./components/scramble/Scramble";
-import { useMediaQuery } from "./hooks/useMediaQuery"; // <-- IMPORT THE HOOK
+import { useMediaQuery } from "./hooks/useMediaQuery";
 import { DesktopLayout } from "./layout/DesktopLayout";
 import { MobileLayout } from "./layout/MobileLayout";
 

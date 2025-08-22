@@ -35,9 +35,7 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
         setComment(result?.comment || "");
     }, [result]);
 
-    const handleCommentToggle = () => {
-        setIsCommentOpen(!isCommentOpen);
-    };
+    const handleCommentToggle = () => setIsCommentOpen(!isCommentOpen);
 
     const handleCommentSubmit = () => {
         if (result) addComment({ result, comment: comment.trim() });
@@ -45,9 +43,8 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Escape") {
-            setIsCommentOpen(false);
-        } else if (e.key === "Enter") {
+        if (e.key === "Escape") setIsCommentOpen(false);
+        else if (e.key === "Enter") {
             e.preventDefault();
             handleCommentSubmit();
         }
@@ -80,12 +77,17 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
                     placeholder="Add a comment..."
                     className="min-w-35 flex-1"
                 />
-                <Button {...commonButtonProps} onClick={handleCommentSubmit}>
+                <Button
+                    {...commonButtonProps}
+                    onClick={handleCommentSubmit}
+                    aria-label="Submit comment"
+                >
                     <PaperPlaneRightIcon size={16} />
                 </Button>
                 <Button
                     {...commonButtonProps}
                     onClick={() => setIsCommentOpen(false)}
+                    aria-label="Cancel comment"
                 >
                     <XIcon size={16} />
                 </Button>
@@ -101,6 +103,7 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
                 className={
                     result.penalty === null ? "border-green-500" : undefined
                 }
+                aria-label="Mark as OK"
             >
                 <CheckIcon size={16} />
             </Button>
@@ -110,6 +113,7 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
                 className={
                     result.penalty === "+2" ? "border-yellow-500" : undefined
                 }
+                aria-label="Mark as +2"
             >
                 +2
             </Button>
@@ -119,6 +123,7 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
                 className={
                     result.penalty === "dnf" ? "border-red-500" : undefined
                 }
+                aria-label="Mark as DNF"
             >
                 DNF
             </Button>
@@ -126,10 +131,15 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
                 {...commonButtonProps}
                 onClick={handleCommentToggle}
                 className={result.comment ? "border-blue-500" : undefined}
+                aria-label="Toggle comment"
             >
                 <ChatCenteredTextIcon size={16} />
             </Button>
-            <Button {...commonButtonProps} onClick={handleRemoveResult}>
+            <Button
+                {...commonButtonProps}
+                onClick={handleRemoveResult}
+                aria-label="Delete result"
+            >
                 <TrashIcon size={16} className="text-red-500" />
             </Button>
         </div>
