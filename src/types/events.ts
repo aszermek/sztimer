@@ -1,4 +1,3 @@
-import type { CubingIconProps } from "@/components/common/CubingIcon";
 import {
     CircleNotchIcon,
     DiamondIcon,
@@ -42,7 +41,7 @@ export interface Event {
     key: EventType;
     keyForViewer: EventTypeForViewer;
     label: string;
-    icon?: CubingIconProps;
+    icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     sessions?: string[];
 }
 
@@ -51,77 +50,77 @@ export const events: Event[] = [
         key: "222",
         keyForViewer: "2x2x2",
         label: "2x2x2",
-        icon: { icon: SquaresFourIcon },
+        icon: SquaresFourIcon,
         sessions: ["Regular"],
     },
     {
         key: "333",
         keyForViewer: "3x3x3",
         label: "3x3x3",
-        icon: { icon: NumberSquareThreeIcon },
+        icon: NumberSquareThreeIcon,
         sessions: ["Regular", "One-Handed", "Blindfolded"],
     },
     {
         key: "444",
         keyForViewer: "4x4x4",
         label: "4x4x4",
-        icon: { icon: NumberSquareFourIcon },
+        icon: NumberSquareFourIcon,
         sessions: ["Regular", "Blindfolded"],
     },
     {
         key: "555",
         keyForViewer: "5x5x5",
         label: "5x5x5",
-        icon: { icon: NumberSquareFiveIcon },
+        icon: NumberSquareFiveIcon,
         sessions: ["Regular", "Blindfolded"],
     },
     {
         key: "666",
         keyForViewer: "6x6x6",
         label: "6x6x6",
-        icon: { icon: NumberSquareSixIcon },
+        icon: NumberSquareSixIcon,
         sessions: ["Regular"],
     },
     {
         key: "777",
         keyForViewer: "7x7x7",
         label: "7x7x7",
-        icon: { icon: NumberSquareSevenIcon },
+        icon: NumberSquareSevenIcon,
         sessions: ["Regular"],
     },
     {
         key: "minx",
         keyForViewer: "megaminx",
         label: "Megaminx",
-        icon: { icon: PentagonIcon },
+        icon: PentagonIcon,
         sessions: ["Regular"],
     },
     {
         key: "pyram",
         keyForViewer: "pyraminx",
         label: "Pyraminx",
-        icon: { icon: TriangleIcon },
+        icon: TriangleIcon,
         sessions: ["Regular"],
     },
     {
         key: "sq1",
         keyForViewer: "square1",
         label: "Square-1",
-        icon: { icon: NumberSquareOneIcon },
+        icon: NumberSquareOneIcon,
         sessions: ["Regular"],
     },
     {
         key: "clock",
         keyForViewer: "clock",
         label: "Clock",
-        icon: { icon: CircleNotchIcon },
+        icon: CircleNotchIcon,
         sessions: ["Regular"],
     },
     {
         key: "skewb",
         keyForViewer: "skewb",
         label: "Skewb",
-        icon: { icon: DiamondIcon },
+        icon: DiamondIcon,
         sessions: ["Regular"],
     },
 ];
