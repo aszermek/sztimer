@@ -25,7 +25,7 @@ export const Scramble: React.FC = () => {
 
     useEffect(() => {
         getFirstScramble();
-    }, [selectedEvent]);
+    }, [selectedEvent, getFirstScramble]);
 
     const scrambleToClipboard = () => {
         navigator.clipboard.writeText(scramble);
@@ -37,13 +37,19 @@ export const Scramble: React.FC = () => {
             size="icon"
             onClick={goToPrevScramble}
             disabled={!canGetPrevScramble}
+            aria-label="Previous scramble"
         >
             <CaretLeftIcon size={16} />
         </Button>
     );
 
     const nextButton = (
-        <Button variant="outline" size="icon" onClick={goToNextScramble}>
+        <Button
+            variant="outline"
+            size="icon"
+            onClick={goToNextScramble}
+            aria-label="Next scramble"
+        >
             <CaretRightIcon size={16} />
         </Button>
     );
@@ -51,12 +57,16 @@ export const Scramble: React.FC = () => {
     return (
         <div className="ScrambleFontSize text-justify font-code min-h-[45px] max-w-[1792px] flex items-center justify-center">
             {isLoading ? (
-                <Skeleton className="min-w-[40vw] max-w-[1656px] h-4 rounded-full bg-gray-200" />
+                <Skeleton
+                    data-testid="scramble-skeleton"
+                    className="min-w-[40vw] max-w-[1656px] h-4 rounded-full bg-gray-200"
+                />
             ) : (
                 <>
                     <div className="hidden md:flex gap-8 items-center">
                         {prevButton}
                         <div
+                            data-testid="scramble-text"
                             className="cursor-pointer shrink-1"
                             onClick={scrambleToClipboard}
                         >
@@ -67,6 +77,7 @@ export const Scramble: React.FC = () => {
 
                     <div className="md:hidden flex flex-col gap-4">
                         <div
+                            data-testid="scramble-text"
                             className="cursor-pointer text-xl md:text-lg"
                             onClick={scrambleToClipboard}
                         >

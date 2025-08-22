@@ -21,7 +21,6 @@ export const Settings: React.FC = () => {
 
     return (
         <div className="flex flex-col gap-6 text-gray-800 w-full">
-            {/* Timer Mode controller is first, as it controls the setting below it. */}
             <div className="flex flex-col gap-3">
                 <label className="font-medium">
                     Timer Input Mode
@@ -51,11 +50,9 @@ export const Settings: React.FC = () => {
                 </ToggleGroup>
             </div>
 
-            {/* Inspection setting is now controlled by the timer mode */}
             <div className="flex justify-between items-center">
                 <label
                     htmlFor="inspection-toggle"
-                    // Add classes to visually indicate the disabled state
                     className={`font-medium pr-4 transition-opacity ${
                         isInspectionDisabled
                             ? "opacity-50 cursor-not-allowed"
@@ -71,7 +68,6 @@ export const Settings: React.FC = () => {
                     id="inspection-toggle"
                     checked={withInspection}
                     onCheckedChange={setWithInspection}
-                    // Disable the switch when in manual mode
                     disabled={isInspectionDisabled}
                 />
             </div>
