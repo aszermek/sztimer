@@ -33,6 +33,7 @@ export default defineConfig({
                 "src/App.tsx",
                 "src/vite-env.d.ts",
                 "src/assets/**",
+                "src/constants/**",
             ],
         },
     },

@@ -1,6 +1,7 @@
 import { statisticsAtom } from "@/atoms/statisticsAtoms";
 import { useAtomValue } from "jotai";
 import { ResponsiveLine } from "@nivo/line";
+import { nivoTheme } from "@/constants/nivoTheme";
 
 export const LineChart: React.FC = () => {
     const { chartData } = useAtomValue(statisticsAtom);
@@ -32,6 +33,7 @@ export const LineChart: React.FC = () => {
         <div className="w-[36vw] h-64">
             <ResponsiveLine
                 data={formattedData}
+                theme={nivoTheme}
                 margin={{ top: 12, right: 20, bottom: 48, left: 40 }}
                 xScale={{ type: "point" }}
                 yScale={{ type: "linear", min: "auto", max: "auto" }}
