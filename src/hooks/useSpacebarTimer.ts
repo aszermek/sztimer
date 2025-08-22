@@ -36,84 +36,72 @@ export const useSpacebarTimer = ({ withInspection }: UseSpacebarTimerProps) => {
 
     const timerIntervalRef = useRef<number | undefined>(undefined);
     const inspectionIntervalRef = useRef<number | undefined>(undefined);
+    const stopLockRef = useRef(false);
 
     const stateRef = useRef({
         timerState,
         elapsedTime,
         inspectionTime,
         withInspection,
+        scramble,
+        selectedEvent,
+        selectedSession,
+        addResult,
     });
     stateRef.current = {
         timerState,
         elapsedTime,
         inspectionTime,
         withInspection,
+        scramble,
+        selectedEvent,
+        selectedSession,
+        addResult,
     };
 
     useEffect(() => {
-        const startInspection = () => {
-            setTimerState("INSPECTING");
-            setIsRunningInspection(true);
-            setInspectionTime(15);
-            inspectionIntervalRef.current = window.setInterval(() => {
-                setInspectionTime((prev) => prev - 1);
-            }, 1000);
-        };
-
-        const startTimer = () => {
-            clearInterval(inspectionIntervalRef.current);
-            setTimerState("TIMING");
-            setIsRunningTimer(true);
-            setIsRunningInspection(false);
-            const startTime = performance.now();
-            timerIntervalRef.current = window.setInterval(() => {
-                setElapsedTime((performance.now() - startTime) / 1000);
-            }, 10);
-        };
-
-        const stopTimer = () => {
-            clearInterval(timerIntervalRef.current);
-            setTimerState("IDLE");
-            setIsRunningTimer(false);
-
-            const {
-                elapsedTime: finalTime,
-                inspectionTime: finalInspectionTime,
-            } = stateRef.current;
-            const finalPenalty =
-                finalInspectionTime < 1
-                    ? finalInspectionTime < -1
-                        ? "dnf"
-                        : "+2"
-                    : null;
-
-            const newResult: Result = {
-                time: finalTime,
-                scramble: scramble,
-                date: new Date(),
-                event: selectedEvent,
-                session: selectedSession,
-                penalty: finalPenalty,
-                comment: "",
-            };
-            addResult(newResult);
-        };
-
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key !== " ") return;
             event.preventDefault();
 
             const { timerState: currentState } = stateRef.current;
-            switch (currentState) {
-                case "IDLE":
-                    setTimerState("READY");
-                    break;
-                case "INSPECTING":
-                    setTimerState("INSPECTING_READY");
-                    break;
-                case "TIMING":
-                    stopTimer();
-                    break;
+
+            if (currentState === "TIMING") {
+                if (stopLockRef.current) return;
+                stopLockRef.current = true;
+
+                clearInterval(timerIntervalRef.current);
+                setIsRunningTimer(false);
+                setTimerState("IDLE");
+
+                const {
+                    elapsedTime,
+                    inspectionTime,
+                    scramble,
+                    selectedEvent,
+                    selectedSession,
+                    addResult,
+                } = stateRef.current;
+                const finalPenalty =
+                    inspectionTime < 1
+                        ? inspectionTime < -1
+                            ? "dnf"
+                            : "+2"
+                        : null;
+                const newResult: Result = {
+                    time: elapsedTime,
+                    scramble,
+                    date: new Date(),
+                    event: selectedEvent,
+                    session: selectedSession,
+                    penalty: finalPenalty,
+                    comment: "",
+                };
+                addResult(newResult);
+            } else if (currentState === "IDLE") {
+                setTimerState("READY");
+            } else if (currentState === "INSPECTING") {
+                setTimerState("INSPECTING_READY");
             }
         };
 
@@ -121,21 +109,38 @@ export const useSpacebarTimer = ({ withInspection }: UseSpacebarTimerProps) => {
             if (event.key !== " ") return;
             event.preventDefault();
 
+            stopLockRef.current = false;
+
             const {
                 timerState: currentState,
                 withInspection: currentWithInspection,
             } = stateRef.current;
-            switch (currentState) {
-                case "READY":
-                    if (currentWithInspection) {
-                        startInspection();
-                    } else {
-                        startTimer();
-                    }
-                    break;
-                case "INSPECTING_READY":
-                    startTimer();
-                    break;
+
+            if (currentState === "READY") {
+                if (currentWithInspection) {
+                    setTimerState("INSPECTING");
+                    setIsRunningInspection(true);
+                    setInspectionTime(15);
+                    inspectionIntervalRef.current = window.setInterval(() => {
+                        setInspectionTime((prev) => prev - 1);
+                    }, 1000);
+                } else {
+                    setTimerState("TIMING");
+                    setIsRunningTimer(true);
+                    const startTime = performance.now();
+                    timerIntervalRef.current = window.setInterval(() => {
+                        setElapsedTime((performance.now() - startTime) / 1000);
+                    }, 10);
+                }
+            } else if (currentState === "INSPECTING_READY") {
+                clearInterval(inspectionIntervalRef.current);
+                setTimerState("TIMING");
+                setIsRunningTimer(true);
+                setIsRunningInspection(false);
+                const startTime = performance.now();
+                timerIntervalRef.current = window.setInterval(() => {
+                    setElapsedTime((performance.now() - startTime) / 1000);
+                }, 10);
             }
         };
 
@@ -148,25 +153,15 @@ export const useSpacebarTimer = ({ withInspection }: UseSpacebarTimerProps) => {
             clearInterval(timerIntervalRef.current);
             clearInterval(inspectionIntervalRef.current);
         };
-    }, [
-        addResult,
-        scramble,
-        selectedEvent,
-        selectedSession,
-        setIsRunningInspection,
-        setIsRunningTimer,
-    ]);
+    }, [setIsRunningInspection, setIsRunningTimer]);
 
     const getDisplayTime = () => {
-        if (timerState === "TIMING") {
-            return formatTime({ time: elapsedTime });
-        }
+        if (timerState === "TIMING") return formatTime({ time: elapsedTime });
         if (timerState === "INSPECTING" || timerState === "INSPECTING_READY") {
             if (inspectionTime >= 1) return inspectionTime.toString();
             if (inspectionTime < 1 && inspectionTime >= -1) return "+2";
             return "DNF";
         }
-
         const latestResult = filteredResults[filteredResults.length - 1];
         if (latestResult && timerState !== "READY") {
             return formatTime({
