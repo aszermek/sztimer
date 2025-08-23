@@ -55,41 +55,43 @@ export const Scramble: React.FC = () => {
     );
 
     return (
-        <div className="ScrambleFontSize text-justify font-code min-h-[45px] max-w-[1792px] flex items-center justify-center">
-            {isLoading ? (
-                <Skeleton
-                    data-testid="scramble-skeleton"
-                    className="min-w-[40vw] max-w-[1656px] h-4 rounded-full bg-gray-200"
-                />
-            ) : (
-                <>
-                    <div className="hidden md:flex gap-8 items-center">
-                        {prevButton}
-                        <div
-                            data-testid="scramble-text"
-                            className="cursor-pointer shrink-1"
-                            onClick={scrambleToClipboard}
-                        >
-                            {scramble}
-                        </div>
-                        {nextButton}
-                    </div>
-
-                    <div className="md:hidden flex flex-col gap-4">
-                        <div
-                            data-testid="scramble-text"
-                            className="cursor-pointer text-xl md:text-lg"
-                            onClick={scrambleToClipboard}
-                        >
-                            {scramble}
-                        </div>
-                        <div className="flex gap-4 justify-center">
+        <section className="flex justify-center gap-8 bg-white border-b border-b-border px-4 py-3">
+            <div className="ScrambleFontSize text-justify font-code min-h-[45px] max-w-[1792px] flex items-center justify-center">
+                {isLoading ? (
+                    <Skeleton
+                        data-testid="scramble-skeleton"
+                        className="min-w-[40vw] max-w-[1656px] h-4 rounded-full bg-gray-200"
+                    />
+                ) : (
+                    <>
+                        <div className="hidden md:flex gap-8 items-center">
                             {prevButton}
+                            <div
+                                data-testid="scramble-text"
+                                className="cursor-pointer shrink-1"
+                                onClick={scrambleToClipboard}
+                            >
+                                {scramble}
+                            </div>
                             {nextButton}
                         </div>
-                    </div>
-                </>
-            )}
-        </div>
+
+                        <div className="md:hidden flex flex-col gap-4">
+                            <div
+                                data-testid="scramble-text"
+                                className="cursor-pointer text-xl md:text-lg"
+                                onClick={scrambleToClipboard}
+                            >
+                                {scramble}
+                            </div>
+                            <div className="flex gap-4 justify-center">
+                                {prevButton}
+                                {nextButton}
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+        </section>
     );
 };
