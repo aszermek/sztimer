@@ -23,6 +23,9 @@ export const ScramblePreview: React.FC = () => {
     }
 
     return (
-        <div ref={previewRef} className="mx-auto scale-[0.7] xl:scale-[0.82]" />
+        <div
+            ref={previewRef}
+            className="mx-auto h-32 sm:h-40 xl:h-48 aspect-video"
+        />
     );
 };

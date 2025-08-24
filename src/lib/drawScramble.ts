@@ -17,5 +17,7 @@ export function drawScramble(
         controlPanel: "none",
     });
 
+    player.classList.add("w-full", "h-full");
+
     element.replaceChildren(player);
 }

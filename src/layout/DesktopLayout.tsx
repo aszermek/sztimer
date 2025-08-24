@@ -1,4 +1,5 @@
 import { EventCombobox } from "@/components/event/EventCombobox";
+import { SessionCombobox } from "@/components/event/SessionCombobox";
 import { Results } from "@/components/results/Results";
 import { ScramblePreview } from "@/components/scramble/ScramblePreview";
 import { Statistics } from "@/components/statistics/Statistics";
@@ -11,10 +12,11 @@ export const DesktopLayout: React.FC = () => {
                 <Timer />
                 <aside className="flex flex-col gap-4">
                     <EventCombobox />
+                    <SessionCombobox />
                     <Results />
                 </aside>
             </section>
-            <section className="flex justify-between gap-4">
+            <section className="flex items-center justify-between gap-4">
                 <ScramblePreview />
                 <Statistics />
             </section>
