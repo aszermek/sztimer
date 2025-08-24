@@ -1,11 +1,11 @@
 import { useSetAtom, useAtomValue } from "jotai";
-import { selectedEventAtom, setSelectedEventAtom } from "@/atoms/sessionAtoms";
+import { selectedEventAtom } from "@/atoms/sessionAtoms";
 import { events, type EventType } from "@/types/events";
 import { Combobox } from "@/components/common/Combobox";
 
 export const EventCombobox: React.FC = () => {
     const selectedEvent = useAtomValue(selectedEventAtom);
-    const setSelectedEvent = useSetAtom(setSelectedEventAtom);
+    const setSelectedEvent = useSetAtom(selectedEventAtom);
 
     const options = events.map((event) => ({
         label: event.label,

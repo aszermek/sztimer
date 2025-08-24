@@ -1,18 +1,27 @@
 import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 import { events, type EventType } from "@/types/events";
 import { prevScrambleAtom } from "./scrambleAtoms";
 
-export const selectedEventAtom = atom<EventType>("333");
+export const selectedSessionAtom = atomWithStorage<string>(
+    "selectedSession",
+    "Regular"
+);
 
-export const setSelectedEventAtom = atom(
-    null,
+const baseSelectedEventAtom = atomWithStorage<EventType>(
+    "selectedEvent",
+    "333"
+);
+
+export const selectedEventAtom = atom(
+    (get) => get(baseSelectedEventAtom),
     (_, set, newEvent: EventType) => {
-        set(selectedEventAtom, newEvent);
+        set(baseSelectedEventAtom, newEvent);
+        set(selectedSessionAtom, "Regular");
         set(prevScrambleAtom, "");
     }
 );
 
-export const selectedSessionAtom = atom<string>("Regular");
 const customSessionsAtom = atom<string[]>([]);
 
 export const selectedEventSessionsAtom = atom((get) => {
@@ -20,7 +29,7 @@ export const selectedEventSessionsAtom = atom((get) => {
     const baseSessions =
         events.find((e) => e.key === selectedEvent)?.sessions ?? [];
     const custom = get(customSessionsAtom);
-    return [...baseSessions, ...custom];
+    return [...new Set([...baseSessions, ...custom])];
 });
 
 export const addNewSessionAtom = atom(null, (get, set, newSession: string) => {
@@ -29,3 +38,17 @@ export const addNewSessionAtom = atom(null, (get, set, newSession: string) => {
         set(customSessionsAtom, [...current, newSession]);
     }
 });
+
+export const removeSessionAtom = atom(
+    null,
+    (get, set, sessionToRemove: string) => {
+        const currentCustom = get(customSessionsAtom);
+        set(
+            customSessionsAtom,
+            currentCustom.filter((s) => s !== sessionToRemove)
+        );
+        if (get(selectedSessionAtom) === sessionToRemove) {
+            set(selectedSessionAtom, "Regular");
+        }
+    }
+);

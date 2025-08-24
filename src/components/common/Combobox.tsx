@@ -6,6 +6,7 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
+    CommandSeparator,
 } from "@/components/ui/command";
 import {
     Popover,
@@ -13,45 +14,68 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { CaretUpDownIcon, CheckIcon } from "@phosphor-icons/react";
+import { CaretUpDownIcon, CheckIcon, TrashIcon } from "@phosphor-icons/react";
 import React, { useState } from "react";
 
 export interface ComboboxOption {
     value: string;
     label: string;
     icon?: React.ElementType;
+    isDeletable?: boolean;
 }
 
 export interface ComboboxProps {
     options: ComboboxOption[];
+    value: string;
+    onChange: (value: string) => void;
+
+    searchValue?: string;
+    onSearchChange?: (value: string) => void;
+    onCreate?: (value: string) => void;
+    onDelete?: (value: string) => void;
+
     placeholder?: string;
-    onChange?: (value: string) => void;
-    value?: string;
     buttonProps?: React.ComponentProps<typeof Button>;
     className?: string;
+    createLabel?: string;
 }
 
 export const Combobox: React.FC<ComboboxProps> = ({
     options,
-    placeholder = "Select an option...",
+    value,
     onChange,
-    value: controlledValue,
+    searchValue = "",
+    onSearchChange,
+    onCreate,
+    onDelete,
+    placeholder = "Select an option...",
     buttonProps,
     className,
+    createLabel = "Create",
 }) => {
-    const [open, setOpen] = useState<boolean>(false);
-    const [uncontrolledValue, setUncontrolledValue] = useState<string>("");
+    const [open, setOpen] = useState(false);
+    const selectedOption = options.find((o) => o.value === value);
 
-    const isControlled = controlledValue !== undefined;
-    const value = isControlled ? controlledValue : uncontrolledValue;
-
-    const handleSelect = (selected: string) => {
-        if (!isControlled) setUncontrolledValue(selected);
-        onChange?.(selected);
+    const handleSelect = (selectedValue: string) => {
+        onChange(selectedValue);
+        onSearchChange?.("");
         setOpen(false);
     };
 
-    const selectedOption = options.find((o) => o.value === value);
+    const handleCreate = () => {
+        onCreate?.(searchValue);
+        handleSelect(searchValue);
+    };
+
+    const handleDelete = (e: React.MouseEvent, optionValue: string) => {
+        e.stopPropagation();
+        onDelete?.(optionValue);
+    };
+
+    const canCreate =
+        onCreate &&
+        searchValue.length > 0 &&
+        !options.some((o) => o.value === searchValue);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -60,8 +84,8 @@ export const Combobox: React.FC<ComboboxProps> = ({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className={cn("w-[200px] py-3", className)}
                     {...buttonProps}
+                    className={cn("w-[200px] py-3", className)}
                 >
                     {selectedOption?.icon && (
                         <selectedOption.icon className="mr-1 h-full aspect-square size-auto shrink-0" />
@@ -70,11 +94,20 @@ export const Combobox: React.FC<ComboboxProps> = ({
                     <CaretUpDownIcon className="opacity-50 h-full aspect-square size-auto ml-auto" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
+            <PopoverContent
+                className="p-0"
+                style={{ width: "var(--radix-popover-trigger-width)" }}
+            >
                 <Command>
-                    <CommandInput placeholder="Search..." className="h-9" />
+                    <CommandInput
+                        placeholder={`Search${onCreate ? " or create" : ""}...`}
+                        value={searchValue}
+                        onValueChange={onSearchChange}
+                    />
                     <CommandList>
-                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandEmpty>
+                            {canCreate ? " " : "No results found."}
+                        </CommandEmpty>
                         <CommandGroup>
                             {options.map((option) => (
                                 <CommandItem
@@ -82,21 +115,52 @@ export const Combobox: React.FC<ComboboxProps> = ({
                                     value={option.label}
                                     onSelect={() => handleSelect(option.value)}
                                 >
-                                    {option.icon && (
-                                        <option.icon className="mr-1 h-4 w-4 shrink-0" />
-                                    )}
-                                    {option.label}
-                                    <CheckIcon
-                                        className={cn(
-                                            "ml-auto h-4 w-4",
-                                            value === option.value
-                                                ? "opacity-100"
-                                                : "opacity-0"
+                                    <div className="flex items-center">
+                                        {option.icon && (
+                                            <option.icon className="mr-2 h-4 w-4 shrink-0" />
                                         )}
-                                    />
+                                        <span>{option.label}</span>
+                                    </div>
+                                    <div className="flex items-center ml-auto gap-1">
+                                        {value === option.value && (
+                                            <CheckIcon size={14} />
+                                        )}
+                                        {option.isDeletable && onDelete && (
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="h-min w-min"
+                                                onClick={(e) =>
+                                                    handleDelete(
+                                                        e,
+                                                        option.value
+                                                    )
+                                                }
+                                                aria-label={`Delete ${option.label}`}
+                                            >
+                                                <TrashIcon
+                                                    size={14}
+                                                    className="text-red-500"
+                                                />
+                                            </Button>
+                                        )}
+                                    </div>
                                 </CommandItem>
                             ))}
                         </CommandGroup>
+                        {canCreate && (
+                            <>
+                                <CommandSeparator />
+                                <CommandGroup>
+                                    <CommandItem
+                                        onSelect={handleCreate}
+                                        className="text-green-600"
+                                    >
+                                        {createLabel} "{searchValue}"
+                                    </CommandItem>
+                                </CommandGroup>
+                            </>
+                        )}
                     </CommandList>
                 </Command>
             </PopoverContent>
