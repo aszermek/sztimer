@@ -13,7 +13,7 @@ export const MobileLayout: React.FC = () => {
     return (
         <div className="flex flex-col h-full w-full">
             {activeTab === "timer" && <Scramble />}
-            <div className="flex flex-col w-full max-w-screen flex-1 min-h-0 overflow-y-auto items-center justify-center p-2 md:p-6">
+            <div className="flex flex-col gap-6 w-full max-w-screen flex-1 min-h-0 overflow-y-auto items-center justify-center p-2 sm:p-6">
                 {activeTab === "timer" && (
                     <>
                         <Timer />

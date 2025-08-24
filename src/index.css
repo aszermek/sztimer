@@ -233,7 +233,26 @@
     .drop-shadow-black {
         filter: drop-shadow(0 0px 3px rgba(0, 0, 0, 1));
     }
-    .ScrambleFontSize {
-        font-size: min(max(22px, 2.5vw), 30px);
+    .scramble-adaptive-text {
+        font-size: clamp(
+            14px,
+            calc(
+                min(6vw, 24px) - max(0, var(--scramble-length, 60) - 120) *
+                    0.04vw
+            ),
+            24px
+        );
+        line-height: 1.4;
+
+        @media (min-width: 768px) {
+            font-size: clamp(
+                24px,
+                calc(
+                    min(2.5vw, 30px) - max(0, var(--scramble-length, 60) - 250) *
+                        0.02vw
+                ),
+                30px
+            );
+        }
     }
 }

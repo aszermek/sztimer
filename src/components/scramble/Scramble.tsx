@@ -55,8 +55,15 @@ export const Scramble: React.FC = () => {
     );
 
     return (
-        <section className="flex justify-center gap-8 bg-white border-b border-b-border px-4 py-3">
-            <div className="ScrambleFontSize text-justify font-code min-h-[45px] max-w-[1792px] flex items-center justify-center">
+        <section className="flex justify-center gap-8 bg-white border-b border-b-border p-2 sm:p-3">
+            <div
+                className="scramble-adaptive-text text-justify font-code min-h-[45px] max-w-[1792px] flex items-center justify-center"
+                style={
+                    {
+                        "--scramble-length": scramble.length,
+                    } as React.CSSProperties
+                }
+            >
                 {isLoading ? (
                     <Skeleton
                         data-testid="scramble-skeleton"
@@ -79,7 +86,7 @@ export const Scramble: React.FC = () => {
                         <div className="md:hidden flex flex-col gap-4">
                             <div
                                 data-testid="scramble-text"
-                                className="cursor-pointer text-xl md:text-lg"
+                                className="cursor-pointer"
                                 onClick={scrambleToClipboard}
                             >
                                 {scramble}

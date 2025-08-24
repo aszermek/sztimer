@@ -39,15 +39,15 @@ export const Timer: React.FC = () => {
 
     if (timerMode === "manual") {
         return (
-            <div className="flex-1 flex flex-col gap-4 justify-center max-w-lg mx-auto">
+            <div className="flex-1 flex flex-col gap-2 sm:gap-4 justify-center max-w-lg mx-auto">
                 <TimeInput onSubmit={handleManualSubmit} />
                 {!!latestResult && (
                     <div className="flex items-center gap-4 justify-between">
                         <div className="flex flex-col">
-                            <p className="text-sm text-gray-500">
-                                Latest result:
+                            <p className="text-xs sm:text-sm text-gray-500">
+                                Latest:
                             </p>
-                            <div className={`text-6xl font-timer`}>
+                            <div className="text-4xl sm:text-6xl font-timer">
                                 {formatTime(latestResult)}
                             </div>
                         </div>

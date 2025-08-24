@@ -10,7 +10,7 @@ export const SpacebarTimer: React.FC = () => {
     });
 
     return (
-        <div className={`text-9xl font-timer ${timerClassName}`}>
+        <div className={`text-8xl sm:text-9xl font-timer ${timerClassName}`}>
             {displayTime}
         </div>
     );
