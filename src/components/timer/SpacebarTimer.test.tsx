@@ -2,10 +2,10 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Provider } from "jotai";
 import { SpacebarTimer } from "./SpacebarTimer";
-import { useSpacebarTimer } from "@/hooks/useSpacebarTimer";
+import { useSpacebarTimer } from "@/hooks/domain/useSpacebarTimer";
 
 // Mock the hook that provides the logic and data to the component
-vi.mock("@/hooks/useSpacebarTimer", () => ({
+vi.mock("@/hooks/domain/useSpacebarTimer", () => ({
     useSpacebarTimer: vi.fn(),
 }));
 

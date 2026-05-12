@@ -16,9 +16,13 @@ const { mockGetNewScramble } = vi.hoisted(() => {
     return { mockGetNewScramble: vi.fn() };
 });
 
-vi.mock("./scrambleAtoms", () => ({
-    getNewScrambleAtom: { write: mockGetNewScramble },
-}));
+vi.mock("./scrambleAtoms", async () => {
+    const { atom } = await import("jotai");
+    return {
+        getNewScrambleAtom: { write: mockGetNewScramble },
+        prevScrambleAtom: atom(""),
+    };
+});
 
 const createResult = (
     id: number,

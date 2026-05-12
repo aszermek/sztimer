@@ -10,7 +10,10 @@ import { drawScramble } from "./drawScramble";
 
 const { mockTwistyPlayerConstructor, mockTwistyPlayerInstance } = vi.hoisted(
     () => {
-        const mockInstance = { id: "mock-player" };
+        const mockInstance = {
+            id: "mock-player",
+            classList: { add: vi.fn() },
+        };
         return {
             mockTwistyPlayerInstance: mockInstance,
             mockTwistyPlayerConstructor: vi.fn(() => mockInstance),

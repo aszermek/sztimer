@@ -106,7 +106,7 @@ describe("Timer Component", () => {
             );
 
             expect(screen.getByTestId("time-input")).toBeInTheDocument();
-            expect(screen.getByText(/latest result/i)).toBeInTheDocument();
+            expect(screen.getByText(/latest:/i)).toBeInTheDocument();
             expect(screen.getByText("12.34")).toBeInTheDocument();
             expect(screen.getByTestId("result-flagger")).toBeInTheDocument();
         });
