@@ -20,7 +20,12 @@ export const filteredResultsAtom = atom((get) => {
 export const addResultAtom = atom(null, async (get, set, result: Result) => {
     const results = [...get(resultsAtom), result];
     set(resultsAtom, results);
-    await getNewScrambleAtom.write!(get, set);
+    await set(getNewScrambleAtom);
+});
+
+export const latestResultAtom = atom((get): Result | null => {
+    const results = get(filteredResultsAtom);
+    return results.at(-1) ?? null;
 });
 
 export const addPenaltyAtom = atom(

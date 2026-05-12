@@ -22,7 +22,7 @@ export const selectedEventAtom = atom(
     }
 );
 
-const customSessionsAtom = atom<string[]>([]);
+const customSessionsAtom = atomWithStorage<string[]>("customSessions", []);
 
 export const selectedEventSessionsAtom = atom((get) => {
     const selectedEvent = get(selectedEventAtom);
