@@ -13,9 +13,12 @@ export const ScramblePreview: React.FC = () => {
     const previewRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (previewRef.current) {
-            drawScramble(eventKey, scramble, previewRef.current);
-        }
+        const el = previewRef.current;
+        if (!el) return;
+        drawScramble(eventKey, scramble, el);
+        return () => {
+            el.replaceChildren();
+        };
     }, [scramble, eventKey]);
 
     if (isLoading) {
