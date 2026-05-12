@@ -1,18 +1,18 @@
 import { statisticsAtom } from "@/atoms/statisticsAtoms";
 import { formatTime } from "@/lib/formatTime";
 import { ChatCenteredTextIcon, TrashIcon } from "@phosphor-icons/react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import * as React from "react";
 import { useState } from "react";
-import { filteredResultsAtom, openDetailsAtom } from "../../atoms/resultAtoms";
-import type { Result } from "../../types/results";
+import { filteredResultsAtom, openDetailsAtom } from "@/atoms/resultAtoms";
+import type { Result } from "@/types/results";
 import { Button } from "../ui/button";
 import { DeleteAllResultsDialog } from "./DeleteAllResultsDialog";
 import { DetailedResultsDialog } from "./DetailedResultsDialog";
 
 export const Results: React.FC = () => {
     const filteredResults = useAtomValue(filteredResultsAtom);
-    const [, openDetails] = useAtom(openDetailsAtom);
+    const openDetails = useSetAtom(openDetailsAtom);
     const stats = useAtomValue(statisticsAtom);
     const [isOpenDeleteDialog, setIsOpenDeleteDialog] =
         useState<boolean>(false);

@@ -1,4 +1,4 @@
-import { addResultAtom, filteredResultsAtom } from "@/atoms/resultAtoms";
+import { addResultAtom, latestResultAtom } from "@/atoms/resultAtoms";
 import { scrambleAtom } from "@/atoms/scrambleAtoms";
 import { selectedEventAtom, selectedSessionAtom } from "@/atoms/sessionAtoms";
 import { timerModeAtom } from "@/atoms/settingsAtoms";
@@ -11,8 +11,7 @@ import { TimeInput } from "./TimeInput";
 
 export const Timer: React.FC = () => {
     const timerMode = useAtomValue(timerModeAtom);
-    const filteredResults = useAtomValue(filteredResultsAtom);
-    const latestResult = filteredResults.at(-1);
+    const latestResult = useAtomValue(latestResultAtom);
     const addResult = useSetAtom(addResultAtom);
     const scramble = useAtomValue(scrambleAtom);
     const selectedEvent = useAtomValue(selectedEventAtom);
@@ -61,7 +60,7 @@ export const Timer: React.FC = () => {
     return (
         <div className="flex-1 flex flex-col justify-center items-center">
             <SpacebarTimer />
-            <ResultFlagger result={latestResult} />
+            <ResultFlagger result={latestResult ?? undefined} />
         </div>
     );
 };
