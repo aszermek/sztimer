@@ -4,16 +4,20 @@ import {
     type TimerMode,
 } from "@/atoms/settingsAtoms";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { Switch } from "../ui/switch";
+
+const isTimerMode = (v: string): v is TimerMode =>
+    v === "spacebar" || v === "manual";
 
 export const Settings: React.FC = () => {
     const [withInspection, setWithInspection] = useAtom(withInspectionAtom);
     const [timerMode, setTimerMode] = useAtom(timerModeAtom);
 
     const handleTimerModeChange = (value: string) => {
-        if (value) {
-            setTimerMode(value as TimerMode);
+        if (isTimerMode(value)) {
+            setTimerMode(value);
         }
     };
 
@@ -53,11 +57,10 @@ export const Settings: React.FC = () => {
             <div className="flex justify-between items-center">
                 <label
                     htmlFor="inspection-toggle"
-                    className={`font-medium pr-4 transition-opacity ${
-                        isInspectionDisabled
-                            ? "opacity-50 cursor-not-allowed"
-                            : ""
-                    }`}
+                    className={cn(
+                        "font-medium pr-4 transition-opacity",
+                        isInspectionDisabled && "opacity-50 cursor-not-allowed"
+                    )}
                 >
                     Use inspection
                     <p className="text-sm text-gray-500 font-normal">
