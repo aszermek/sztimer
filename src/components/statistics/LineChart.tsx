@@ -1,12 +1,13 @@
 import { statisticsAtom } from "@/atoms/statisticsAtoms";
 import { useAtomValue } from "jotai";
+import { useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { nivoTheme } from "@/constants/nivoTheme";
 
 export const LineChart: React.FC = () => {
     const { chartData } = useAtomValue(statisticsAtom);
 
-    const formattedData = [
+    const formattedData = useMemo(() => [
         {
             id: "Single",
             data: chartData
@@ -25,7 +26,7 @@ export const LineChart: React.FC = () => {
                 .filter((d) => d.ao12 !== null)
                 .map((d) => ({ x: d.id, y: d.ao12 as number })),
         },
-    ];
+    ], [chartData]);
 
     if (chartData.length < 2) return null;
 
