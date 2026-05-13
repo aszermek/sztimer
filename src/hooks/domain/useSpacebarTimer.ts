@@ -8,7 +8,7 @@ import {
 import { formatTime } from "@/lib/formatTime";
 import type { Result } from "@/types/results";
 import { useAtomValue, useSetAtom } from "jotai";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface UseSpacebarTimerProps {
     withInspection: boolean;
@@ -48,16 +48,18 @@ export const useSpacebarTimer = ({ withInspection }: UseSpacebarTimerProps) => {
         selectedSession,
         addResult,
     });
-    stateRef.current = {
-        timerState,
-        elapsedTime,
-        inspectionTime,
-        withInspection,
-        scramble,
-        selectedEvent,
-        selectedSession,
-        addResult,
-    };
+    useLayoutEffect(() => {
+        stateRef.current = {
+            timerState,
+            elapsedTime,
+            inspectionTime,
+            withInspection,
+            scramble,
+            selectedEvent,
+            selectedSession,
+            addResult,
+        };
+    });
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {

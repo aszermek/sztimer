@@ -16,7 +16,7 @@ const { mockTwistyPlayerConstructor, mockTwistyPlayerInstance } = vi.hoisted(
         };
         return {
             mockTwistyPlayerInstance: mockInstance,
-            mockTwistyPlayerConstructor: vi.fn(() => mockInstance),
+            mockTwistyPlayerConstructor: vi.fn(function () { return mockInstance; }),
         };
     }
 );

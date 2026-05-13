@@ -7,7 +7,7 @@ import {
 } from "@phosphor-icons/react";
 import { useAtom } from "jotai";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     addCommentAtom,
     addPenaltyAtom,
@@ -29,11 +29,13 @@ export const ResultFlagger: React.FC<ResultFlaggerProps> = ({ result }) => {
     const [, closeDetails] = useAtom(closeDetailsAtom);
 
     const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false);
+    const [prevResult, setPrevResult] = useState<Result | undefined>(result);
     const [comment, setComment] = useState<string>(result?.comment || "");
 
-    useEffect(() => {
+    if (prevResult !== result) {
+        setPrevResult(result);
         setComment(result?.comment || "");
-    }, [result]);
+    }
 
     const handleCommentToggle = () => setIsCommentOpen(!isCommentOpen);
 

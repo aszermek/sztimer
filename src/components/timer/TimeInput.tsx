@@ -31,22 +31,18 @@ const parseTime = (enteredTime: string): number | undefined => {
 
     const timeComponents = enteredTime.split(":");
     let hours = 0,
-        minutes = 0,
-        seconds = 0;
+        minutes = 0;
+    let seconds: number;
 
-    try {
-        if (timeComponents.length === 3) {
-            hours = parseInt(timeComponents[0]);
-            minutes = parseInt(timeComponents[1]);
-            seconds = parseSeconds(timeComponents[2]);
-        } else if (timeComponents.length === 2) {
-            minutes = parseInt(timeComponents[0]);
-            seconds = parseSeconds(timeComponents[1]);
-        } else {
-            seconds = parseSeconds(timeComponents[0]);
-        }
-    } catch (e) {
-        return undefined;
+    if (timeComponents.length === 3) {
+        hours = parseInt(timeComponents[0]);
+        minutes = parseInt(timeComponents[1]);
+        seconds = parseSeconds(timeComponents[2]);
+    } else if (timeComponents.length === 2) {
+        minutes = parseInt(timeComponents[0]);
+        seconds = parseSeconds(timeComponents[1]);
+    } else {
+        seconds = parseSeconds(timeComponents[0]);
     }
 
     if (isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
