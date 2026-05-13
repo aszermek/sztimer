@@ -26,9 +26,9 @@ export const LineChart: React.FC = () => {
                 .filter((d) => d.ao12 !== null)
                 .map((d) => ({ x: d.id, y: d.ao12 as number })),
         },
-    ], [chartData]);
+    ].filter((series) => series.data.length >= 2), [chartData]);
 
-    if (chartData.length < 2) return null;
+    if (chartData.length < 2 || formattedData.length === 0) return null;
 
     return (
         <div className="w-[36vw] h-64">
