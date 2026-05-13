@@ -2,7 +2,7 @@
 
 A clean, fast, and modern web application for speedcubing enthusiasts. Designed for both practice and serious training sessions, `szTimer` provides all the essential tools a cuber needs without the clutter.
 
-### [**Live Demo**](https://sztimer.vercel.app)
+### [**Live Demo**](https://sz-timer.vercel.app)
 
 ## ✨ Key Features
 
