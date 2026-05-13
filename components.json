@@ -17,9 +17,5 @@
         "lib": "@/lib",
         "hooks": "@/hooks"
     },
-    "icons": {
-        "name": "@phosphor-icons/react",
-        "import": "{ Icon }",
-        "resolveIcon": "icon => icon"
-    }
+    "iconLibrary": "lucide"
 }

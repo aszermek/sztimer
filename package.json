@@ -29,7 +29,6 @@
         "cubing": "^0.63.3",
         "date-fns": "^4.1.0",
         "jotai": "^2.20.0",
-        "lucide-react": "^1.14.0",
         "motion": "^12.38.0",
         "react": "^19.2.6",
         "react-dom": "^19.2.6",
